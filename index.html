@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django Project Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#ff6e00; --blue:#2f80ed; --title:#3b8ad9; --ink:#222; --muted:#5f6670;
+  --bg:#fff; --panel:#f6f8fb; --line:#e3e7ee; --footer:#1d1d1d; --code:#0f1720; --codeink:#e6edf3;
+  --ok:#1e8e3e; --bad:#d93025;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Raleway,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+a{color:var(--blue)}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,monospace}
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:4px solid var(--orange);background:#fff;position:sticky;top:0;z-index:10}
+.burger{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 10px;font-size:20px;cursor:pointer;display:none}
+.logo{font-weight:700;color:var(--ok);font-size:18px}
+.logo span{color:var(--orange)}
+.crumbs{padding:14px 24px;font-size:22px;color:var(--blue)}
+.crumbs b{font-weight:500}
+.crumbs .sep{margin:0 8px;color:var(--ink)}
+/* layout */
+.wrap{display:flex;max-width:1280px;margin:0 auto;padding:0 16px 40px;gap:24px}
+nav.side{flex:0 0 210px;align-self:flex-start;position:sticky;top:80px}
+nav.side a{display:block;padding:10px 16px;text-decoration:none;color:var(--ink);border-left:3px solid transparent;font-weight:500}
+nav.side a:hover{background:var(--panel)}
+nav.side a.active{border-left-color:var(--orange);color:var(--blue);background:var(--panel)}
+main{flex:1;min-width:0}
+h1.exp{color:var(--title);text-align:center;font-weight:500;font-size:28px;border-bottom:1px solid var(--line);padding-bottom:10px;margin:8px 0 20px}
+h2{color:var(--title);font-weight:600;font-size:21px;margin-top:28px}
+h3{font-size:17px;margin-bottom:6px}
+section.page{display:none}
+section.page.active{display:block}
+pre{background:var(--code);color:var(--codeink);padding:14px 16px;border-radius:8px;overflow:auto;font-size:13.5px;line-height:1.5}
+:not(pre)>code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:.9em}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel)}
+.note{background:#fff7ef;border-left:4px solid var(--orange);padding:10px 14px;border-radius:4px;margin:14px 0}
+/* quiz */
+.q{border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0}
+.q p{margin:0 0 8px;font-weight:600}
+.q label{display:block;padding:4px 6px;border-radius:4px;cursor:pointer}
+.q label.right{background:#e6f4ea;color:var(--ok)}
+.q label.wrong{background:#fce8e6;color:var(--bad)}
+.q .exp{display:none;font-size:14px;color:var(--muted);margin-top:6px}
+.q.done .exp{display:block}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:6px;padding:9px 18px;font:inherit;font-weight:600;cursor:pointer}
+.btn.alt{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.score{font-weight:700;margin-left:12px}
+/* simulation */
+.sim{display:grid;grid-template-columns:300px 1fr;gap:16px}
+.card{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.card h4{margin:0;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--line);font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.tree{padding:8px 6px;font-size:13.5px;min-height:340px;max-height:520px;overflow:auto}
+.tree .node{padding:3px 8px;border-radius:4px;cursor:pointer;white-space:nowrap}
+.tree .node:hover{background:var(--panel)}
+.tree .node.sel{background:#e3eefc}
+.tree .node.new{animation:flash 1.4s}
+@keyframes flash{0%{background:#fff3c4}100%{background:transparent}}
+.tag{font-size:10px;padding:1px 6px;border-radius:10px;margin-left:6px;font-family:Raleway,sans-serif;font-weight:700}
+.tag.proj{background:#fde7d3;color:#b34d00}.tag.app{background:#dbeafe;color:#1d4ed8}
+.term{background:var(--code);color:var(--codeink);padding:12px 14px;font-size:13px;min-height:130px;max-height:200px;overflow:auto}
+.term .ps{color:#7ee787}.term .err{color:#ff7b72}.term .out{color:#a5b3c2}
+.cmdbar{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);flex-wrap:wrap}
+.cmdbar input{flex:1;min-width:180px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.steps{padding:10px 14px;font-size:14px}
+.steps li{margin:4px 0;color:var(--muted)}
+.steps li.cur{color:var(--ink);font-weight:700}
+.steps li.ok{color:var(--ok)}
+.steps li.ok::marker{content:"✓  "}
+.viewer pre{margin:0;border-radius:0;min-height:200px;max-height:340px}
+.explain{padding:10px 14px;font-size:14px;background:#fffdf6;border-top:1px solid var(--line)}
+.right-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hint{font-size:13px;color:var(--muted);padding:0 10px 10px}
+.browser{padding:0}
+.browser .bar{display:flex;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--panel)}
+.browser .bar input{flex:1;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.browser .view{padding:16px;min-height:70px;font-size:15px}
+/* footer */
+footer{background:var(--footer);color:#ddd;padding:28px 24px 10px;font-size:14px}
+footer .cols{display:flex;gap:40px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
+footer h5{margin:0 0 6px;font-size:15px;color:#fff;border-bottom:2px solid #3fa7d6;padding-bottom:6px;width:200px}
+footer a{color:#ddd;text-decoration:none;display:block}
+footer .lic{text-align:center;margin-top:18px;border-top:1px solid #333;padding-top:10px}
+footer .lic a{display:inline;color:#3fa7d6}
+@media (max-width:860px){
+  .burger{display:block}
+  nav.side{display:none;position:fixed;top:60px;left:0;background:#fff;width:240px;height:100%;box-shadow:2px 0 10px rgba(0,0,0,.15);z-index:20}
+  nav.side.open{display:block}
+  .sim{grid-template-columns:1fr}
+  .crumbs{font-size:17px;padding:12px 16px}
+  .wrap{padding:0 16px 30px}
+}
+</style>
+</head>
+<body>
+<header>
+  <button class="burger" onclick="document.querySelector('nav.side').classList.toggle('open')" aria-label="Menu">☰</button>
+  <div class="logo">Virtual <span>Labs</span></div>
+</header>
+<div class="crumbs"><b>Computer Science and Engineering</b><span class="sep">›</span><b>Web Development Lab</b><span class="sep">›</span><b>Experiments</b></div>
+
+<div class="wrap">
+<nav class="side" id="nav">
+  <a href="#aim">Aim</a><a href="#theory">Theory</a><a href="#pretest">Pretest</a><a href="#procedure">Procedure</a>
+  <a href="#simulation">Simulation</a><a href="#posttest">Posttest</a><a href="#references">References</a>
+  <a href="#contributors">Contributors</a><a href="#feedback">Feedback</a>
+</nav>
+
+<main>
+<h1 class="exp">Understanding Django Project and App Structure</h1>
+
+<!-- AIM -->
+<section class="page" id="aim">
+  <p>To understand how a Django web application is organised by creating a <b>project</b> and an <b>app</b>, examining the purpose of every generated file, and connecting the app to the project so that it serves a page in the browser.</p>
+  <h2>Objectives</h2>
+  <ul>
+    <li>Distinguish between a Django <i>project</i> and a Django <i>app</i>.</li>
+    <li>Identify the role of <code>manage.py</code>, <code>settings.py</code>, <code>urls.py</code>, <code>wsgi.py</code>, <code>asgi.py</code>, <code>models.py</code>, <code>views.py</code>, <code>admin.py</code>, <code>apps.py</code> and <code>migrations/</code>.</li>
+    <li>Register an app in <code>INSTALLED_APPS</code> and route a URL to a view.</li>
+  </ul>
+</section>
+
+<!-- THEORY -->
+<section class="page" id="theory">
+  <h2>What is Django?</h2>
+  <p>Django is a high-level Python web framework that follows the <b>MTV (Model–Template–View)</b> pattern. It encourages a modular layout in which one <b>project</b> holds configuration and many <b>apps</b> hold features.</p>
+
+  <h2>Project vs App</h2>
+  <table>
+    <tr><th></th><th>Project</th><th>App</th></tr>
+    <tr><td>Definition</td><td>The whole website: configuration + a collection of apps</td><td>A self-contained module that does one job (blog, accounts, polls)</td></tr>
+    <tr><td>Created with</td><td><code>django-admin startproject mysite</code></td><td><code>python manage.py startapp blog</code></td></tr>
+    <tr><td>How many</td><td>One per website</td><td>Many per project; reusable across projects</td></tr>
+    <tr><td>Contains</td><td>settings, root URLs, WSGI/ASGI entry points</td><td>models, views, admin, tests, migrations</td></tr>
+  </table>
+
+  <h2>Project layout</h2>
+<pre>mysite/                 ← outer folder (container, name can be anything)
+├── manage.py           ← command-line utility for this project
+└── mysite/             ← the actual Python package of the project
+    ├── __init__.py     ← marks the folder as a Python package
+    ├── settings.py     ← all configuration (apps, DB, templates, static…)
+    ├── urls.py         ← root URL dispatcher ("table of contents")
+    ├── asgi.py         ← entry point for ASGI (async) servers
+    └── wsgi.py         ← entry point for WSGI servers (gunicorn, mod_wsgi)</pre>
+
+  <h2>App layout</h2>
+<pre>blog/
+├── __init__.py
+├── admin.py            ← register models with the admin site
+├── apps.py             ← app configuration class (BlogConfig)
+├── migrations/         ← database schema history
+│   └── __init__.py
+├── models.py           ← data models (database tables)
+├── tests.py            ← unit tests
+└── views.py            ← functions/classes that handle requests</pre>
+  <p>Files commonly added by the developer: <code>urls.py</code> (app-level routes), <code>templates/blog/</code> (HTML), <code>static/blog/</code> (CSS/JS/images), <code>forms.py</code>.</p>
+
+  <h2>Request flow</h2>
+<pre>Browser → /blog/
+   → mysite/urls.py      path('blog/', include('blog.urls'))
+   → blog/urls.py        path('', views.index)
+   → blog/views.py       index(request) → HttpResponse / render(template)
+   → (models.py ↔ database, templates/ → HTML)
+   → Response → Browser</pre>
+  <div class="note">An app is only “seen” by Django after it is added to <code>INSTALLED_APPS</code> in <code>settings.py</code>. Its URLs are only reachable after the project’s <code>urls.py</code> includes them.</div>
+</section>
+
+<!-- PRETEST -->
+<section class="page" id="pretest"><div data-quiz="pre"></div></section>
+
+<!-- PROCEDURE -->
+<section class="page" id="procedure">
+  <h2>Steps for the simulation</h2>
+  <ol>
+    <li>Open the <b>Simulation</b> tab. The terminal starts in an empty workspace.</li>
+    <li>Create a project: type <code>django-admin startproject mysite</code> and press <b>Run</b>. Observe the generated tree.</li>
+    <li>Click every file in the tree and read its contents and explanation.</li>
+    <li>Move into the project folder: <code>cd mysite</code>.</li>
+    <li>Create an app: <code>python manage.py startapp blog</code>. Compare the app’s files with the project’s files.</li>
+    <li>Register the app: click <code>mysite/settings.py</code> and press <b>Add 'blog' to INSTALLED_APPS</b>.</li>
+    <li>Write a view: open <code>blog/views.py</code> and press <b>Add index view</b>.</li>
+    <li>Create <code>blog/urls.py</code>: select the <code>blog</code> folder and press <b>Create urls.py</b>.</li>
+    <li>Include the app URLs in the project: open <code>mysite/urls.py</code> and press <b>Include blog.urls</b>.</li>
+    <li>Start the server: <code>python manage.py runserver</code>, then visit <code>/blog/</code> in the mini browser.</li>
+    <li>Try skipping a step (e.g. run the server before including URLs) and observe the error — this shows why each file matters.</li>
+  </ol>
+  <p>Use <b>Reset</b> to start again. Type <code>help</code> in the terminal to list supported commands.</p>
+</section>
+
+<!-- SIMULATION -->
+<section class="page" id="simulation">
+  <div class="sim">
+    <div class="card">
+      <h4>Explorer <button class="btn alt" style="padding:3px 10px;font-size:12px" onclick="Sim.reset()">Reset</button></h4>
+      <div class="tree mono" id="tree"></div>
+      <h4>Tasks</h4>
+      <ol class="steps" id="steps"></ol>
+    </div>
+    <div class="right-col">
+      <div class="card">
+        <h4>Terminal <span class="mono" id="cwd" style="font-weight:400"></span></h4>
+        <div class="term mono" id="term"></div>
+        <div class="cmdbar">
+          <input id="cmd" placeholder="django-admin startproject mysite" autocomplete="off" spellcheck="false">
+          <button class="btn" onclick="Sim.run()">Run</button>
+        </div>
+        <div class="hint" id="hint"></div>
+      </div>
+      <div class="card viewer">
+        <h4><span class="mono" id="fname">Select a file</span><span id="actions"></span></h4>
+        <pre id="code">// Click a file in the Explorer to view it.</pre>
+        <div class="explain" id="explain">Each generated file has a specific purpose. Select one to learn about it.</div>
+      </div>
+      <div class="card browser">
+        <div class="bar"><input id="url" value="http://127.0.0.1:8000/blog/"><button class="btn" onclick="Sim.visit()">Go</button></div>
+        <div class="view" id="view" style="color:var(--muted)">Server not running.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSTTEST -->
+<section class="page" id="posttest"><div data-quiz="post"></div></section>
+
+<!-- REFERENCES -->
+<section class="page" id="references">
+  <ol>
+    <li>Django documentation — “Writing your first Django app, part 1”: <a href="https://docs.djangoproject.com/en/stable/intro/tutorial01/" target="_blank">docs.djangoproject.com/en/stable/intro/tutorial01/</a></li>
+    <li>Django documentation — Applications: <a href="https://docs.djangoproject.com/en/stable/ref/applications/" target="_blank">docs.djangoproject.com/en/stable/ref/applications/</a></li>
+    <li>Django documentation — URL dispatcher: <a href="https://docs.djangoproject.com/en/stable/topics/http/urls/" target="_blank">docs.djangoproject.com/en/stable/topics/http/urls/</a></li>
+    <li>Django documentation — Settings: <a href="https://docs.djangoproject.com/en/stable/ref/settings/" target="_blank">docs.djangoproject.com/en/stable/ref/settings/</a></li>
+    <li>W. S. Vincent, <i>Django for Beginners</i>.</li>
+  </ol>
+</section>
+
+<!-- CONTRIBUTORS -->
+<section class="page" id="contributors">
+  <h2>Subject Matter Expert</h2>
+  <p>[Name], [Designation], [Institute]</p>
+  <h2>Developer</h2>
+  <p>[Name], [Institute]</p>
+</section>
+
+<!-- FEEDBACK -->
+<section class="page" id="feedback">
+  <p>Help us improve this experiment. Please share your experience.</p>
+  <p><a class="btn" style="text-decoration:none;display:inline-block" href="#feedback">Feedback form (add your link)</a></p>
+</section>
+</main>
+</div>
+
+<footer>
+  <div class="cols">
+    <div><h5>Community Links</h5><a href="https://www.sakshat.ac.in/">Sakshat Portal</a><a href="http://outreach.vlabs.ac.in/">Outreach Portal</a><a href="https://vlab.co.in/faq">FAQ: Virtual Labs</a></div>
+    <div><h5>Contact Us</h5><span>Phone: 011-26582050</span><br><span>Email: support@vlabs.ac.in</span></div>
+    <div><h5>Follow Us</h5><a href="https://twitter.com/TheVirtualLabs">Twitter</a><a href="https://www.youtube.com/watch?v=asxRaOgk6a0">YouTube</a></div>
+  </div>
+  <div class="lic"><a href="https://www.gnu.org/licenses/agpl-3.0.en.html">AGPL 3.0</a> &amp; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons (CC BY-NC-SA 4.0)</a></div>
+</footer>
+
+<script>
+/* ---------- routing ---------- */
+function route(){
+  const id=(location.hash||'#aim').slice(1);
+  document.querySelectorAll('section.page').forEach(s=>s.classList.toggle('active',s.id===id));
+  document.querySelectorAll('nav.side a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  document.querySelector('nav.side').classList.remove('open');
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);
+
+/* ---------- quizzes ---------- */
+const QUIZ={
+ pre:[
+  ["Django is written in which language?",["Java","Python","PHP","Ruby"],1,"Django is a Python web framework."],
+  ["Which architectural pattern does Django follow?",["MVC strictly","MTV (Model–Template–View)","MVVM","Flux"],1,"Django calls its variant MTV."],
+  ["Which tool is used to install Django?",["npm","apt-get only","pip","composer"],2,"pip install django"],
+  ["In Django, a single website is called a…",["Project","App","Module","Package"],0,"One project per site; it contains many apps."],
+  ["Which file type mainly holds Django logic?",[".js",".py",".java",".rb"],1,"All Django code is Python (.py)."]
+ ],
+ post:[
+  ["Which command creates a new app inside a project?",["django-admin startproject blog","python manage.py startapp blog","python manage.py newapp blog","pip install blog"],1,"Apps are created with manage.py startapp."],
+  ["Where must an app be registered so Django recognises it?",["urls.py","wsgi.py","INSTALLED_APPS in settings.py","apps.py of another app"],2,"INSTALLED_APPS in settings.py lists active apps."],
+  ["What is the purpose of migrations/?",["Store static files","Track database schema changes","Hold HTML templates","Store logs"],1,"Migrations record changes to models so the DB schema can be updated."],
+  ["Which file is the entry point for WSGI-compatible web servers?",["asgi.py","manage.py","wsgi.py","apps.py"],2,"wsgi.py exposes the WSGI callable named application."],
+  ["Which function connects a project URL prefix to an app’s URL file?",["render()","include()","redirect()","reverse()"],1,"path('blog/', include('blog.urls'))"],
+  ["Which file is NOT generated by startapp?",["models.py","views.py","urls.py","admin.py"],2,"App-level urls.py must be created manually."],
+  ["Which statement is TRUE?",["An app can only belong to one project ever","A project can contain many apps","settings.py lives inside each app","manage.py lives inside the app"],1,"Projects hold many apps; apps are reusable."]
+ ]
+};
+document.querySelectorAll('[data-quiz]').forEach(box=>{
+  const qs=QUIZ[box.dataset.quiz];
+  box.innerHTML=qs.map((q,i)=>`<div class="q" data-a="${q[2]}"><p>${i+1}. ${q[0]}</p>${q[1].map((o,j)=>`<label><input type="radio" name="${box.dataset.quiz}${i}" value="${j}"> ${o}</label>`).join('')}<div class="exp">${q[3]}</div></div>`).join('')
+   +`<button class="btn">Submit</button><span class="score"></span>`;
+  box.querySelector('.btn').onclick=()=>{
+    let s=0;
+    box.querySelectorAll('.q').forEach(q=>{
+      const a=+q.dataset.a, c=q.querySelector('input:checked');
+      q.classList.add('done');
+      q.querySelectorAll('label').forEach((l,j)=>{l.classList.remove('right','wrong'); if(j===a)l.classList.add('right'); else if(c&&+c.value===j)l.classList.add('wrong');});
+      if(c&&+c.value===a)s++;
+    });
+    box.querySelector('.score').textContent=`Score: ${s} / ${qs.length}`;
+  };
+});
+
+/* ---------- simulation ---------- */
+const FILES={
+ 'mysite/manage.py':{code:`#!/usr/bin/env python
+"""Django's command-line utility for administrative tasks."""
+import os
+import sys
+
+def main():
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+    from django.core.management import execute_from_command_line
+    execute_from_command_line(sys.argv)
+
+if __name__ == '__main__':
+    main()`,exp:"<b>manage.py</b> — a thin wrapper around django-admin that points to <code>mysite.settings</code>. You run <code>runserver</code>, <code>startapp</code>, <code>makemigrations</code>, <code>migrate</code>, <code>createsuperuser</code> etc. through it. You rarely edit it."},
+ 'mysite/mysite/__init__.py':{code:"# empty",exp:"<b>__init__.py</b> — an empty file telling Python this directory is a package, so <code>mysite.settings</code> can be imported."},
+ 'mysite/mysite/settings.py':{code:null,exp:"<b>settings.py</b> — the project's configuration: <code>SECRET_KEY</code>, <code>DEBUG</code>, <code>INSTALLED_APPS</code>, <code>MIDDLEWARE</code>, <code>ROOT_URLCONF</code>, <code>TEMPLATES</code>, <code>DATABASES</code>, <code>STATIC_URL</code>. Apps must be listed in <code>INSTALLED_APPS</code>."},
+ 'mysite/mysite/urls.py':{code:null,exp:"<b>urls.py (project)</b> — the root URLconf named in <code>ROOT_URLCONF</code>. Every request starts here; use <code>include()</code> to hand a URL prefix to an app."},
+ 'mysite/mysite/asgi.py':{code:`import os
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+application = get_asgi_application()`,exp:"<b>asgi.py</b> — entry point for asynchronous servers such as Uvicorn or Daphne (WebSockets, async views)."},
+ 'mysite/mysite/wsgi.py':{code:`import os
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+application = get_wsgi_application()`,exp:"<b>wsgi.py</b> — entry point for traditional WSGI servers like Gunicorn or Apache mod_wsgi in production."},
+ 'mysite/db.sqlite3':{code:"(binary SQLite database)",exp:"<b>db.sqlite3</b> — the default database file, created the first time the project touches the DB (e.g. <code>migrate</code> or <code>runserver</code>)."},
+ 'mysite/blog/__init__.py':{code:"# empty",exp:"<b>__init__.py</b> — makes <code>blog</code> an importable Python package."},
+ 'mysite/blog/admin.py':{code:`from django.contrib import admin
+
+# Register your models here.`,exp:"<b>admin.py</b> — register models here (<code>admin.site.register(Post)</code>) to manage them in Django's built-in admin interface."},
+ 'mysite/blog/apps.py':{code:`from django.apps import AppConfig
+
+
+class BlogConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'blog'`,exp:"<b>apps.py</b> — the AppConfig class describing the app. <code>'blog'</code> in INSTALLED_APPS resolves to this config."},
+ 'mysite/blog/migrations/__init__.py':{code:"# empty",exp:"<b>migrations/</b> — numbered files (0001_initial.py…) generated by <code>makemigrations</code> describing schema changes; applied with <code>migrate</code>."},
+ 'mysite/blog/models.py':{code:`from django.db import models
+
+# Create your models here.`,exp:"<b>models.py</b> — the <b>M</b> in MTV. Each class subclassing <code>models.Model</code> becomes a database table."},
+ 'mysite/blog/tests.py':{code:`from django.test import TestCase
+
+# Create your tests here.`,exp:"<b>tests.py</b> — unit tests run with <code>python manage.py test</code>."},
+ 'mysite/blog/views.py':{code:null,exp:"<b>views.py</b> — the <b>V</b> in MTV. A view receives an <code>HttpRequest</code> and returns an <code>HttpResponse</code> (often via <code>render()</code> with a template)."},
+ 'mysite/blog/urls.py':{code:`from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]`,exp:"<b>urls.py (app)</b> — NOT created by startapp. It maps URL paths <i>within</i> the app to views, and is plugged into the project with <code>include('blog.urls')</code>."}
+};
+const STEPS=[
+ ["Create project: django-admin startproject mysite",s=>s.project],
+ ["Enter folder: cd mysite",s=>s.cwd==='mysite'],
+ ["Create app: python manage.py startapp blog",s=>s.app],
+ ["Register 'blog' in INSTALLED_APPS",s=>s.installed],
+ ["Write index view in blog/views.py",s=>s.view],
+ ["Create blog/urls.py",s=>s.appUrls],
+ ["Include blog.urls in mysite/urls.py",s=>s.included],
+ ["Run server and visit /blog/",s=>s.visited]
+];
+const Sim={
+ s:null, sel:null, fresh:new Set(),
+ reset(){
+  this.s={project:false,app:false,installed:false,view:false,appUrls:false,included:false,server:false,visited:false,db:false,cwd:''};
+  this.sel=null;this.fresh.clear();
+  $('#term').innerHTML='<span class="out">Workspace ready. Type <b>help</b> to see commands.</span>\n';
+  $('#view').textContent='Server not running.';
+  this.show(null);this.render();
+ },
+ settings(){return `from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = 'django-insecure-...'
+DEBUG = True
+ALLOWED_HOSTS = []
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',${this.s.installed?"\n    'blog',                 # ← our app":""}
+]
+
+MIDDLEWARE = [ ... ]
+ROOT_URLCONF = 'mysite.urls'
+TEMPLATES = [ ... ]
+WSGI_APPLICATION = 'mysite.wsgi.application'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+STATIC_URL = 'static/'`},
+ projUrls(){return `from django.contrib import admin
+from django.urls import path${this.s.included?', include':''}
+
+urlpatterns = [
+    path('admin/', admin.site.urls),${this.s.included?"\n    path('blog/', include('blog.urls')),   # ← hand /blog/ to the app":""}
+]`},
+ views(){return this.s.view?`from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello from the blog app!")`:`from django.shortcuts import render
+
+# Create your views here.`},
+ tree(){
+  const s=this.s,t=[];
+  if(!s.project)return t;
+  t.push(['mysite',0,'dir','proj']);
+  if(s.app){
+   t.push(['mysite/blog',1,'dir','app']);
+   t.push(['mysite/blog/migrations',2,'dir']);t.push(['mysite/blog/migrations/__init__.py',3]);
+   ['__init__.py','admin.py','apps.py','models.py','tests.py'].forEach(f=>t.push(['mysite/blog/'+f,2]));
+   if(s.appUrls)t.push(['mysite/blog/urls.py',2]);
+   t.push(['mysite/blog/views.py',2]);
+  }
+  t.push(['mysite/mysite',1,'dir','proj']);
+  ['__init__.py','asgi.py','settings.py','urls.py','wsgi.py'].forEach(f=>t.push(['mysite/mysite/'+f,2]));
+  if(s.db)t.push(['mysite/db.sqlite3',1]);
+  t.push(['mysite/manage.py',1]);
+  return t;
+ },
+ render(){
+  const tr=this.tree();
+  $('#tree').innerHTML=tr.length?tr.map(([p,d,k,tag])=>{
+    const n=p.split('/').pop();
+    return `<div class="node ${this.sel===p?'sel':''} ${this.fresh.has(p)?'new':''}" style="padding-left:${8+d*16}px" onclick="Sim.show('${p}')">${k==='dir'?'📁':'📄'} ${n}${k==='dir'?'/':''}${tag?`<span class="tag ${tag}">${tag==='proj'?'project':'app'}</span>`:''}</div>`;
+  }).join(''):'<div style="padding:10px;color:var(--muted);font-family:Raleway">Empty workspace</div>';
+  this.fresh.clear();
+  $('#cwd').textContent='~/workspace'+(this.s.cwd?'/'+this.s.cwd:'')+' $';
+  let cur=-1;
+  $('#steps').innerHTML=STEPS.map(([t,f],i)=>{const ok=f(this.s);if(!ok&&cur<0)cur=i;return `<li class="${ok?'ok':(cur===i?'cur':'')}">${t}</li>`}).join('');
+  $('#hint').textContent=cur<0?'🎉 All tasks complete! Try the Posttest.':'Next: '+STEPS[cur][0];
+ },
+ show(p){
+  this.sel=p;const a=$('#actions');a.innerHTML='';
+  if(!p){$('#fname').textContent='Select a file';$('#code').textContent='// Click a file in the Explorer to view it.';$('#explain').innerHTML='Each generated file has a specific purpose. Select one to learn about it.';this.render&&this.s&&this.render();return}
+  $('#fname').textContent=p;
+  const dirs={'mysite':"<b>Outer mysite/</b> — just a container for the project. Its name doesn't matter to Django; you can rename it.",
+   'mysite/mysite':"<b>Inner mysite/</b> — the project's Python package. Its name is used in imports such as <code>mysite.settings</code> and <code>mysite.urls</code>.",
+   'mysite/blog':"<b>blog/</b> — an <i>app</i>: a self-contained feature module. Note it has no settings.py or wsgi.py — those belong to the project only.",
+   'mysite/blog/migrations':FILES['mysite/blog/migrations/__init__.py'].exp};
+  if(dirs[p]){
+   $('#code').textContent='(directory)';$('#explain').innerHTML=dirs[p];
+   if(p==='mysite/blog'&&!this.s.appUrls)this.btn('Create urls.py',()=>{this.s.appUrls=true;this.fresh.add('mysite/blog/urls.py');this.log('out','Created blog/urls.py');this.show('mysite/blog/urls.py')});
+  }else{
+   const f=FILES[p];
+   const code=p.endsWith('settings.py')?this.settings():p==='mysite/mysite/urls.py'?this.projUrls():p.endsWith('blog/views.py')?this.views():f.code;
+   $('#code').textContent=code;$('#explain').innerHTML=f.exp;
+   if(p.endsWith('settings.py')&&!this.s.installed)this.btn("Add 'blog' to INSTALLED_APPS",()=>{if(!this.s.app)return this.log('err',"No app named 'blog' exists yet.");this.s.installed=true;this.show(p)});
+   if(p.endsWith('blog/views.py')&&!this.s.view)this.btn('Add index view',()=>{this.s.view=true;this.show(p)});
+   if(p==='mysite/mysite/urls.py'&&!this.s.included)this.btn('Include blog.urls',()=>{if(!this.s.app)return this.log('err',"No app named 'blog' exists yet.");this.s.included=true;this.show(p)});
+  }
+  this.render();
+ },
+ btn(label,fn){const b=document.createElement('button');b.className='btn';b.style.cssText='padding:4px 10px;font-size:12px';b.textContent=label;b.onclick=fn;$('#actions').appendChild(b)},
+ log(cls,txt){const t=$('#term');t.innerHTML+=`<span class="${cls}">${txt.replace(/</g,'&lt;')}</span>\n`;t.scrollTop=t.scrollHeight},
+ run(){
+  const inp=$('#cmd'),c=inp.value.trim().replace(/\s+/g,' ');inp.value='';if(!c)return;
+  const s=this.s;this.log('ps',`${s.cwd?'~/workspace/'+s.cwd:'~/workspace'} $ ${c}`);
+  const inProj=s.cwd==='mysite';
+  if(c==='help'){this.log('out','Commands: django-admin startproject <name> | cd <dir> | cd .. | ls | python manage.py startapp <name> | python manage.py runserver | python manage.py migrate | clear');}
+  else if(c==='clear'){$('#term').innerHTML='';}
+  else if(c==='ls'){const t=this.tree().filter(([p,d])=>inProj?d===1:d===0).map(x=>x[0].split('/').pop());this.log('out',t.join('  ')||'(empty)');}
+  else if(/^django-admin startproject \w+$/.test(c)){
+   const n=c.split(' ')[2];
+   if(n!=='mysite')this.log('err',"For this lab, please name the project 'mysite'.");
+   else if(s.project)this.log('err',"CommandError: '/workspace/mysite' already exists");
+   else{s.project=true;this.tree().forEach(x=>this.fresh.add(x[0]));this.log('out','Project "mysite" created.');}
+  }
+  else if(c==='cd mysite'){if(!s.project)this.log('err','cd: mysite: No such file or directory');else if(inProj)this.log('err','Hint: you are already in the outer mysite folder (it contains manage.py).');else s.cwd='mysite';}
+  else if(c==='cd ..'){s.cwd='';}
+  else if(c.startsWith('python manage.py')){
+   if(!inProj){this.log('err',"python: can't open file 'manage.py': [Errno 2] No such file or directory");}
+   else{
+    const sub=c.slice(17);
+    if(/^startapp \w+$/.test(sub)){const n=sub.split(' ')[1];if(n!=='blog')this.log('err',"For this lab, please name the app 'blog'.");else if(s.app)this.log('err',"CommandError: 'blog' already exists");else{s.app=true;this.tree().filter(x=>x[0].startsWith('mysite/blog')).forEach(x=>this.fresh.add(x[0]));this.log('out','App "blog" created.');}}
+    else if(sub==='migrate'){if(!s.db)this.fresh.add('mysite/db.sqlite3');s.db=true;this.log('out','Operations to perform:\n  Apply all migrations: admin, auth, contenttypes, sessions\nRunning migrations:\n  Applying contenttypes.0001_initial... OK\n  Applying auth.0001_initial... OK\n  ...  OK');}
+    else if(sub==='runserver'){
+     if(s.included&&!s.appUrls){this.log('err',"ModuleNotFoundError: No module named 'blog.urls'");return this.render();}
+     if(s.appUrls&&!s.view){this.log('err',"AttributeError: module 'blog.views' has no attribute 'index'");return this.render();}
+     if(!s.db){this.fresh.add('mysite/db.sqlite3');s.db=true;}
+     s.server=true;this.log('out',"Watching for file changes with StatReloader\nSystem check identified no issues (0 silenced).\nStarting development server at http://127.0.0.1:8000/\nQuit the server with CTRL-BREAK.");
+     $('#view').textContent='Server running — enter a URL and press Go.';
+    }
+    else this.log('err',`Unknown command: '${sub}'. Type help.`);
+   }
+  }
+  else this.log('err',`Command not recognised: ${c}. Type help.`);
+  this.render();
+ },
+ visit(){
+  const s=this.s,v=$('#view');let path;
+  try{path=new URL($('#url').value).pathname}catch(e){path='/'}
+  if(!s.server){v.innerHTML='<b style="color:var(--bad)">This site can’t be reached.</b> Run <code>python manage.py runserver</code> first.';return}
+  if(path==='/blog/'&&s.included&&s.view&&s.appUrls){
+   v.innerHTML='<div style="font-size:20px">Hello from the blog app!</div><div style="color:var(--muted);font-size:13px;margin-top:6px">Request flow: mysite/urls.py → include(\'blog.urls\') → blog/urls.py → views.index</div>';
+   if(!s.installed)v.innerHTML+='<div class="note">It works — but note that <code>blog</code> is not in INSTALLED_APPS. A plain view still runs, but models, admin, templates and migrations of the app would NOT be picked up. Register it to complete the task.</div>';
+   else s.visited=true;
+   this.log('out',`"GET ${path} HTTP/1.1" 200`);
+  }else if(path==='/admin/'){v.innerHTML='Django administration — login page';this.log('out',`"GET ${path} HTTP/1.1" 302`);}
+  else{
+   const pats=["admin/"].concat(s.included?["blog/"]:[]);
+   v.innerHTML=`<b style="color:var(--bad)">Page not found (404)</b><div class="mono" style="font-size:13px;margin-top:6px">Using the URLconf defined in mysite.urls, Django tried these URL patterns:<br>${pats.map(p=>'&nbsp;&nbsp;'+p).join('<br>')}<br>The current path, ${path.slice(1)}, didn’t match any of these.</div>`;
+   this.log('err',`"GET ${path} HTTP/1.1" 404`);
+  }
+  this.render();
+ }
+};
+function $(q){return document.querySelector(q)}
+$('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
+Sim.reset();route();
+</script>
+</body>
+</html>

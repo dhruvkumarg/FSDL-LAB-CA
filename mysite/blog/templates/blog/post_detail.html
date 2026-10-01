@@ -1,0 +1,10 @@
+<!doctype html>
+<html>
+<head><title>{{ post.title }}</title></head>
+<body>
+  <h1>{{ post.title }}</h1>
+  <p><small>{{ post.created_at }}</small></p>
+  <p>{{ post.body|linebreaksbr }}</p>
+  <a href="{% url 'blog:post_list' %}">← All posts</a>
+</body>
+</html>

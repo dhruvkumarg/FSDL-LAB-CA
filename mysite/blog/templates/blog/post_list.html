@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head><title>Blog posts</title></head>
+<body>
+  <h1>Blog posts</h1>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></li>
+    {% empty %}
+      <li>No posts yet. Add some in the <a href="/admin/">admin</a>.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
