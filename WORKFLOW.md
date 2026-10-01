@@ -11,18 +11,33 @@
 
 ---
 
+## Status (updated 2026-10-01)
+
+| Item | Status |
+|---|---|
+| Base Django project + Vlab page | ✅ Done (P1) |
+| DRF + CORS configured in `settings.py` | ✅ Done (P1) — Shlok & Prajeet can start |
+| Collaborators added (Shlok148Dev, prajeetgodse-stack, Arnav872iron) | ✅ Done — all have write access |
+| `docs/project-structure.md` | ⏳ P1 |
+| Blog API (`/blog/api/posts/`) | ⏳ P2 Shlok — **needed by Prajeet** |
+| React frontend | ⏳ P3 Prajeet — start with mock data |
+| Vlab contributors, posttest, GitHub Pages | ⏳ P4 Arnav — Contributors tab is a quick first commit |
+
+---
+
 ## 0. One-time setup
 
 **Person 1 (repo owner):**
-1. GitHub → repo → **Settings → Collaborators → Add people** → invite Shlok, Prajeet and Arnav by GitHub username.
+1. ~~Invite Shlok, Prajeet and Arnav as collaborators~~ ✅ done.
 2. **Settings → Branches → Add rule** for `main`: *Require a pull request before merging* (optional but recommended).
 
 **Persons 2, 3, 4 (Shlok, Prajeet, Arnav):**
-1. Accept the invite (email or github.com/notifications).
+1. ✅ You are already a collaborator with write access — nothing to accept.
 2. Make sure the email in your git config is added & verified on your GitHub account (**Settings → Emails**), otherwise you will NOT show as a contributor:
    ```bash
    git config --global user.name "Your Name"
    git config --global user.email "your-github-email@example.com"
+   git config --global user.email        # check: must match an email under GitHub Settings → Emails
    ```
 3. Clone and set up:
    ```bash
@@ -60,10 +75,11 @@ Rules:
 ## 2. Tasks per person
 
 ### Person 1 — Django setup & project structure (Dhruv)
-- [ ] Add collaborators + branch rule (step 0).
-- [ ] Add `ALLOWED_HOSTS = ['127.0.0.1', 'localhost']` and a `STATIC_ROOT` to `settings.py`.
-- [ ] Add `django-cors-headers` + `djangorestframework` to `requirements.txt` and `INSTALLED_APPS` (needed by Person 2 & 3).
-- [ ] Add `CORS_ALLOWED_ORIGINS = ['http://localhost:5173']` + `corsheaders.middleware.CorsMiddleware` at the top of `MIDDLEWARE`.
+- [x] Add collaborators.
+- [ ] Branch protection rule for `main` (optional).
+- [x] Add `ALLOWED_HOSTS = ['127.0.0.1', 'localhost']` and a `STATIC_ROOT` to `settings.py`.
+- [x] Add `django-cors-headers` + `djangorestframework` to `requirements.txt` and `INSTALLED_APPS` (needed by Person 2 & 3).
+- [x] Add `CORS_ALLOWED_ORIGINS = ['http://localhost:5173']` + `corsheaders.middleware.CorsMiddleware` at the top of `MIDDLEWARE`.
 - [ ] Add `docs/project-structure.md` explaining each project file.
 - **Present:** venv → install → `startproject` / `startapp` → tour of `manage.py`, `settings.py`, `urls.py`, `wsgi.py`, `asgi.py` → `runserver`.
 
