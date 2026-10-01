@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-change-me-for-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,10 +18,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',  # our app
+    # third-party
+    'rest_framework',
+    'corsheaders',
+    # local apps
+    'blog',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,5 +75,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# React dev server (Vite) is allowed to call the API
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
