@@ -4,10 +4,10 @@
 
 | Person | Role | Branch | Owns |
 |---|---|---|---|
-| 1 (Dhruv) | Django setup & project structure | `p1-django-setup` | `mysite/mysite/`, `mysite/manage.py`, `requirements.txt`, repo admin |
-| 2 (Shlok) | Models, URLs, views & admin | `p2-backend-logic` | `mysite/blog/` (models, views, urls, admin, tests) |
-| 3 (Prajeet) | React frontend | `p3-react-frontend` | `frontend/` (new) |
-| 4 (Arnav) | Virtual Lab, testing & deployment | `p4-vlab-deploy` | `index.html`, `README.md`, GitHub Pages |
+| 1 (Dhruv — @dhruvkumarg) | Django setup & project structure | `p1-django-setup` | `mysite/mysite/`, `mysite/manage.py`, `requirements.txt`, repo admin |
+| 2 (Shlok — @Shlok148Dev) | Models, URLs, views & admin | `p2-backend-logic` | `mysite/blog/` (models, views, urls, admin, tests) |
+| 3 (Prajeet — @prajeetgodse-stack) | React frontend | `p3-react-frontend` | `frontend/` (new) |
+| 4 (Arnav — @Arnav872iron) | Virtual Lab, testing & deployment | `p4-vlab-deploy` | `index.html`, `README.md`, GitHub Pages |
 
 ---
 
@@ -96,7 +96,7 @@ Rules:
 |---|---|
 | 1 | P1 setup + collaborators + CORS/DRF config merged first (others depend on it) |
 | 2–3 | P2 API & models, P3 React UI (mock data until API merges), P4 Vlab edits |
-| 4 (Arnav) | Merge all PRs, P4 runs full test on fresh clone, fix bugs |
+| 4 (Arnav — @Arnav872iron) | Merge all PRs, P4 runs full test on fresh clone, fix bugs |
 | 5 | Rehearse presentation: P4 intro → P1 → P2 → P3 → P4 demo & conclusion |
 
 ## 4. Presentation (≈ 15 min)
