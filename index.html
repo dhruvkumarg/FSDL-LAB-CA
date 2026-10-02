@@ -17,6 +17,8 @@ a{color:var(--blue)}
 code,pre,.mono{font-family:"JetBrains Mono",Consolas,monospace}
 /* header */
 header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:4px solid var(--orange);background:#fff;position:sticky;top:0;z-index:10}
+.admin-link{margin-left:auto;margin-right:14px;padding:6px 14px;border:1px solid var(--blue);border-radius:6px;color:var(--blue);text-decoration:none;font-weight:600;font-size:14px}
+.admin-link:hover{background:var(--blue);color:#fff}
 .burger{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 10px;font-size:20px;cursor:pointer;display:none}
 .logo{font-weight:700;color:var(--ok);font-size:18px}
 .logo span{color:var(--orange)}
@@ -126,6 +128,7 @@ footer .lic a{display:inline;color:#3fa7d6}
 <header>
   <button class="burger" onclick="document.querySelector('nav.side').classList.toggle('open')" aria-label="Menu">☰</button>
   <div class="logo">Virtual <span>Labs</span></div>
+  <a class="admin-link" id="adminLink" href="http://127.0.0.1:8000/admin/" target="_blank" rel="noopener" title="Django admin: view feedback responses and posts">&#9881; Admin</a>
 </header>
 <div class="crumbs"><b>Computer Science and Engineering</b><span class="sep">›</span><b>Web Development Lab</b><span class="sep">›</span><b>Experiments</b></div>
 
@@ -597,6 +600,16 @@ def index(request):
 };
 function $(q){return document.querySelector(q)}
 $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
+/* ---------- admin link ---------- */
+// Change ADMIN_URL once Django is hosted online (e.g. https://<user>.pythonanywhere.com/admin/).
+const ADMIN_URL='http://127.0.0.1:8000/admin/';
+(function(){
+  const a=document.getElementById('adminLink');
+  // When the lab is opened from Django itself (/vlab/), use that same server's admin.
+  if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&location.port){a.href=location.origin+'/admin/';}
+  else{a.href=ADMIN_URL;}
+})();
+
 /* ---------- feedback form: saves to Django database via /blog/api/feedback/ ---------- */
 (function(){
   // Same server when the page is opened from Django (/vlab/); otherwise the local dev server.
