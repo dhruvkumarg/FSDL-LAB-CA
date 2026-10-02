@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Django Blog{% endblock %} | FSDL Lab</title>
+  <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {# ---------- Header / navigation (shared by every page) ---------- #}
+  <header class="site-header">
+    <a class="brand" href="{% url 'blog:index' %}">Django<span>Blog</span></a>
+    <nav>
+      {% url 'blog:index' as home_url %}
+      {% url 'blog:post_list' as posts_url %}
+      <a href="{{ home_url }}" {% if request.path == home_url %}class="active"{% endif %}>Home</a>
+      <a href="{{ posts_url }}" {% if request.path == posts_url %}class="active"{% endif %}>All posts</a>
+      <a href="/admin/">Admin</a>
+    </nav>
+  </header>
+
+  {# ---------- Page content: each child template fills this block ---------- #}
+  <main class="container">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="msg {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  {# ---------- Footer ---------- #}
+  <footer class="site-footer">
+    <p>FSDL Lab CA &middot; Understanding Django Project and App Structure &middot; {% now "Y" %}</p>
+  </footer>
+</body>
+</html>

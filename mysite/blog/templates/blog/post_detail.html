@@ -1,10 +1,23 @@
-<!doctype html>
-<html>
-<head><title>{{ post.title }}</title></head>
-<body>
-  <h1>{{ post.title }}</h1>
-  <p><small>{{ post.created_at }}</small></p>
-  <p>{{ post.body|linebreaksbr }}</p>
-  <a href="{% url 'blog:post_list' %}">← All posts</a>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+  <p><a href="{% url 'blog:post_list' %}">&larr; All posts</a></p>
+
+  <article class="post">
+    <h1>{{ post.title }}</h1>
+    <p class="meta">Published {{ post.created_at|date:"l, d F Y \a\t H:i" }}</p>
+    <div class="body">{{ post.body|linebreaks }}</div>
+  </article>
+
+  <aside class="info">
+    <h2>Template concepts used on this page</h2>
+    <ul>
+      <li><code>{% templatetag openblock %} extends {% templatetag closeblock %}</code> &mdash; inherits header and footer from <code>base.html</code></li>
+      <li><code>{% templatetag openvariable %} post.title {% templatetag closevariable %}</code> &mdash; prints a model field</li>
+      <li><code>|date</code>, <code>|linebreaks</code> &mdash; filters that format values</li>
+      <li><code>{% templatetag openblock %} url 'blog:post_list' {% templatetag closeblock %}</code> &mdash; builds a link from the URL name, not a hard-coded path</li>
+    </ul>
+  </aside>
+{% endblock %}

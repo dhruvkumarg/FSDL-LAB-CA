@@ -1,14 +1,18 @@
-<!doctype html>
-<html>
-<head><title>Blog posts</title></head>
-<body>
-  <h1>Blog posts</h1>
-  <ul>
-    {% for post in posts %}
-      <li><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></li>
-    {% empty %}
-      <li>No posts yet. Add some in the <a href="/admin/">admin</a>.</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+
+{% block title %}All posts{% endblock %}
+
+{% block content %}
+  <h1>All posts</h1>
+  <p class="meta">{{ posts|length }} post{{ posts|length|pluralize }}</p>
+
+  {% if posts %}
+    <div class="grid">
+      {% for post in posts %}
+        {% include 'blog/_post_card.html' with post=post %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">No posts yet. Add some in the <a href="/admin/">admin</a>.</p>
+  {% endif %}
+{% endblock %}

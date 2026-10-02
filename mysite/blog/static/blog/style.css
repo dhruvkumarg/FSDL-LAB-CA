@@ -1,0 +1,35 @@
+:root { --blue:#2f80ed; --orange:#ff6e00; --ink:#222; --muted:#666; --line:#e3e7ee; --panel:#f6f8fb; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Segoe UI", Roboto, Arial, sans-serif; color:var(--ink); line-height:1.6; background:#fff; }
+a { color:var(--blue); }
+code { background:#eef2f7; padding:1px 5px; border-radius:4px; font-size:.9em; }
+
+.site-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+  padding:12px 24px; border-bottom:4px solid var(--orange); }
+.brand { font-size:22px; font-weight:700; text-decoration:none; color:var(--ink); }
+.brand span { color:var(--orange); }
+.site-header nav a { margin-left:16px; text-decoration:none; color:var(--ink); font-weight:500; }
+.site-header nav a.active, .site-header nav a:hover { color:var(--blue); }
+
+.container { max-width:960px; margin:0 auto; padding:24px 16px 40px; }
+h1, h2 { color:#3b8ad9; font-weight:600; }
+.meta { color:var(--muted); font-size:14px; margin-top:-6px; }
+.empty { background:var(--panel); padding:16px; border-radius:8px; }
+
+.hero { background:var(--panel); border-radius:12px; padding:28px; margin-bottom:24px; }
+.btn { display:inline-block; background:var(--blue); color:#fff; padding:9px 18px; border-radius:6px; text-decoration:none; font-weight:600; }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px; }
+.card { border:1px solid var(--line); border-radius:10px; padding:16px; }
+.card h3 { margin:0 0 6px; }
+.card h3 a { text-decoration:none; }
+.more { font-weight:600; text-decoration:none; }
+
+.post .body { font-size:17px; }
+.info, .flow { margin-top:28px; border-left:4px solid var(--orange); background:#fff7ef; padding:8px 18px; border-radius:4px; }
+
+.messages { list-style:none; padding:0; }
+.msg { padding:10px 14px; border-radius:6px; background:#e3eefc; margin-bottom:8px; }
+.msg.success { background:#e6f4ea; } .msg.error { background:#fce8e6; }
+
+.site-footer { text-align:center; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding:16px; }

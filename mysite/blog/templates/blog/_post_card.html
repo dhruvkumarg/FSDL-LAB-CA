@@ -1,0 +1,7 @@
+{# Reusable card for one post. Usage: {% include 'blog/_post_card.html' with post=post %} #}
+<article class="card">
+  <h3><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h3>
+  <p class="meta">{{ post.created_at|date:"d M Y, H:i" }} &middot; {{ post.created_at|timesince }} ago</p>
+  <p>{{ post.body|truncatewords:25 }}</p>
+  <a class="more" href="{% url 'blog:post_detail' post.pk %}">Read more &rarr;</a>
+</article>

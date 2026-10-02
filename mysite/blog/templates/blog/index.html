@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <h1>Hello from the blog app!</h1>
+    <p>This page is rendered by <code>blog/views.py → index()</code> using the
+       template <code>blog/templates/blog/index.html</code>, which extends
+       <code>base.html</code>.</p>
+    <a class="btn" href="{% url 'blog:post_list' %}">Read the posts &rarr;</a>
+  </section>
+
+  <section>
+    <h2>Latest posts</h2>
+    {% if latest_posts %}
+      <div class="grid">
+        {% for post in latest_posts %}
+          {% include 'blog/_post_card.html' with post=post %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty">No posts yet. Log in to the <a href="/admin/">admin</a> to add one.</p>
+    {% endif %}
+  </section>
+
+  <section class="flow">
+    <h2>How this page reached you</h2>
+    <ol>
+      <li><code>mysite/urls.py</code> &mdash; <code>path('blog/', include('blog.urls'))</code></li>
+      <li><code>blog/urls.py</code> &mdash; <code>path('', views.index)</code></li>
+      <li><code>blog/views.py</code> &mdash; queries <code>Post</code> and calls <code>render()</code></li>
+      <li><code>templates/blog/index.html</code> &mdash; turned into the HTML you see</li>
+    </ol>
+  </section>
+{% endblock %}
