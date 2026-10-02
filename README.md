@@ -3,6 +3,7 @@
 
 - `index.html` — the Virtual Lab (Aim, Theory, Pretest, Procedure, Simulation, Posttest, References). Open it in a browser.
 - `mysite/` — the complete Django project built in the lab (`mysite` project + `blog` app).
+- `docs/project-structure.md` — explanation of every file in the project and app.
 
 ## Run the Django project
 

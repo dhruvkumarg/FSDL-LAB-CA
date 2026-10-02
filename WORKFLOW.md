@@ -18,7 +18,7 @@
 | Base Django project + Vlab page | ✅ Done (P1) |
 | DRF + CORS configured in `settings.py` | ✅ Done (P1) — Shlok & Prajeet can start |
 | Collaborators added (Shlok148Dev, prajeetgodse-stack, Arnav872iron) | ✅ Done — all have write access |
-| `docs/project-structure.md` | ⏳ P1 |
+| `docs/project-structure.md` | ✅ Done (P1) |
 | Blog API (`/blog/api/posts/`) | ⏳ P2 Shlok — **needed by Prajeet** |
 | React frontend | ⏳ P3 Prajeet — start with mock data |
 | GitHub Pages deployment | ✅ Done (P1) — live at https://dhruvkumarg.github.io/FSDL-LAB-CA/ |
@@ -81,7 +81,7 @@ Rules:
 - [x] Add `ALLOWED_HOSTS = ['127.0.0.1', 'localhost']` and a `STATIC_ROOT` to `settings.py`.
 - [x] Add `django-cors-headers` + `djangorestframework` to `requirements.txt` and `INSTALLED_APPS` (needed by Person 2 & 3).
 - [x] Add `CORS_ALLOWED_ORIGINS = ['http://localhost:5173']` + `corsheaders.middleware.CorsMiddleware` at the top of `MIDDLEWARE`.
-- [ ] Add `docs/project-structure.md` explaining each project file.
+- [x] Add `docs/project-structure.md` explaining each project file.
 - **Present:** venv → install → `startproject` / `startapp` → tour of `manage.py`, `settings.py`, `urls.py`, `wsgi.py`, `asgi.py` → `runserver`.
 
 ### Person 2 — Models, URLs, views & admin (Shlok)
