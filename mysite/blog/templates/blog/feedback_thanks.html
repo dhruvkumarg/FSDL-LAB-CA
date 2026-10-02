@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Thank you{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <h1>Thank you for your feedback!</h1>
+    <p>Your response has been saved. The lab team reviews every submission in the Django admin.</p>
+    <a class="btn" href="{% url 'blog:index' %}">Back to home</a>
+    <a class="btn alt" href="{% url 'blog:feedback' %}">Submit another response</a>
+  </section>
+{% endblock %}

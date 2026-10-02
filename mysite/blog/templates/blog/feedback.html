@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+  <h1>Lab Feedback</h1>
+  <p class="meta">Help us improve the &ldquo;Understanding Django Project and App Structure&rdquo; Virtual Lab.
+     Fields marked <span class="req">*</span> are required.</p>
+
+  {% if form.non_field_errors %}
+    <div class="msg error">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <form method="post" class="feedback-form" novalidate>
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>1. About you</legend>
+      <div class="row">
+        {% include 'blog/_field.html' with field=form.name %}
+        {% include 'blog/_field.html' with field=form.email %}
+      </div>
+      <div class="row">
+        {% include 'blog/_field.html' with field=form.role %}
+        {% include 'blog/_field.html' with field=form.institute %}
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Rate the lab <small>(1 = poor, 5 = excellent)</small></legend>
+      {% include 'blog/_choice_field.html' with field=form.overall_rating style='star' %}
+      {% include 'blog/_choice_field.html' with field=form.theory_rating style='star' %}
+      {% include 'blog/_choice_field.html' with field=form.simulation_rating style='star' %}
+      {% include 'blog/_choice_field.html' with field=form.difficulty style='pill' %}
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Your comments</legend>
+      {% include 'blog/_field.html' with field=form.liked %}
+      {% include 'blog/_field.html' with field=form.improvements %}
+      <label class="check">{{ form.would_recommend }} {{ form.would_recommend.label }}</label>
+    </fieldset>
+
+    <button type="submit" class="btn">Submit feedback</button>
+  </form>
+{% endblock %}

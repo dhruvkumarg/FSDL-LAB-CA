@@ -17,6 +17,8 @@
       {% url 'blog:post_list' as posts_url %}
       <a href="{{ home_url }}" {% if request.path == home_url %}class="active"{% endif %}>Home</a>
       <a href="{{ posts_url }}" {% if request.path == posts_url %}class="active"{% endif %}>All posts</a>
+      {% url 'blog:feedback' as feedback_url %}
+      <a href="{{ feedback_url }}" {% if request.path == feedback_url %}class="active"{% endif %}>Feedback</a>
       <a href="/admin/">Admin</a>
     </nav>
   </header>

@@ -8,4 +8,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('posts/', views.post_list, name='post_list'),
     path('posts/<int:pk>/', views.post_detail, name='post_detail'),
+    path('feedback/', views.feedback, name='feedback'),
+    path('feedback/thanks/', views.feedback_thanks, name='feedback_thanks'),
 ]

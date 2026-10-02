@@ -1,0 +1,10 @@
+{# Renders a radio field as clickable buttons. Usage: include with field=form.x style='star' or 'pill' #}
+<div class="field{% if field.errors %} has-error{% endif %}">
+  <label>{{ field.label }}{% if field.field.required %} <span class="req">*</span>{% endif %}</label>
+  <div class="{{ style }}s">
+    {% for radio in field %}
+      <label class="{{ style }}">{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>
+    {% endfor %}
+  </div>
+  {% for error in field.errors %}<p class="error">{{ error }}</p>{% endfor %}
+</div>
