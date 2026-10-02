@@ -1,0 +1,109 @@
+{% extends "admin/base.html" %}
+{% comment %}
+  Custom admin theme for the FSDL Lab.
+  Overrides Django's admin/base_site.html (found first because of TEMPLATES['DIRS'])
+  and changes the colour variables used by the admin CSS.
+{% endcomment %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | FSDL Lab Admin{% endblock %}
+
+{% block branding %}
+  <div id="site-name">
+    <a href="{% url 'admin:index' %}">Django<span class="accent">Lab</span> Admin</a>
+  </div>
+  {% if user.is_anonymous %}{% include "admin/color_theme_toggle.html" %}{% endif %}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  /* ---------- Light theme: Vlab blue + orange ---------- */
+  html[data-theme="light"], :root {
+    --primary: #1f4e8c;            /* header background */
+    --secondary: #2f80ed;          /* module headers, breadcrumbs */
+    --accent: #ff6e00;             /* highlights */
+    --primary-fg: #ffffff;
+
+    --header-color: #ffd7b5;
+    --header-branding-color: #ffffff;
+    --header-bg: #1f4e8c;
+    --header-link-color: #ffffff;
+
+    --breadcrumbs-bg: #2f80ed;
+    --breadcrumbs-link-fg: #ffffff;
+    --breadcrumbs-fg: #e3eefc;
+
+    --link-fg: #1f6fd1;
+    --link-hover-color: #ff6e00;
+    --link-selected-fg: #ff6e00;
+
+    --button-bg: #2f80ed;
+    --button-hover-bg: #1f4e8c;
+    --default-button-bg: #ff6e00;
+    --default-button-hover-bg: #d95d00;
+    --close-button-bg: #6b7a90;
+    --close-button-hover-bg: #4a5668;
+    --delete-button-bg: #d93025;
+    --delete-button-hover-bg: #b3261e;
+
+    --selected-bg: #fff3e6;
+    --selected-row: #fff7ef;
+    --object-tools-bg: #2f80ed;
+    --object-tools-hover-bg: #ff6e00;
+
+    --message-success-bg: #e6f4ea;
+    --message-warning-bg: #fff4e5;
+    --message-error-bg: #fce8e6;
+  }
+
+  /* ---------- Dark theme ---------- */
+  html[data-theme="dark"] {
+    --primary: #4d8fe8;
+    --secondary: #1b3a66;
+    --accent: #ff8a2b;
+    --header-bg: #0f2747;
+    --header-color: #ffb877;
+    --breadcrumbs-bg: #1b3a66;
+    --link-fg: #7fb2ff;
+    --link-hover-color: #ff8a2b;
+    --link-selected-fg: #ff8a2b;
+    --button-bg: #2f80ed;
+    --button-hover-bg: #4d8fe8;
+    --default-button-bg: #ff6e00;
+    --default-button-hover-bg: #ff8a2b;
+    --selected-row: #24324a;
+    --object-tools-bg: #2f80ed;
+    --object-tools-hover-bg: #ff6e00;
+  }
+  @media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] {
+      --primary: #4d8fe8;
+      --secondary: #1b3a66;
+      --accent: #ff8a2b;
+      --header-bg: #0f2747;
+      --header-color: #ffb877;
+      --breadcrumbs-bg: #1b3a66;
+      --link-fg: #7fb2ff;
+      --link-hover-color: #ff8a2b;
+      --link-selected-fg: #ff8a2b;
+      --button-bg: #2f80ed;
+      --button-hover-bg: #4d8fe8;
+      --default-button-bg: #ff6e00;
+      --default-button-hover-bg: #ff8a2b;
+      --selected-row: #24324a;
+      --object-tools-bg: #2f80ed;
+      --object-tools-hover-bg: #ff6e00;
+    }
+  }
+
+  /* ---------- Extra touches ---------- */
+  #header { border-bottom: 4px solid var(--accent); }
+  #site-name a { font-weight: 700; letter-spacing: .3px; }
+  #site-name .accent { color: var(--accent); }
+  .module h2, .module caption, .inline-group h2 { background: var(--secondary); }
+  #changelist-filter h2 { background: var(--secondary); }
+  .button, input[type=submit], input[type=button], .submit-row input, a.button { border-radius: 6px; }
+  .login #header { border-bottom-width: 3px; }
+</style>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -13,3 +13,8 @@ class FeedbackAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email', 'institute', 'liked', 'improvements')
     readonly_fields = ('created_at',)
     date_hierarchy = 'created_at'
+
+# Text shown in the admin header, browser tab and home page
+admin.site.site_header = "DjangoLab Admin"
+admin.site.site_title = "FSDL Lab Admin"
+admin.site.index_title = "Lab administration"
