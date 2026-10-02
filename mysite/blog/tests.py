@@ -45,3 +45,40 @@ class FeedbackTests(TestCase):
         response = self.client.post(reverse('blog:feedback'), dict(self.valid, overall_rating=1))
         self.assertContains(response, 'Please tell us what went wrong')
         self.assertEqual(Feedback.objects.count(), 0)
+
+
+class FeedbackApiTests(TestCase):
+    url = '/blog/api/feedback/'
+    payload = {
+        'name': 'Ravi', 'email': 'ravi@example.com', 'role': 'student', 'institute': 'KJSCE',
+        'overall_rating': 4, 'theory_rating': 5, 'simulation_rating': 4, 'quiz_rating': 3,
+        'difficulty': 'just_right', 'sections_used': 'Theory, Simulation',
+        'liked': 'Simulation', 'improvements': '', 'would_recommend': True,
+    }
+
+    def post(self, data):
+        import json
+        return self.client.post(self.url, json.dumps(data), content_type='application/json')
+
+    def test_valid_json_is_saved(self):
+        from .models import Feedback
+        response = self.post(self.payload)
+        self.assertEqual(response.status_code, 201)
+        entry = Feedback.objects.get()
+        self.assertEqual(entry.source, 'vlab')
+        self.assertEqual(entry.sections_used, 'Theory, Simulation')
+        self.assertEqual(response.json()['id'], entry.pk)
+
+    def test_invalid_json_returns_field_errors(self):
+        response = self.post(dict(self.payload, email='bad', overall_rating=None))
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('email', response.json()['errors'])
+        self.assertIn('overall_rating', response.json()['errors'])
+
+    def test_get_not_allowed(self):
+        self.assertEqual(self.client.get(self.url).status_code, 405)
+
+    def test_vlab_page_served(self):
+        response = self.client.get('/vlab/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Understanding Django Project and App Structure', b''.join(response.streaming_content))

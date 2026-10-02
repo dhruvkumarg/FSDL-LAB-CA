@@ -32,7 +32,11 @@ class Feedback(models.Model):
     overall_rating = models.PositiveSmallIntegerField('Overall experience', choices=RATING_CHOICES)
     theory_rating = models.PositiveSmallIntegerField('Theory clarity', choices=RATING_CHOICES)
     simulation_rating = models.PositiveSmallIntegerField('Simulation usefulness', choices=RATING_CHOICES)
+    quiz_rating = models.PositiveSmallIntegerField('Pretest/Posttest quality', choices=RATING_CHOICES, null=True, blank=True)
     difficulty = models.CharField('Difficulty level', max_length=20, choices=DIFFICULTY_CHOICES, default='just_right')
+
+    sections_used = models.CharField(max_length=100, blank=True)
+    source = models.CharField(max_length=20, default='django')
 
     liked = models.TextField('What did you like?', blank=True)
     improvements = models.TextField('What should we improve?', blank=True)

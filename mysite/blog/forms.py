@@ -8,7 +8,7 @@ class FeedbackForm(forms.ModelForm):
         model = Feedback
         fields = [
             'name', 'email', 'role', 'institute',
-            'overall_rating', 'theory_rating', 'simulation_rating', 'difficulty',
+            'overall_rating', 'theory_rating', 'simulation_rating', 'quiz_rating', 'difficulty',
             'liked', 'improvements', 'would_recommend',
         ]
         widgets = {
@@ -18,6 +18,7 @@ class FeedbackForm(forms.ModelForm):
             'overall_rating': forms.RadioSelect,
             'theory_rating': forms.RadioSelect,
             'simulation_rating': forms.RadioSelect,
+            'quiz_rating': forms.RadioSelect,
             'difficulty': forms.RadioSelect,
             'liked': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Which part helped you most?'}),
             'improvements': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Anything confusing, missing or broken?'}),

@@ -78,6 +78,11 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # React dev server (Vite) is allowed to call the API
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',          # React dev server
+    'https://dhruvkumarg.github.io',  # live Vlab on GitHub Pages (feedback API)
+]
+# Lets a public HTTPS page (GitHub Pages) call the API on 127.0.0.1 in Chrome
+CORS_ALLOW_PRIVATE_NETWORK = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

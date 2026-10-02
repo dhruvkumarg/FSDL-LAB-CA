@@ -102,6 +102,8 @@ th{background:var(--panel)}
 .fb-opt input:focus-visible+span{outline:2px solid var(--orange)}
 .fb-check{display:flex;gap:8px;align-items:center}
 .fb-note{color:var(--muted);font-size:14px}
+.note.ok{background:#e6f4ea;border-left-color:var(--ok)}
+.note.err{background:#fce8e6;border-left-color:var(--bad)}
 @media (max-width:600px){.fb-row{grid-template-columns:1fr}}
 /* footer */
 footer{background:var(--footer);color:#ddd;padding:28px 24px 10px;font-size:14px}
@@ -316,7 +318,7 @@ footer .lic a{display:inline;color:#3fa7d6}
     </fieldset>
 
     <button type="submit" class="btn">Submit feedback</button>
-    <p class="fb-note">Submitting opens your email app with your answers filled in &mdash; just press <b>Send</b>.</p>
+    <p class="fb-note">Responses are saved in the lab's Django database. The Django server must be running (<code>python manage.py runserver</code>).</p>
   </form>
   <div id="fbDone" class="note" style="display:none"></div>
 </section>
@@ -595,10 +597,15 @@ def index(request):
 };
 function $(q){return document.querySelector(q)}
 $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
-/* ---------- feedback form ---------- */
+/* ---------- feedback form: saves to Django database via /blog/api/feedback/ ---------- */
 (function(){
-  const TO='dhruvkumar.g@somaiya.edu';
-  const f=document.getElementById('fbForm');
+  // Same server when the page is opened from Django (/vlab/); otherwise the local dev server.
+  const LOCAL=/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&location.port;
+  const API=(LOCAL?location.origin:'http://127.0.0.1:8000')+'/blog/api/feedback/';
+  const ROLE={'Student':'student','Teacher / Faculty':'teacher','Developer':'developer','Other':'other'};
+  const DIFF={'Easy':'easy','Just right':'just_right','Hard':'hard'};
+  const RATE={'Overall experience':'overall_rating','Theory clarity':'theory_rating','Simulation usefulness':'simulation_rating','Pretest/Posttest quality':'quiz_rating'};
+  const f=document.getElementById('fbForm'), done=document.getElementById('fbDone'), btn=f.querySelector('button[type=submit]');
   f.querySelectorAll('[data-rating]').forEach(box=>{
     const n=box.dataset.rating;
     box.innerHTML=`<label>${n} <span class="req">*</span></label><div class="fb-opts">`+
@@ -606,7 +613,10 @@ $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
       `</div><p class="fb-err"></p>`;
   });
   function setErr(el,msg){const box=el.closest('.fb-field');box.classList.toggle('bad',!!msg);box.querySelector('.fb-err').textContent=msg||'';return !msg;}
-  f.addEventListener('submit',e=>{
+  function show(cls,html){done.className='note '+cls;done.style.display='block';done.innerHTML=html;done.scrollIntoView({behavior:'smooth',block:'center'});}
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  f.addEventListener('submit',async e=>{
     e.preventDefault();
     let ok=true;
     const name=f.Name.value.trim(), email=f.Email.value.trim();
@@ -614,30 +624,35 @@ $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
     ok=setErr(f.Email,/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)?'':'Please enter a valid email address.')&&ok;
     const ratings={};
     f.querySelectorAll('[data-rating]').forEach(box=>{
-      const c=box.querySelector('input:checked');ratings[box.dataset.rating]=c?c.value:'';
+      const c=box.querySelector('input:checked');ratings[RATE[box.dataset.rating]]=c?+c.value:null;
       box.classList.toggle('bad',!c);box.querySelector('.fb-err').textContent=c?'':'Please choose a rating.';
       if(!c)ok=false;
     });
     const improve=f.Improvements.value.trim();
-    ok=setErr(f.Improvements,(ratings['Overall experience']&&+ratings['Overall experience']<=2&&!improve)?'Please tell us what went wrong so we can fix it.':'')&&ok;
+    ok=setErr(f.Improvements,(ratings.overall_rating&&ratings.overall_rating<=2&&!improve)?'Please tell us what went wrong so we can fix it.':'')&&ok;
     if(!ok){const first=f.querySelector('.bad');if(first)first.scrollIntoView({behavior:'smooth',block:'center'});return;}
-    const sections=[...f.querySelectorAll('input[name=Sections]:checked')].map(x=>x.value).join(', ')||'-';
-    const lines=[
-      'Virtual Lab Feedback - Understanding Django Project and App Structure','',
-      'Name: '+name,'Email: '+email,'Role: '+f.Role.value,'Institute: '+(f.Institute.value.trim()||'-'),'',
-      ...Object.entries(ratings).map(([k,v])=>k+': '+v+'/5'),
-      'Difficulty: '+f.querySelector('input[name=Difficulty]:checked').value,
-      'Sections used: '+sections,'',
-      'What I liked:',f.Liked.value.trim()||'-','',
-      'What to improve:',improve||'-','',
-      'Would recommend: '+(f.Recommend.checked?'Yes':'No')
-    ];
-    const subject='Vlab Feedback: '+name+' ('+ratings['Overall experience']+'/5)';
-    location.href='mailto:'+TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(lines.join('\n'));
-    const done=document.getElementById('fbDone');
-    done.style.display='block';
-    done.innerHTML='Thank you, <b>'+name.replace(/</g,'&lt;')+'</b>! Your email app should now be open with your feedback &mdash; press <b>Send</b> to submit it. If nothing opened, email your answers to <a href="mailto:'+TO+'">'+TO+'</a>.';
-    done.scrollIntoView({behavior:'smooth',block:'center'});
+
+    const payload={
+      name, email, role:ROLE[f.Role.value], institute:f.Institute.value.trim(), ...ratings,
+      difficulty:DIFF[f.querySelector('input[name=Difficulty]:checked').value],
+      sections_used:[...f.querySelectorAll('input[name=Sections]:checked')].map(x=>x.value).join(', '),
+      liked:f.Liked.value.trim(), improvements:improve, would_recommend:f.Recommend.checked
+    };
+    btn.disabled=true;btn.textContent='Saving…';
+    try{
+      const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const data=await res.json();
+      if(res.ok){
+        f.reset();f.style.display='none';
+        show('ok','<b>Thank you, '+esc(name)+'!</b> Your feedback was saved to the database (response #'+data.id+').');
+      }else{
+        const map={name:f.Name,email:f.Email,improvements:f.Improvements};
+        Object.entries(data.errors||{}).forEach(([k,v])=>{ if(map[k]) setErr(map[k],v.join(' ')); });
+        show('err','Please fix the highlighted fields. '+esc(Object.values(data.errors||{}).flat().join(' ')));
+      }
+    }catch(err){
+      show('err','<b>Could not reach the feedback server.</b> Start Django with <code>python manage.py runserver</code> and submit again, or open the lab from <a href="http://127.0.0.1:8000/vlab/#feedback">127.0.0.1:8000/vlab/</a>.');
+    }finally{btn.disabled=false;btn.textContent='Submit feedback';}
   });
 })();
 Sim.reset();route();

@@ -10,4 +10,5 @@ urlpatterns = [
     path('posts/<int:pk>/', views.post_detail, name='post_detail'),
     path('feedback/', views.feedback, name='feedback'),
     path('feedback/thanks/', views.feedback_thanks, name='feedback_thanks'),
+    path('api/feedback/', views.api_feedback, name='api_feedback'),
 ]
