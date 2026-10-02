@@ -1,4 +1,5 @@
 # Virtual Lab: Understanding Django Project and App Structure
+**🔗 Live Virtual Lab: https://dhruvkumarg.github.io/FSDL-LAB-CA/**
 
 - `index.html` — the Virtual Lab (Aim, Theory, Pretest, Procedure, Simulation, Posttest, References). Open it in a browser.
 - `mysite/` — the complete Django project built in the lab (`mysite` project + `blog` app).

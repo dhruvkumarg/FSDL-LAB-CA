@@ -21,7 +21,8 @@
 | `docs/project-structure.md` | ⏳ P1 |
 | Blog API (`/blog/api/posts/`) | ⏳ P2 Shlok — **needed by Prajeet** |
 | React frontend | ⏳ P3 Prajeet — start with mock data |
-| Vlab contributors, posttest, GitHub Pages | ⏳ P4 Arnav — Contributors tab is a quick first commit |
+| GitHub Pages deployment | ✅ Done (P1) — live at https://dhruvkumarg.github.io/FSDL-LAB-CA/ |
+| Vlab contributors, posttest, final testing | ⏳ P4 Arnav — Contributors tab is a quick first commit |
 
 ---
 
@@ -100,7 +101,7 @@ Rules:
 ### Person 4 — Virtual Lab, testing & deployment (Arnav)
 - [ ] Fill Contributors tab in `index.html` with all 4 names & roles; add the feedback form link.
 - [ ] Add 2–3 more posttest questions and one about React ↔ Django.
-- [ ] Enable **Settings → Pages** (branch `main`, folder `/root`) and put the live link in README.
+- [x] GitHub Pages enabled — https://dhruvkumarg.github.io/FSDL-LAB-CA/ (auto-redeploys on every push to `main`; check after merging).
 - [ ] Final end-to-end test of every step in README on a fresh clone; open issues for bugs found.
 - **Present:** Vlab walk-through + live simulation, Git/GitHub workflow, architecture diagram, conclusion.
 
