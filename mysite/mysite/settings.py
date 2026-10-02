@@ -1,15 +1,27 @@
-"""Django settings for mysite project."""
+"""Django settings for mysite project.
+
+Local development works with no setup. In production (PythonAnywhere) set these
+environment variables in the WSGI file: DJANGO_SECRET_KEY, DJANGO_DEBUG=False.
+"""
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-change-me-for-production'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-me-for-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com']
+
+# Needed for admin login/forms over HTTPS on the hosted site
+CSRF_TRUSTED_ORIGINS = ['https://*.pythonanywhere.com']
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
