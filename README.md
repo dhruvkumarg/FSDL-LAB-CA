@@ -1,9 +1,50 @@
 # Virtual Lab: Understanding Django Project and App Structure
+
 **🔗 Live Virtual Lab: https://dhruvkumarg.github.io/FSDL-LAB-CA/**
 
 - `index.html` — the Virtual Lab (Aim, Theory, Pretest, Procedure, Simulation, Posttest, References). Open it in a browser.
 - `mysite/` — the complete Django project built in the lab (`mysite` project + `blog` app).
 - `docs/project-structure.md` — explanation of every file in the project and app.
+
+## Django project structure
+
+A Django site = one **project** (configuration) + one or more **apps** (features).
+
+```
+mysite/                      ← outer folder (container)
+├── manage.py                ← command-line tool: runserver, migrate, startapp…
+├── requirements.txt         ← Python dependencies
+│
+├── mysite/                  ← PROJECT package (site-wide configuration)
+│   ├── __init__.py          ← marks folder as a Python package
+│   ├── settings.py          ← INSTALLED_APPS, database, templates, CORS…
+│   ├── urls.py              ← root URL map — every request starts here
+│   ├── wsgi.py              ← entry point for WSGI servers (Gunicorn)
+│   └── asgi.py              ← entry point for ASGI servers (Uvicorn)
+│
+└── blog/                    ← APP package (one feature)
+    ├── __init__.py
+    ├── apps.py              ← app configuration (BlogConfig)
+    ├── models.py            ← M — database tables (Post)
+    ├── views.py             ← V — request → response logic
+    ├── urls.py              ← app URL map (created manually)
+    ├── admin.py             ← registers models in /admin/
+    ├── tests.py             ← automated tests
+    ├── migrations/          ← database schema history
+    └── templates/blog/      ← T — HTML templates
+```
+
+**MTV pattern:** Model (`models.py`) ↔ Template (`templates/`) ↔ View (`views.py`), with `urls.py` routing each URL to a view.
+
+**Request flow:**
+
+```
+Browser → mysite/urls.py → blog/urls.py → views.py ⇄ models.py ⇄ database
+                                              ↓
+                                     templates/*.html → HTML response → Browser
+```
+
+Full file-by-file explanation: [docs/project-structure.md](docs/project-structure.md)
 
 ## Run the Django project
 
