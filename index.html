@@ -145,6 +145,15 @@ th{background:var(--panel)}
 .st-foot{text-align:center;color:var(--muted);font-size:13px;padding:18px;border-top:1px solid var(--line);margin-top:18px;background:#fff}
 @media (max-width:600px){.st-hero{padding:22px;margin:14px}.st-hero h1{font-size:26px}.st-section{padding:0 14px 10px}.st-nav{padding:12px 14px;gap:12px}}
 @media (prefers-reduced-motion:reduce){.site-win{animation:none}}
+/* contributors */
+.inst{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-bottom:8px}
+.inst-logo{width:56px;height:56px;border-radius:12px;background:#b7202e;color:#fff;display:grid;place-items:center;font-weight:700;font-size:20px;flex:0 0 auto}
+.inst-sub{margin:2px 0 0;color:var(--muted);font-size:14px}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.person{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.person b{display:block;font-size:16px}.person span{display:block;font-size:13px;color:var(--muted)}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;flex:0 0 auto}
+.guide-card{border-left:4px solid var(--orange)}.guide-card .avatar{background:var(--orange)}
 /* footer */
 footer{background:var(--footer);color:#ddd;padding:28px 24px 10px;font-size:14px}
 footer .cols{display:flex;justify-content:center;gap:40px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
@@ -353,10 +362,23 @@ footer .lic a{display:inline;color:#3fa7d6}
 
 <!-- CONTRIBUTORS -->
 <section class="page" id="contributors">
-  <h2>Subject Matter Expert</h2>
-  <p>[Name], [Designation], [Institute]</p>
-  <h2>Developer</h2>
-  <p>[Name], [Institute]</p>
+  <div class="inst">
+    <div class="inst-logo" aria-hidden="true">KJ</div>
+    <div><h2 style="margin:0">K. J. Somaiya School of Engineering</h2><p class="inst-sub">FSDL Lab CA &middot; Understanding Django Project and App Structure</p></div>
+  </div>
+
+  <h2>Guided by</h2>
+  <div class="people">
+    <div class="person guide-card"><div class="avatar">AD</div><div><b>Prof. Ashwini Deshmukh</b><span>Faculty Guide</span><span>K. J. Somaiya School of Engineering</span></div></div>
+  </div>
+
+  <h2>Developers</h2>
+  <div class="people">
+    <div class="person"><div class="avatar">DG</div><div><b>Dhruvkumar Goenka</b><span>Django setup &amp; project structure</span></div></div>
+    <div class="person"><div class="avatar">ST</div><div><b>Shlok Tiwari</b><span>Models, URLs, views &amp; admin</span></div></div>
+    <div class="person"><div class="avatar">PG</div><div><b>Prajeet Godse</b><span>React frontend</span></div></div>
+    <div class="person"><div class="avatar">AG</div><div><b>Arnav Gupta</b><span>Virtual Lab, testing &amp; deployment</span></div></div>
+  </div>
 </section>
 
 <!-- FEEDBACK -->
