@@ -82,3 +82,52 @@ class FeedbackApiTests(TestCase):
         response = self.client.get('/vlab/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Understanding Django Project and App Structure', b''.join(response.streaming_content))
+
+
+class PostModelTests(TestCase):
+    def test_slug_is_made_from_title_and_kept_unique(self):
+        first = Post.objects.create(title="Hello Django World", body="x")
+        second = Post.objects.create(title="Hello Django World", body="y")
+        self.assertEqual(first.slug, 'hello-django-world')
+        self.assertEqual(second.slug, 'hello-django-world-2')
+
+    def test_custom_slug_is_kept(self):
+        post = Post.objects.create(title="Anything", slug="my-slug", body="x")
+        self.assertEqual(post.slug, 'my-slug')
+
+
+class PostApiTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        self.author = User.objects.create_user('shlok', first_name='Shlok', password='x')
+        self.old = Post.objects.create(title="Old post", body="First", author=self.author)
+        self.new = Post.objects.create(title="New post", body="Second")
+
+    def test_list_returns_all_posts_newest_first(self):
+        response = self.client.get(reverse('blog:api_post_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([p['title'] for p in response.json()], ["New post", "Old post"])
+
+    def test_detail_returns_one_post(self):
+        response = self.client.get(reverse('blog:api_post_detail', args=[self.old.pk]))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            'id': self.old.pk, 'title': "Old post", 'slug': 'old-post', 'author': 'Shlok',
+            'body': "First", 'created_at': response.json()['created_at'],
+        })
+
+    def test_post_without_author_has_null_author(self):
+        response = self.client.get(reverse('blog:api_post_detail', args=[self.new.pk]))
+        self.assertIsNone(response.json()['author'])
+
+    def test_missing_post_returns_404(self):
+        self.assertEqual(self.client.get('/blog/api/posts/9999/').status_code, 404)
+
+    def test_api_is_read_only(self):
+        response = self.client.post(reverse('blog:api_post_list'), {'title': 'x', 'body': 'y'})
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(Post.objects.count(), 2)
+
+    def test_react_dev_server_allowed_by_cors(self):
+        response = self.client.get(reverse('blog:api_post_list'), HTTP_ORIGIN='http://localhost:5173')
+        self.assertEqual(response['Access-Control-Allow-Origin'], 'http://localhost:5173')
