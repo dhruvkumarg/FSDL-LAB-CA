@@ -5,9 +5,11 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404, redirect, render
+from rest_framework import generics
 
 from .forms import FeedbackForm
 from .models import Post
+from .serializers import PostSerializer
 
 
 def index(request):
@@ -61,3 +63,15 @@ def api_feedback(request):
     entry.save()
     return JsonResponse({'ok': True, 'id': entry.pk,
                          'message': f'Thank you, {entry.name}! Your feedback was saved.'}, status=201)
+
+
+class PostListApi(generics.ListAPIView):
+    """GET /blog/api/posts/ -> all posts as JSON, newest first."""
+    queryset = Post.objects.select_related('author').order_by('-created_at')
+    serializer_class = PostSerializer
+
+
+class PostDetailApi(generics.RetrieveAPIView):
+    """GET /blog/api/posts/<id>/ -> one post as JSON, or 404."""
+    queryset = Post.objects.select_related('author')
+    serializer_class = PostSerializer
