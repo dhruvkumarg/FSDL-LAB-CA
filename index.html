@@ -49,6 +49,8 @@ th{background:var(--panel)}
 .q label{display:block;padding:4px 6px;border-radius:4px;cursor:pointer}
 .q label.right{background:#e6f4ea;color:var(--ok)}
 .q label.wrong{background:#fce8e6;color:var(--bad)}
+.q.missing{border-color:var(--bad);background:#fff6f5}
+.q.missing p::after{content:"  (answer required)";color:var(--bad);font-weight:400;font-size:13px}
 .q .exp{display:none;font-size:14px;color:var(--muted);margin-top:6px}
 .q.done .exp{display:block}
 .btn{background:var(--blue);color:#fff;border:0;border-radius:6px;padding:9px 18px;font:inherit;font-weight:600;cursor:pointer}
@@ -78,6 +80,19 @@ th{background:var(--panel)}
 .steps li.ok::marker{content:"✓  "}
 .viewer pre{margin:0;border-radius:0;min-height:200px;max-height:340px}
 .explain{padding:10px 14px;font-size:14px;background:#fffdf6;border-top:1px solid var(--line)}
+.guide{border:2px solid var(--blue)}
+.guide .g-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#e3eefc;font-weight:700;font-size:14px}
+.guide .g-bar{height:6px;background:var(--line)}
+.guide .g-bar div{height:100%;background:var(--orange);transition:width .3s}
+.guide .g-body{padding:12px 16px}
+.guide h3{margin:0 0 6px;font-size:18px;color:var(--title)}
+.guide .g-why{color:var(--muted);font-size:14px;margin:0 0 10px}
+.guide .g-cmd{display:block;background:var(--code);color:#7ee787;padding:10px 12px;border-radius:6px;font-size:14px;margin-bottom:10px}
+.guide .g-do{font-size:14px;margin:0 0 10px;padding:8px 12px;background:#fff7ef;border-left:3px solid var(--orange);border-radius:4px}
+.guide .g-btns{display:flex;gap:8px;flex-wrap:wrap}
+.guide .g-learn{margin-top:10px;font-size:14px;padding:8px 12px;background:#e6f4ea;border-radius:6px;display:none}
+.guide.done-step .g-learn{display:block}
+.steps li{cursor:default}
 .right-col{display:flex;flex-direction:column;gap:16px;min-width:0}
 .hint{font-size:13px;color:var(--muted);padding:0 10px 10px}
 .browser{padding:0}
@@ -200,25 +215,26 @@ footer .lic a{display:inline;color:#3fa7d6}
 </section>
 
 <!-- PRETEST -->
-<section class="page" id="pretest"><div data-quiz="pre"></div></section>
+<section class="page" id="pretest"><p>Answer all questions, then press <b>Submit</b> to see your score and explanations.</p><div data-quiz="pre"></div></section>
 
 <!-- PROCEDURE -->
 <section class="page" id="procedure">
   <h2>Steps for the simulation</h2>
+  <p>Open the <b>Simulation</b> tab. A blue <b>step box</b> guides you through 10 steps. For each step, read the explanation, then press the <b>▶</b> button (or type the shown command in the terminal and press <b>Run</b>). The next step appears automatically.</p>
   <ol>
-    <li>Open the <b>Simulation</b> tab. The terminal starts in an empty workspace.</li>
-    <li>Create a project: type <code>django-admin startproject mysite</code> and press <b>Run</b>. Observe the generated tree.</li>
-    <li>Click every file in the tree and read its contents and explanation.</li>
-    <li>Move into the project folder: <code>cd mysite</code>.</li>
-    <li>Create an app: <code>python manage.py startapp blog</code>. Compare the app’s files with the project’s files.</li>
-    <li>Register the app: click <code>mysite/settings.py</code> and press <b>Add 'blog' to INSTALLED_APPS</b>.</li>
-    <li>Write a view: open <code>blog/views.py</code> and press <b>Add index view</b>.</li>
-    <li>Create <code>blog/urls.py</code>: select the <code>blog</code> folder and press <b>Create urls.py</b>.</li>
-    <li>Include the app URLs in the project: open <code>mysite/urls.py</code> and press <b>Include blog.urls</b>.</li>
-    <li>Start the server: <code>python manage.py runserver</code>, then visit <code>/blog/</code> in the mini browser.</li>
-    <li>Try skipping a step (e.g. run the server before including URLs) and observe the error — this shows why each file matters.</li>
+    <li><b>Create the project:</b> <code>django-admin startproject mysite</code>. The project appears in the Explorer.</li>
+    <li><b>Explore the project files:</b> click files in the Explorer (<code>manage.py</code>, <code>settings.py</code>, <code>urls.py</code>, <code>wsgi.py</code>, <code>asgi.py</code>) and read each explanation.</li>
+    <li><b>Move into the project folder:</b> <code>cd mysite</code>.</li>
+    <li><b>Create the app:</b> <code>python manage.py startapp blog</code>. Compare the app's files with the project's.</li>
+    <li><b>Register the app:</b> add <code>'blog'</code> to <code>INSTALLED_APPS</code> in <code>settings.py</code>.</li>
+    <li><b>Write a view:</b> add <code>index()</code> to <code>blog/views.py</code>.</li>
+    <li><b>Create the app's <code>urls.py</code>:</b> map <code>''</code> to <code>views.index</code>.</li>
+    <li><b>Connect the URLs:</b> add <code>path('blog/', include('blog.urls'))</code> to <code>mysite/urls.py</code>.</li>
+    <li><b>Start the server:</b> <code>python manage.py runserver</code>.</li>
+    <li><b>Open <code>/blog/</code></b> in the mini browser and see &ldquo;Hello from the blog app!&rdquo;.</li>
   </ol>
-  <p>Use <b>Reset</b> to start again. Type <code>help</code> in the terminal to list supported commands.</p>
+  <div class="note"><b>Explore further:</b> after finishing, press <b>Reset</b> and try steps out of order in the terminal (e.g. <code>runserver</code> before <code>cd mysite</code>, or visiting <code>/blog/</code> before including the URLs) to see the real errors Django would show. Type <code>help</code> in the terminal for all commands.</div>
+  <p>Finally, take the <b>Posttest</b>. All questions must be answered before submitting.</p>
 </section>
 
 <!-- SIMULATION -->
@@ -227,15 +243,16 @@ footer .lic a{display:inline;color:#3fa7d6}
     <div class="card">
       <h4>Explorer <button class="btn alt" style="padding:3px 10px;font-size:12px" onclick="Sim.reset()">Reset</button></h4>
       <div class="tree mono" id="tree"></div>
-      <h4>Tasks</h4>
+      <h4>Steps</h4>
       <ol class="steps" id="steps"></ol>
     </div>
     <div class="right-col">
+      <div class="card guide" id="guide"></div>
       <div class="card">
         <h4>Terminal <span class="mono" id="cwd" style="font-weight:400"></span></h4>
         <div class="term mono" id="term"></div>
         <div class="cmdbar">
-          <input id="cmd" placeholder="django-admin startproject mysite" autocomplete="off" spellcheck="false">
+          <input id="cmd" placeholder="Optional: type the command yourself, or use ▶ Run step above" autocomplete="off" spellcheck="false">
           <button class="btn" onclick="Sim.run()">Run</button>
         </div>
         <div class="hint" id="hint"></div>
@@ -254,7 +271,7 @@ footer .lic a{display:inline;color:#3fa7d6}
 </section>
 
 <!-- POSTTEST -->
-<section class="page" id="posttest"><div data-quiz="post"></div></section>
+<section class="page" id="posttest"><p>Answer all questions, then press <b>Submit</b> to see your score and explanations.</p><div data-quiz="post"></div></section>
 
 <!-- REFERENCES -->
 <section class="page" id="references">
@@ -370,6 +387,14 @@ document.querySelectorAll('[data-quiz]').forEach(box=>{
   box.innerHTML=qs.map((q,i)=>`<div class="q" data-a="${q[2]}"><p>${i+1}. ${q[0]}</p>${q[1].map((o,j)=>`<label><input type="radio" name="${box.dataset.quiz}${i}" value="${j}"> ${o}</label>`).join('')}<div class="exp">${q[3]}</div></div>`).join('')
    +`<button class="btn">Submit</button><span class="score"></span>`;
   box.querySelector('.btn').onclick=()=>{
+    const qsEl=[...box.querySelectorAll('.q')];
+    const missing=qsEl.filter(q=>!q.querySelector('input:checked'));
+    qsEl.forEach(q=>q.classList.toggle('missing',!q.querySelector('input:checked')));
+    if(missing.length){
+      box.querySelector('.score').innerHTML=`<span style="color:var(--bad)">Please answer all ${qs.length} questions before submitting (${missing.length} left).</span>`;
+      missing[0].scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
     let s=0;
     box.querySelectorAll('.q').forEach(q=>{
       const a=+q.dataset.a, c=q.querySelector('input:checked');
@@ -379,6 +404,7 @@ document.querySelectorAll('[data-quiz]').forEach(box=>{
     });
     box.querySelector('.score').textContent=`Score: ${s} / ${qs.length}`;
   };
+  box.addEventListener('change',e=>{const q=e.target.closest('.q');if(q)q.classList.remove('missing');});
 });
 
 /* ---------- simulation ---------- */
@@ -434,22 +460,50 @@ urlpatterns = [
     path('', views.index, name='index'),
 ]`,exp:"<b>urls.py (app)</b> — NOT created by startapp. It maps URL paths <i>within</i> the app to views, and is plugged into the project with <code>include('blog.urls')</code>."}
 };
+/* Guided steps: each has a command to run in the terminal (cmd) or a file action (act). */
 const STEPS=[
- ["Create project: django-admin startproject mysite",s=>s.project],
- ["Enter folder: cd mysite",s=>s.cwd==='mysite'],
- ["Create app: python manage.py startapp blog",s=>s.app],
- ["Register 'blog' in INSTALLED_APPS",s=>s.installed],
- ["Write index view in blog/views.py",s=>s.view],
- ["Create blog/urls.py",s=>s.appUrls],
- ["Include blog.urls in mysite/urls.py",s=>s.included],
- ["Run server and visit /blog/",s=>s.visited]
+ {t:"Create the project",why:"<code>django-admin startproject</code> generates the project: the configuration for the whole website.",
+  cmd:"django-admin startproject mysite",done:s=>s.project,
+  learn:"A <b>mysite/</b> folder appeared in the Explorer with <code>manage.py</code> and an inner <code>mysite/</code> package."},
+ {t:"Explore the project files",why:"Every generated file has a job. Open them to see what's inside.",
+  act:()=>{Sim.s.explored=true;Sim.show('mysite/mysite/settings.py');},actLabel:"Open settings.py",
+  doText:"Click any file in the <b>Explorer</b> on the left (e.g. <code>manage.py</code>, <code>urls.py</code>, <code>wsgi.py</code>) to read it and its explanation below.",
+  done:s=>s.explored,learn:"<code>settings.py</code> holds all configuration; <code>urls.py</code> is the root URL map; <code>wsgi.py</code>/<code>asgi.py</code> are server entry points."},
+ {t:"Move into the project folder",why:"<code>manage.py</code> lives inside the outer <code>mysite/</code> folder, so commands must run from there.",
+  cmd:"cd mysite",done:s=>s.cwd==='mysite',learn:"The terminal prompt now shows <code>~/workspace/mysite</code>."},
+ {t:"Create the app",why:"An app is one feature of the site. A project can contain many apps.",
+  cmd:"python manage.py startapp blog",done:s=>s.app,
+  learn:"A <b>blog/</b> app appeared with <code>models.py</code>, <code>views.py</code>, <code>admin.py</code>, <code>migrations/</code>&hellip; but no <code>urls.py</code> and no <code>settings.py</code>."},
+ {t:"Register the app in INSTALLED_APPS",why:"Django ignores an app until it is listed in <code>settings.py</code>.",
+  act:()=>{Sim.s.installed=true;Sim.show('mysite/mysite/settings.py');},actLabel:"Add 'blog' to INSTALLED_APPS",
+  doText:"Edits <code>mysite/settings.py</code> &rarr; <code>INSTALLED_APPS</code>.",done:s=>s.installed,
+  learn:"<code>'blog'</code> is now in <code>INSTALLED_APPS</code>, so its models, admin and templates will be loaded."},
+ {t:"Write a view",why:"A view receives a request and returns a response.",
+  act:()=>{Sim.s.view=true;Sim.show('mysite/blog/views.py');},actLabel:"Add index view",
+  doText:"Edits <code>blog/views.py</code>.",done:s=>s.view,
+  learn:"<code>index(request)</code> returns <code>HttpResponse(\"Hello from the blog app!\")</code>."},
+ {t:"Create the app's urls.py",why:"<code>startapp</code> doesn't create it: you add it to map paths inside the app to views.",
+  act:()=>{Sim.s.appUrls=true;Sim.fresh.add('mysite/blog/urls.py');Sim.log('out','Created blog/urls.py');Sim.show('mysite/blog/urls.py');},actLabel:"Create blog/urls.py",
+  doText:"Creates <code>blog/urls.py</code> with <code>path('', views.index)</code>.",done:s=>s.appUrls,
+  learn:"The app now has its own URL map pointing <code>''</code> to <code>views.index</code>."},
+ {t:"Connect the app to the project URLs",why:"The project's <code>urls.py</code> is where every request starts; <code>include()</code> hands <code>/blog/</code> to the app.",
+  act:()=>{Sim.s.included=true;Sim.show('mysite/mysite/urls.py');},actLabel:"Include blog.urls",
+  doText:"Edits <code>mysite/urls.py</code>.",done:s=>s.included,
+  learn:"<code>path('blog/', include('blog.urls'))</code> was added."},
+ {t:"Start the development server",why:"<code>runserver</code> starts Django's built-in server for local testing.",
+  cmd:"python manage.py runserver",done:s=>s.server,
+  learn:"The server is running at <code>http://127.0.0.1:8000/</code>. It also created <code>db.sqlite3</code>."},
+ {t:"Open /blog/ in the browser",why:"See the whole chain work: project URLs &rarr; app URLs &rarr; view &rarr; response.",
+  act:()=>{$('#url').value='http://127.0.0.1:8000/blog/';Sim.visit();},actLabel:"Visit /blog/",
+  doText:"Uses the mini browser at the bottom.",done:s=>s.visited,
+  learn:"&ldquo;Hello from the blog app!&rdquo; &mdash; you built and connected a Django project and app. Try the <a href=\"#posttest\">Posttest</a>."}
 ];
 const Sim={
  s:null, sel:null, fresh:new Set(),
  reset(){
-  this.s={project:false,app:false,installed:false,view:false,appUrls:false,included:false,server:false,visited:false,db:false,cwd:''};
+  this.s={project:false,explored:false,app:false,installed:false,view:false,appUrls:false,included:false,server:false,visited:false,db:false,cwd:''};
   this.sel=null;this.fresh.clear();
-  $('#term').innerHTML='<span class="out">Workspace ready. Type <b>help</b> to see commands.</span>\n';
+  $('#term').innerHTML='<span class="out">Workspace ready. Follow the steps above, or type <b>help</b> to see commands.</span>\n';
   $('#view').textContent='Server not running.';
   this.show(null);this.render();
  },
@@ -519,9 +573,27 @@ def index(request):
   }).join(''):'<div style="padding:10px;color:var(--muted);font-family:Raleway">Empty workspace</div>';
   this.fresh.clear();
   $('#cwd').textContent='~/workspace'+(this.s.cwd?'/'+this.s.cwd:'')+' $';
-  let cur=-1;
-  $('#steps').innerHTML=STEPS.map(([t,f],i)=>{const ok=f(this.s);if(!ok&&cur<0)cur=i;return `<li class="${ok?'ok':(cur===i?'cur':'')}">${t}</li>`}).join('');
-  $('#hint').textContent=cur<0?'🎉 All tasks complete! Try the Posttest.':'Next: '+STEPS[cur][0];
+  const cur=STEPS.findIndex(st=>!st.done(this.s));
+  $('#steps').innerHTML=STEPS.map((st,i)=>`<li class="${st.done(this.s)?'ok':(cur===i?'cur':'')}">${st.t}</li>`).join('');
+  $('#hint').textContent='';
+  this.renderGuide(cur);
+ },
+ renderGuide(cur){
+  const g=$('#guide'),n=STEPS.length,doneCount=STEPS.filter(st=>st.done(this.s)).length;
+  const head=`<div class="g-head"><span>${cur<0?'All steps complete':'Step '+(cur+1)+' of '+n}</span><span>${doneCount}/${n} done</span></div><div class="g-bar"><div style="width:${doneCount/n*100}%"></div></div>`;
+  g.classList.remove('done-step');
+  if(cur<0){
+    g.innerHTML=head+`<div class="g-body"><h3>🎉 Well done!</h3><p class="g-why">You created a project, added an app, registered it, wired its URLs to a view and served a page.</p><div class="g-btns"><a class="btn" style="text-decoration:none" href="#posttest">Take the Posttest</a><button class="btn alt" onclick="Sim.reset()">Start again</button></div></div>`;
+    return;
+  }
+  const st=STEPS[cur], prev=cur>0?STEPS[cur-1]:null;
+  g.innerHTML=head+`<div class="g-body">
+    ${prev?`<div class="g-learn" style="display:block;margin:0 0 10px">✓ <b>${prev.t}:</b> ${prev.learn}</div>`:''}
+    <h3>${st.t}</h3><p class="g-why">${st.why}</p>
+    ${st.cmd?`<code class="g-cmd mono">$ ${st.cmd}</code>`:`<p class="g-do">${st.doText}</p>`}
+    <div class="g-btns"><button class="btn" id="gRun">▶ ${st.cmd?'Run this command':st.actLabel}</button>${st.cmd?'<span style="font-size:13px;color:var(--muted);align-self:center">or type it in the terminal below</span>':''}</div>
+  </div>`;
+  $('#gRun').onclick=()=>{ if(st.cmd){$('#cmd').value=st.cmd;this.run();} else {st.act();} };
  },
  show(p){
   this.sel=p;const a=$('#actions');a.innerHTML='';
@@ -547,7 +619,9 @@ def index(request):
  btn(label,fn){const b=document.createElement('button');b.className='btn';b.style.cssText='padding:4px 10px;font-size:12px';b.textContent=label;b.onclick=fn;$('#actions').appendChild(b)},
  log(cls,txt){const t=$('#term');t.innerHTML+=`<span class="${cls}">${txt.replace(/</g,'&lt;')}</span>\n`;t.scrollTop=t.scrollHeight},
  run(){
-  const inp=$('#cmd'),c=inp.value.trim().replace(/\s+/g,' ');inp.value='';if(!c)return;
+  const inp=$('#cmd');let c=inp.value.trim().replace(/\s+/g,' ');inp.value='';if(!c)return;
+  // forgive common typos: "cd..", "django admin", "Django-Admin"
+  c=c.replace(/^cd\.\.$/,'cd ..').replace(/^django[ _]admin /i,'django-admin ').replace(/^Django-admin /i,'django-admin ');
   const s=this.s;this.log('ps',`${s.cwd?'~/workspace/'+s.cwd:'~/workspace'} $ ${c}`);
   const inProj=s.cwd==='mysite';
   if(c==='help'){this.log('out','Commands: django-admin startproject <name> | cd <dir> | cd .. | ls | python manage.py startapp <name> | python manage.py runserver | python manage.py migrate | clear');}
@@ -562,7 +636,7 @@ def index(request):
   else if(c==='cd mysite'){if(!s.project)this.log('err','cd: mysite: No such file or directory');else if(inProj)this.log('err','Hint: you are already in the outer mysite folder (it contains manage.py).');else s.cwd='mysite';}
   else if(c==='cd ..'){s.cwd='';}
   else if(c.startsWith('python manage.py')){
-   if(!inProj){this.log('err',"python: can't open file 'manage.py': [Errno 2] No such file or directory");}
+   if(!inProj){this.log('err',"python: can't open file 'manage.py': [Errno 2] No such file or directory"+(s.project?"\nHint: manage.py is inside the project folder. Run  cd mysite  first.":"\nHint: create the project first:  django-admin startproject mysite"));}
    else{
     const sub=c.slice(17);
     if(/^startapp \w+$/.test(sub)){const n=sub.split(' ')[1];if(n!=='blog')this.log('err',"For this lab, please name the app 'blog'.");else if(s.app)this.log('err',"CommandError: 'blog' already exists");else{s.app=true;this.tree().filter(x=>x[0].startsWith('mysite/blog')).forEach(x=>this.fresh.add(x[0]));this.log('out','App "blog" created.');}}
@@ -574,10 +648,13 @@ def index(request):
      s.server=true;this.log('out',"Watching for file changes with StatReloader\nSystem check identified no issues (0 silenced).\nStarting development server at http://127.0.0.1:8000/\nQuit the server with CTRL-BREAK.");
      $('#view').textContent='Server running — enter a URL and press Go.';
     }
-    else this.log('err',`Unknown command: '${sub}'. Type help.`);
+    else{const nx=STEPS.find(st=>!st.done(s));this.log('err',`Unknown command: '${sub}'.`+(nx&&nx.cmd?`\nHint: try  ${nx.cmd}`:' Type help.'));}
    }
   }
-  else this.log('err',`Command not recognised: ${c}. Type help.`);
+  else{
+   const nx=STEPS.find(st=>!st.done(s));
+   this.log('err',`Command not recognised: ${c}`+(nx&&nx.cmd?`\nHint: the next step's command is:  ${nx.cmd}`:nx?`\nHint: the next step doesn't need a command; use the ▶ button in the step box.`:''));
+  }
   this.render();
  },
  visit(){
