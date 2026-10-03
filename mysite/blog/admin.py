@@ -2,7 +2,20 @@ from django.contrib import admin
 
 from .models import Feedback, Post
 
-admin.site.register(Post)
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'author', 'created_at')
+    list_filter = ('author', 'created_at')
+    search_fields = ('title', 'slug', 'body')
+    prepopulated_fields = {'slug': ('title',)}  # slug is typed for you as you type the title
+    readonly_fields = ('created_at',)
+    date_hierarchy = 'created_at'
+
+    def save_model(self, request, obj, form, change):
+        if not change and not obj.author_id:
+            obj.author = request.user  # new posts default to the logged-in admin
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(Feedback)
