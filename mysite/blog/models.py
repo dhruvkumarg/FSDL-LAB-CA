@@ -1,13 +1,33 @@
+from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, blank=True,
+                            help_text='URL-friendly name; filled from the title if left empty.')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                               null=True, blank=True, related_name='posts')
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slug(self.title, Post.objects.exclude(pk=self.pk))
+        super().save(*args, **kwargs)
+
+
+def unique_slug(title, queryset):
+    """slugify(title), with -2, -3 ... added if that slug is already taken."""
+    base = slugify(title)[:190] or 'post'
+    slug, n = base, 2
+    while queryset.filter(slug=slug).exists():
+        slug, n = f'{base}-{n}', n + 1
+    return slug
 
 
 class Feedback(models.Model):

@@ -7,7 +7,7 @@
 
   <article class="post">
     <h1>{{ post.title }}</h1>
-    <p class="meta">Published {{ post.created_at|date:"l, d F Y \a\t H:i" }}</p>
+    <p class="meta">Published{% if post.author %} by {{ post.author.get_full_name|default:post.author.username }}{% endif %} {{ post.created_at|date:"l, d F Y \a\t H:i" }}</p>
     <div class="body">{{ post.body|linebreaks }}</div>
   </article>
 
