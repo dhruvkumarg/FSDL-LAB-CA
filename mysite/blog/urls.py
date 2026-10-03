@@ -11,4 +11,6 @@ urlpatterns = [
     path('feedback/', views.feedback, name='feedback'),
     path('feedback/thanks/', views.feedback_thanks, name='feedback_thanks'),
     path('api/feedback/', views.api_feedback, name='api_feedback'),
+    path('api/posts/', views.PostListApi.as_view(), name='api_post_list'),
+    path('api/posts/<int:pk>/', views.PostDetailApi.as_view(), name='api_post_detail'),
 ]
