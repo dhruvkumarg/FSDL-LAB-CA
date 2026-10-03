@@ -80,19 +80,6 @@ th{background:var(--panel)}
 .steps li.ok::marker{content:"✓  "}
 .viewer pre{margin:0;border-radius:0;min-height:200px;max-height:340px}
 .explain{padding:10px 14px;font-size:14px;background:#fffdf6;border-top:1px solid var(--line)}
-.guide{border:2px solid var(--blue)}
-.guide .g-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#e3eefc;font-weight:700;font-size:14px}
-.guide .g-bar{height:6px;background:var(--line)}
-.guide .g-bar div{height:100%;background:var(--orange);transition:width .3s}
-.guide .g-body{padding:12px 16px}
-.guide h3{margin:0 0 6px;font-size:18px;color:var(--title)}
-.guide .g-why{color:var(--muted);font-size:14px;margin:0 0 10px}
-.guide .g-cmd{display:block;background:var(--code);color:#7ee787;padding:10px 12px;border-radius:6px;font-size:14px;margin-bottom:10px}
-.guide .g-do{font-size:14px;margin:0 0 10px;padding:8px 12px;background:#fff7ef;border-left:3px solid var(--orange);border-radius:4px}
-.guide .g-btns{display:flex;gap:8px;flex-wrap:wrap}
-.guide .g-learn{margin-top:10px;font-size:14px;padding:8px 12px;background:#e6f4ea;border-radius:6px;display:none}
-.guide.done-step .g-learn{display:block}
-.steps li{cursor:default}
 .right-col{display:flex;flex-direction:column;gap:16px;min-width:0}
 .hint{font-size:13px;color:var(--muted);padding:0 10px 10px}
 .browser{padding:0}
@@ -122,112 +109,42 @@ th{background:var(--panel)}
 .note.ok{background:#e6f4ea;border-left-color:var(--ok)}
 .note.err{background:#fce8e6;border-left-color:var(--bad)}
 @media (max-width:600px){.fb-row{grid-template-columns:1fr}}
-
-/* ================= Simulation: IDE look ================= */
-.sim-intro{color:var(--muted);margin-top:0}
-.ide{--ide-bg:#1e1f26;--ide-side:#181920;--ide-line:#2c2e38;--ide-ink:#d6dae3;--ide-mut:#8a90a0;
-  background:var(--ide-bg);color:var(--ide-ink);border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(20,30,60,.25);border:1px solid #2a2c36}
-.ide-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#25262f;border-bottom:1px solid var(--ide-line)}
-.dots{display:inline-flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block}
-.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
-.ide-title{flex:1;text-align:center;font-size:13px;color:var(--ide-mut);font-weight:600}
-.ide-reset{background:transparent;border:1px solid #3a3d4a;color:var(--ide-ink);border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
-.ide-reset:hover{border-color:var(--orange);color:var(--orange)}
-.ide-body{display:grid;grid-template-columns:260px 1fr;min-height:520px}
-.ide-side{background:var(--ide-side);border-right:1px solid var(--ide-line);display:flex;flex-direction:column}
-.side-h{font-size:11px;letter-spacing:1.5px;color:var(--ide-mut);padding:10px 14px 4px;font-weight:700}
-.ide .tree{min-height:220px;max-height:340px;padding:4px 6px}
-.ide .tree .node{color:var(--ide-ink);padding:3px 8px}
-.ide .tree .node:hover{background:#262833}
-.ide .tree .node.sel{background:#2b3b5c;color:#fff}
-.ide .tree .node.new{animation:glow 1.6s}
-@keyframes glow{0%{background:#4a3a12;box-shadow:inset 3px 0 0 var(--orange)}100%{background:transparent}}
-.fi{display:inline-block;width:18px;text-align:center;margin-right:4px}
-.fi.py{color:#1e1f26;background:#ffd43b;border-radius:3px;font:700 9px/14px "JetBrains Mono",monospace;width:18px;height:14px;vertical-align:1px}.fi.dir{color:#e8a849}.fi.db{color:#7fb2ff}
-.ide .tag.proj{background:#4a2e14;color:#ffb877}.ide .tag.app{background:#1d3357;color:#8ab8ff}
-.ide .steps{padding:4px 14px 14px 34px;font-size:13px;margin:0}
-.ide .steps li{color:var(--ide-mut);margin:5px 0}
-.ide .steps li.cur{color:#fff;font-weight:700}
-.ide .steps li.ok{color:#5fd38d}
-.ide-main{display:flex;flex-direction:column;min-width:0}
-.editor{display:flex;flex-direction:column;border-bottom:1px solid var(--ide-line)}
-.tabbar{display:flex;justify-content:space-between;align-items:center;background:#202129;border-bottom:1px solid var(--ide-line);min-height:38px;padding-right:8px;flex-wrap:wrap;gap:6px}
-.tab{padding:9px 16px;background:var(--ide-bg);border-top:2px solid var(--orange);font-size:13px;color:#fff}
-.ide #code{margin:0;border-radius:0;background:var(--ide-bg);color:var(--ide-ink);min-height:230px;max-height:320px;font-size:13px;counter-reset:ln}
-.ide #code .ln{display:block;padding-left:3.2em;position:relative}
-.ide #code .ln::before{counter-increment:ln;content:counter(ln);position:absolute;left:0;width:2.2em;text-align:right;color:#4d5263}
-.hk{color:#c792ea}.hs{color:#c3e88d}.hc{color:#6b7389;font-style:italic}.hf{color:#82aaff}.hn{color:#f78c6c}.hd{color:#ffcb6b}
-.ide .explain{background:#23252f;color:var(--ide-ink);border-top:1px solid var(--ide-line)}
-.ide .explain code{background:#2f3240;color:#ffcb6b}
-.ide #actions .btn{background:var(--orange)}
-.terminal{background:#14151b;display:flex;flex-direction:column}
-.term-h{display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.5px;color:var(--ide-mut);padding:8px 14px;border-bottom:1px solid var(--ide-line);font-weight:700}
-.term-h #cwd{letter-spacing:0;font-weight:400;color:#7ee787}
-.ide .term{background:#14151b;min-height:120px;max-height:190px}
-.ide .cmdbar{border-top:1px solid var(--ide-line);align-items:center}
-.ide .cmdbar input{background:#1e1f26;color:#fff;border-color:#33364a}
-.prompt{color:#7ee787;font-weight:700}
-.ide .hint:empty{display:none}
-
-/* step tracker */
-.ide .guide{border:0;border-bottom:1px solid var(--ide-line);background:linear-gradient(135deg,#1f3a66,#23262f 60%);color:#fff;border-radius:0}
-.stepper{display:flex;align-items:center;gap:0;padding:14px 18px 4px;overflow-x:auto}
-.sdot{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:#2e3242;color:#9aa2b8;border:2px solid #3b4055;transition:.3s}
-.sdot.ok{background:#1f8f4e;border-color:#2fd07a;color:#fff}
-.sdot.cur{background:var(--orange);border-color:#ffb877;color:#fff;transform:scale(1.15);box-shadow:0 0 0 6px rgba(255,110,0,.18)}
-.sline{flex:1 0 14px;height:3px;background:#3b4055;min-width:14px}
-.sline.ok{background:#2fd07a}
-.ide .guide .g-body{padding:12px 18px 16px}
-.ide .guide h3{color:#fff;font-size:20px}
-.ide .guide .g-why{color:#c9d3ea}
-.ide .guide .g-why code,.ide .guide .g-do code{background:rgba(255,255,255,.12);color:#ffd8b0}
-.ide .guide .g-cmd{background:#0f1117;border:1px solid #33364a}
-.ide .guide .g-do{background:rgba(255,110,0,.12);color:#ffe3cc}
-.ide .guide .g-learn{background:rgba(47,208,122,.14);color:#c8f5dc}
-.ide .guide .g-learn code{background:rgba(255,255,255,.1);color:#c8f5dc}
-.ide .guide .g-learn a{color:#ffb877}
-.ide .guide #gRun{background:var(--orange);font-size:15px;padding:10px 20px;box-shadow:0 6px 16px rgba(255,110,0,.35);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 6px 16px rgba(255,110,0,.35)}50%{box-shadow:0 6px 24px rgba(255,110,0,.65)}}
-.ide .guide .g-btns span{color:#9aa2b8!important}
-.g-count{font-size:13px;color:#c9d3ea;padding:0 18px}
-
-/* browser window */
-.bwin{margin-top:18px;border-radius:12px;overflow:hidden;border:1px solid #cfd6e0;box-shadow:0 10px 26px rgba(20,30,60,.12);background:#fff}
-.bwin-top{display:flex;align-items:flex-end;gap:12px;padding:8px 12px 0;background:#dfe3ea}
-.btab{background:#fff;border-radius:8px 8px 0 0;padding:7px 14px;font-size:13px;display:inline-flex;gap:6px;align-items:center;max-width:240px;color:#222}
-.bwin-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border-bottom:1px solid #e3e7ee}
-.navb{color:#7a8291;padding:0 4px;cursor:default;user-select:none}
-.addr{flex:1;display:flex;align-items:center;gap:6px;background:#f0f2f6;border-radius:18px;padding:5px 12px;font-size:13px}
-.addr input{flex:1;border:0;background:transparent;font-size:13px;outline:none}
-.bwin .view{padding:22px;min-height:90px;font-size:15px;color:var(--muted)}
-
-/* opened site */
-.site-modal{position:fixed;inset:0;background:rgba(10,16,30,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+/* ---------- website shown after the simulation ---------- */
+.site-modal{position:fixed;inset:0;background:rgba(10,16,30,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
 .site-modal.open{display:flex}
-.site-win{width:min(900px,100%);max-height:92vh;overflow:auto;border-radius:14px;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:popin .45s cubic-bezier(.2,1.4,.4,1)}
-@keyframes popin{from{transform:scale(.6) translateY(40px);opacity:0}to{transform:none;opacity:1}}
-.site-x{margin-left:auto;align-self:center;background:transparent;border:0;font-size:16px;cursor:pointer;color:#555;padding:4px 8px}
-.site-page{padding:0 0 22px}
-.sp-nav{display:flex;gap:18px;align-items:center;padding:14px 24px;border-bottom:4px solid var(--orange);font-size:14px}
-.sp-nav b{font-size:20px;margin-right:auto}.sp-nav b span{color:var(--orange)}
-.sp-hero{margin:22px 24px;padding:30px;border-radius:14px;background:linear-gradient(135deg,#2f80ed,#1f4e8c);color:#fff}
-.sp-hero h1{color:#fff;margin:8px 0;font-size:32px}
-.sp-hero code{background:rgba(255,255,255,.18);color:#fff}
-.sp-badge{display:inline-block;background:#28c840;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px}
-.sp-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;padding:0 24px;justify-content:center}
-.sp-node{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:22px;min-width:110px;opacity:0;animation:rise .4s forwards}
-.sp-node span{font-size:12px;font-weight:600}.sp-node small{font-weight:400;color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10.5px}
-.sp-arrow{align-self:center;color:var(--orange);font-weight:700;opacity:0;animation:rise .4s forwards}
-.sp-flow>*:nth-child(1){animation-delay:.2s}.sp-flow>*:nth-child(2){animation-delay:.35s}.sp-flow>*:nth-child(3){animation-delay:.5s}
-.sp-flow>*:nth-child(4){animation-delay:.65s}.sp-flow>*:nth-child(5){animation-delay:.8s}.sp-flow>*:nth-child(6){animation-delay:.95s}
-.sp-flow>*:nth-child(7){animation-delay:1.1s}.sp-flow>*:nth-child(8){animation-delay:1.25s}.sp-flow>*:nth-child(9){animation-delay:1.4s}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.sp-actions{display:flex;gap:10px;justify-content:center;margin-top:22px}
-.sp-actions .btn{text-decoration:none}
-.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:120;pointer-events:none;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
-@media (max-width:860px){.ide-body{grid-template-columns:1fr}.ide-side{border-right:0;border-bottom:1px solid var(--ide-line)}.ide .tree{min-height:120px}.sp-arrow{transform:rotate(90deg)}.sp-flow{flex-direction:column;align-items:center}}
-@media (prefers-reduced-motion:reduce){.ide .guide #gRun,.site-win,.sp-node,.sp-arrow,.confetti{animation:none!important;opacity:1}}
+.site-win{width:min(940px,100%);max-height:92vh;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:swpop .35s ease-out}
+@keyframes swpop{from{transform:scale(.92) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.sw-top{display:flex;align-items:flex-end;gap:12px;padding:8px 12px 0;background:#dfe3ea}
+.sw-dots{display:inline-flex;gap:7px;align-self:center}.sw-dots i{width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block;cursor:pointer}
+.sw-dots i:nth-child(2){background:#febc2e;cursor:default}.sw-dots i:nth-child(3){background:#28c840;cursor:default}
+.sw-tab{background:#fff;border-radius:8px 8px 0 0;padding:7px 14px;font-size:13px}
+.sw-x{margin-left:auto;align-self:center;background:transparent;border:0;font-size:16px;cursor:pointer;color:#555}
+.sw-bar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);color:#7a8291}
+.sw-addr{flex:1;background:#f0f2f6;border-radius:16px;padding:5px 12px;font-size:13px;color:#333}
+.site{overflow:auto;background:#fafbfd}
+.st-nav{display:flex;align-items:center;gap:18px;padding:14px 26px;background:#fff;border-bottom:4px solid var(--orange)}
+.st-nav a{color:var(--ink);font-size:14px;font-weight:600;cursor:default}
+.st-brand{font-size:21px;margin-right:auto}.st-brand span{color:var(--orange)}
+.st-hero{margin:22px 26px;padding:34px;border-radius:14px;background:linear-gradient(135deg,#2f80ed,#1f4e8c);color:#fff}
+.st-hero h1{margin:10px 0 8px;font-size:34px;font-weight:700}
+.st-hero p{margin:0;opacity:.95}
+.st-ok{display:inline-block;background:#28c840;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px}
+.st-cta{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.st-btn{background:var(--orange);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+.st-btn.ghost{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.6)}
+.st-section{padding:0 26px 10px}
+.st-section h2{margin:14px 0 12px;font-size:20px}
+.st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.st-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;transition:transform .2s,box-shadow .2s}
+.st-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(20,30,60,.1)}
+.st-card h3{margin:8px 0 6px;font-size:16px}.st-card p{margin:0 0 8px;font-size:14px;color:var(--muted)}.st-card small{color:var(--muted)}
+.st-tag{font-size:11px;font-weight:700;color:var(--blue);background:#e3eefc;padding:2px 8px;border-radius:10px}
+.st-flow{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px;counter-reset:f}
+.st-flow li{flex:1 1 150px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:8px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:4px}
+.st-flow code{font-size:11.5px;background:none;padding:0;color:var(--muted)}
+.st-foot{text-align:center;color:var(--muted);font-size:13px;padding:18px;border-top:1px solid var(--line);margin-top:18px;background:#fff}
+@media (max-width:600px){.st-hero{padding:22px;margin:14px}.st-hero h1{font-size:26px}.st-section{padding:0 14px 10px}.st-nav{padding:12px 14px;gap:12px}}
+@media (prefers-reduced-motion:reduce){.site-win{animation:none}}
 /* footer */
 footer{background:var(--footer);color:#ddd;padding:28px 24px 10px;font-size:14px}
 footer .cols{display:flex;justify-content:center;gap:40px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
@@ -326,102 +243,95 @@ footer .lic a{display:inline;color:#3fa7d6}
 <!-- PROCEDURE -->
 <section class="page" id="procedure">
   <h2>Steps for the simulation</h2>
-  <p>Open the <b>Simulation</b> tab. A blue <b>step box</b> guides you through 10 steps. For each step, read the explanation, then press the <b>▶</b> button (or type the shown command in the terminal and press <b>Run</b>). The next step appears automatically.</p>
   <ol>
-    <li><b>Create the project:</b> <code>django-admin startproject mysite</code>. The project appears in the Explorer.</li>
-    <li><b>Explore the project files:</b> click files in the Explorer (<code>manage.py</code>, <code>settings.py</code>, <code>urls.py</code>, <code>wsgi.py</code>, <code>asgi.py</code>) and read each explanation.</li>
-    <li><b>Move into the project folder:</b> <code>cd mysite</code>.</li>
-    <li><b>Create the app:</b> <code>python manage.py startapp blog</code>. Compare the app's files with the project's.</li>
-    <li><b>Register the app:</b> add <code>'blog'</code> to <code>INSTALLED_APPS</code> in <code>settings.py</code>.</li>
-    <li><b>Write a view:</b> add <code>index()</code> to <code>blog/views.py</code>.</li>
-    <li><b>Create the app's <code>urls.py</code>:</b> map <code>''</code> to <code>views.index</code>.</li>
-    <li><b>Connect the URLs:</b> add <code>path('blog/', include('blog.urls'))</code> to <code>mysite/urls.py</code>.</li>
-    <li><b>Start the server:</b> <code>python manage.py runserver</code>.</li>
-    <li><b>Open <code>/blog/</code></b> in the mini browser and see &ldquo;Hello from the blog app!&rdquo;.</li>
+    <li>Open the <b>Simulation</b> tab. The terminal starts in an empty workspace.</li>
+    <li>Create a project: type <code>django-admin startproject mysite</code> and press <b>Run</b>. Observe the generated tree.</li>
+    <li>Click every file in the tree and read its contents and explanation.</li>
+    <li>Move into the project folder: <code>cd mysite</code>.</li>
+    <li>Create an app: <code>python manage.py startapp blog</code>. Compare the app’s files with the project’s files.</li>
+    <li>Register the app: click <code>mysite/settings.py</code> and press <b>Add 'blog' to INSTALLED_APPS</b>.</li>
+    <li>Write a view: open <code>blog/views.py</code> and press <b>Add index view</b>.</li>
+    <li>Create <code>blog/urls.py</code>: select the <code>blog</code> folder and press <b>Create urls.py</b>.</li>
+    <li>Include the app URLs in the project: open <code>mysite/urls.py</code> and press <b>Include blog.urls</b>.</li>
+    <li>Start the server: <code>python manage.py runserver</code>, then visit <code>/blog/</code> in the mini browser.</li>
+    <li>Try skipping a step (e.g. run the server before including URLs) and observe the error — this shows why each file matters.</li>
   </ol>
-  <div class="note"><b>Explore further:</b> after finishing, press <b>Reset</b> and try steps out of order in the terminal (e.g. <code>runserver</code> before <code>cd mysite</code>, or visiting <code>/blog/</code> before including the URLs) to see the real errors Django would show. Type <code>help</code> in the terminal for all commands.</div>
-  <p>Finally, take the <b>Posttest</b>. All questions must be answered before submitting.</p>
+  <p>Use <b>Reset</b> to start again. Type <code>help</code> in the terminal to list supported commands.</p>
 </section>
 
 <!-- SIMULATION -->
 <section class="page" id="simulation">
-  <p class="sim-intro">Build a Django project step by step. Press <b>▶</b> in the step box (or type the command in the terminal), watch the files appear, and open your site in the browser at the end.</p>
-
-  <div class="ide">
-    <div class="ide-bar">
-      <span class="dots"><i></i><i></i><i></i></span>
-      <span class="ide-title">🐍 mysite &mdash; Django Lab IDE</span>
-      <button class="ide-reset" onclick="Sim.reset()" title="Start the simulation again">↺ Reset</button>
+  <div class="sim">
+    <div class="card">
+      <h4>Explorer <button class="btn alt" style="padding:3px 10px;font-size:12px" onclick="Sim.reset()">Reset</button></h4>
+      <div class="tree mono" id="tree"></div>
+      <h4>Tasks</h4>
+      <ol class="steps" id="steps"></ol>
     </div>
-
-    <div class="guide" id="guide"></div>
-
-    <div class="ide-body">
-      <aside class="ide-side">
-        <div class="side-h">EXPLORER</div>
-        <div class="tree mono" id="tree"></div>
-        <div class="side-h">PROGRESS</div>
-        <ol class="steps" id="steps"></ol>
-      </aside>
-
-      <div class="ide-main">
-        <div class="editor viewer">
-          <div class="tabbar"><span class="tab"><span class="mono" id="fname">Select a file</span></span><span id="actions"></span></div>
-          <pre id="code" class="mono">// Click a file in the Explorer to view it.</pre>
-          <div class="explain" id="explain">Each generated file has a specific purpose. Select one to learn about it.</div>
+    <div class="right-col">
+      <div class="card">
+        <h4>Terminal <span class="mono" id="cwd" style="font-weight:400"></span></h4>
+        <div class="term mono" id="term"></div>
+        <div class="cmdbar">
+          <input id="cmd" placeholder="django-admin startproject mysite" autocomplete="off" spellcheck="false">
+          <button class="btn" onclick="Sim.run()">Run</button>
         </div>
-
-        <div class="terminal">
-          <div class="term-h"><span>TERMINAL</span><span class="mono" id="cwd"></span></div>
-          <div class="term mono" id="term"></div>
-          <div class="cmdbar">
-            <span class="mono prompt">$</span>
-            <input id="cmd" class="mono" placeholder="Optional: type a command, or use ▶ in the step box" autocomplete="off" spellcheck="false">
-            <button class="btn" onclick="Sim.run()">Run</button>
-          </div>
-          <div class="hint" id="hint"></div>
-        </div>
+        <div class="hint" id="hint"></div>
+      </div>
+      <div class="card viewer">
+        <h4><span class="mono" id="fname">Select a file</span><span id="actions"></span></h4>
+        <pre id="code">// Click a file in the Explorer to view it.</pre>
+        <div class="explain" id="explain">Each generated file has a specific purpose. Select one to learn about it.</div>
+      </div>
+      <div class="card browser">
+        <div class="bar"><input id="url" value="http://127.0.0.1:8000/blog/"><button class="btn" onclick="Sim.visit()">Go</button></div>
+        <div class="view" id="view" style="color:var(--muted)">Server not running.</div>
       </div>
     </div>
   </div>
-
-  <div class="bwin">
-    <div class="bwin-top">
-      <span class="dots"><i></i><i></i><i></i></span>
-      <span class="btab"><span class="fav">🌐</span><span id="btabTitle">New Tab</span></span>
-    </div>
-    <div class="bwin-bar">
-      <span class="navb">←</span><span class="navb">→</span><span class="navb" onclick="Sim.visit()" title="Reload">⟳</span>
-      <div class="addr"><span id="lock">ⓘ</span><input id="url" class="mono" value="http://127.0.0.1:8000/blog/"></div>
-      <button class="btn" onclick="Sim.visit()">Go</button>
-    </div>
-    <div class="view" id="view">Server not running.</div>
-  </div>
-
-  <div class="site-modal" id="siteModal" onclick="if(event.target===this)closeSite()">
+  <div class="site-modal" id="siteModal" role="dialog" aria-modal="true" aria-label="Your Django site" onclick="if(event.target===this)closeSite()">
     <div class="site-win">
-      <div class="bwin-top">
-        <span class="dots"><i onclick="closeSite()" title="Close"></i><i></i><i></i></span>
-        <span class="btab"><span class="fav">🐍</span>DjangoBlog</span>
-        <button class="site-x" onclick="closeSite()" aria-label="Close">✕</button>
+      <div class="sw-top">
+        <span class="sw-dots"><i onclick="closeSite()" title="Close"></i><i></i><i></i></span>
+        <span class="sw-tab">🌐 DjangoBlog &middot; Home</span>
+        <button class="sw-x" onclick="closeSite()" aria-label="Close">✕</button>
       </div>
-      <div class="bwin-bar"><span class="navb">←</span><span class="navb">→</span><span class="navb">⟳</span>
-        <div class="addr"><span>🔓</span><span class="mono">127.0.0.1:8000/blog/</span></div></div>
-      <div class="site-page">
-        <nav class="sp-nav"><b>Django<span>Blog</span></b><span>Home</span><span>Posts</span><span>Admin</span></nav>
-        <div class="sp-hero">
-          <div class="sp-badge">200 OK &middot; served by Django</div>
+      <div class="sw-bar"><span>←</span><span>→</span><span>⟳</span><div class="sw-addr mono">127.0.0.1:8000/blog/</div></div>
+
+      <div class="site">
+        <nav class="st-nav">
+          <b class="st-brand">Django<span>Blog</span></b>
+          <a>Home</a><a>Posts</a><a>About</a><a>Admin</a>
+        </nav>
+
+        <div class="st-hero">
+          <span class="st-ok">200 OK &middot; served by Django</span>
           <h1>Hello from the blog app!</h1>
-          <p>Your project and app are connected. This page was produced by <code>blog/views.py &rarr; index()</code>.</p>
+          <p>Your <b>mysite</b> project and <b>blog</b> app are connected and running on Django&rsquo;s development server.</p>
+          <div class="st-cta"><a class="st-btn" href="#posttest" onclick="closeSite()">Take the Posttest</a><button class="st-btn ghost" onclick="closeSite()">Back to the lab</button></div>
         </div>
-        <div class="sp-flow">
-          <div class="sp-node">🌐<span>Browser<br><small>GET /blog/</small></span></div><div class="sp-arrow">&rarr;</div>
-          <div class="sp-node">🗺️<span>mysite/urls.py<br><small>include('blog.urls')</small></span></div><div class="sp-arrow">&rarr;</div>
-          <div class="sp-node">🧭<span>blog/urls.py<br><small>path('', index)</small></span></div><div class="sp-arrow">&rarr;</div>
-          <div class="sp-node">⚙️<span>blog/views.py<br><small>index(request)</small></span></div><div class="sp-arrow">&rarr;</div>
-          <div class="sp-node">📄<span>Response<br><small>HttpResponse</small></span></div>
-        </div>
-        <div class="sp-actions"><a class="btn" href="#posttest" onclick="closeSite()">Take the Posttest</a><button class="btn alt" onclick="closeSite()">Back to the lab</button></div>
+
+        <section class="st-section">
+          <h2>Latest posts</h2>
+          <div class="st-grid">
+            <article class="st-card"><span class="st-tag">Basics</span><h3>Project vs App</h3><p>A project is the whole site&rsquo;s configuration; an app is one reusable feature like this blog.</p><small>3 min read</small></article>
+            <article class="st-card"><span class="st-tag">Routing</span><h3>How URLs reach a view</h3><p><code>mysite/urls.py</code> uses <code>include()</code> to hand <code>/blog/</code> to <code>blog/urls.py</code>.</p><small>4 min read</small></article>
+            <article class="st-card"><span class="st-tag">Config</span><h3>Why INSTALLED_APPS matters</h3><p>Django loads an app&rsquo;s models, admin and templates only after it is registered.</p><small>2 min read</small></article>
+          </div>
+        </section>
+
+        <section class="st-section">
+          <h2>How this page reached you</h2>
+          <ol class="st-flow">
+            <li><b>Browser</b><code>GET /blog/</code></li>
+            <li><b>mysite/urls.py</b><code>path('blog/', include('blog.urls'))</code></li>
+            <li><b>blog/urls.py</b><code>path('', views.index)</code></li>
+            <li><b>blog/views.py</b><code>index(request)</code></li>
+            <li><b>Response</b><code>HttpResponse(...)</code></li>
+          </ol>
+        </section>
+
+        <div class="st-foot">DjangoBlog &middot; built in the Django Project &amp; App Structure Virtual Lab</div>
       </div>
     </div>
   </div>
@@ -617,50 +527,22 @@ urlpatterns = [
     path('', views.index, name='index'),
 ]`,exp:"<b>urls.py (app)</b> — NOT created by startapp. It maps URL paths <i>within</i> the app to views, and is plugged into the project with <code>include('blog.urls')</code>."}
 };
-/* Guided steps: each has a command to run in the terminal (cmd) or a file action (act). */
 const STEPS=[
- {t:"Create the project",why:"<code>django-admin startproject</code> generates the project: the configuration for the whole website.",
-  cmd:"django-admin startproject mysite",done:s=>s.project,
-  learn:"A <b>mysite/</b> folder appeared in the Explorer with <code>manage.py</code> and an inner <code>mysite/</code> package."},
- {t:"Explore the project files",why:"Every generated file has a job. Open them to see what's inside.",
-  act:()=>{Sim.s.explored=true;Sim.show('mysite/mysite/settings.py');},actLabel:"Open settings.py",
-  doText:"Click any file in the <b>Explorer</b> on the left (e.g. <code>manage.py</code>, <code>urls.py</code>, <code>wsgi.py</code>) to read it and its explanation below.",
-  done:s=>s.explored,learn:"<code>settings.py</code> holds all configuration; <code>urls.py</code> is the root URL map; <code>wsgi.py</code>/<code>asgi.py</code> are server entry points."},
- {t:"Move into the project folder",why:"<code>manage.py</code> lives inside the outer <code>mysite/</code> folder, so commands must run from there.",
-  cmd:"cd mysite",done:s=>s.cwd==='mysite',learn:"The terminal prompt now shows <code>~/workspace/mysite</code>."},
- {t:"Create the app",why:"An app is one feature of the site. A project can contain many apps.",
-  cmd:"python manage.py startapp blog",done:s=>s.app,
-  learn:"A <b>blog/</b> app appeared with <code>models.py</code>, <code>views.py</code>, <code>admin.py</code>, <code>migrations/</code>&hellip; but no <code>urls.py</code> and no <code>settings.py</code>."},
- {t:"Register the app in INSTALLED_APPS",why:"Django ignores an app until it is listed in <code>settings.py</code>.",
-  act:()=>{Sim.s.installed=true;Sim.show('mysite/mysite/settings.py');},actLabel:"Add 'blog' to INSTALLED_APPS",
-  doText:"Edits <code>mysite/settings.py</code> &rarr; <code>INSTALLED_APPS</code>.",done:s=>s.installed,
-  learn:"<code>'blog'</code> is now in <code>INSTALLED_APPS</code>, so its models, admin and templates will be loaded."},
- {t:"Write a view",why:"A view receives a request and returns a response.",
-  act:()=>{Sim.s.view=true;Sim.show('mysite/blog/views.py');},actLabel:"Add index view",
-  doText:"Edits <code>blog/views.py</code>.",done:s=>s.view,
-  learn:"<code>index(request)</code> returns <code>HttpResponse(\"Hello from the blog app!\")</code>."},
- {t:"Create the app's urls.py",why:"<code>startapp</code> doesn't create it: you add it to map paths inside the app to views.",
-  act:()=>{Sim.s.appUrls=true;Sim.fresh.add('mysite/blog/urls.py');Sim.log('out','Created blog/urls.py');Sim.show('mysite/blog/urls.py');},actLabel:"Create blog/urls.py",
-  doText:"Creates <code>blog/urls.py</code> with <code>path('', views.index)</code>.",done:s=>s.appUrls,
-  learn:"The app now has its own URL map pointing <code>''</code> to <code>views.index</code>."},
- {t:"Connect the app to the project URLs",why:"The project's <code>urls.py</code> is where every request starts; <code>include()</code> hands <code>/blog/</code> to the app.",
-  act:()=>{Sim.s.included=true;Sim.show('mysite/mysite/urls.py');},actLabel:"Include blog.urls",
-  doText:"Edits <code>mysite/urls.py</code>.",done:s=>s.included,
-  learn:"<code>path('blog/', include('blog.urls'))</code> was added."},
- {t:"Start the development server",why:"<code>runserver</code> starts Django's built-in server for local testing.",
-  cmd:"python manage.py runserver",done:s=>s.server,
-  learn:"The server is running at <code>http://127.0.0.1:8000/</code>. It also created <code>db.sqlite3</code>."},
- {t:"Open /blog/ in the browser",why:"See the whole chain work: project URLs &rarr; app URLs &rarr; view &rarr; response.",
-  act:()=>{$('#url').value='http://127.0.0.1:8000/blog/';Sim.visit();},actLabel:"Visit /blog/",
-  doText:"Uses the mini browser at the bottom.",done:s=>s.visited,
-  learn:"&ldquo;Hello from the blog app!&rdquo; &mdash; you built and connected a Django project and app. Try the <a href=\"#posttest\">Posttest</a>."}
+ ["Create project: django-admin startproject mysite",s=>s.project],
+ ["Enter folder: cd mysite",s=>s.cwd==='mysite'],
+ ["Create app: python manage.py startapp blog",s=>s.app],
+ ["Register 'blog' in INSTALLED_APPS",s=>s.installed],
+ ["Write index view in blog/views.py",s=>s.view],
+ ["Create blog/urls.py",s=>s.appUrls],
+ ["Include blog.urls in mysite/urls.py",s=>s.included],
+ ["Run server and visit /blog/",s=>s.visited]
 ];
 const Sim={
  s:null, sel:null, fresh:new Set(),
  reset(){
-  this.s={project:false,explored:false,app:false,installed:false,view:false,appUrls:false,included:false,server:false,visited:false,db:false,cwd:''};
+  this.s={project:false,app:false,installed:false,view:false,appUrls:false,included:false,server:false,visited:false,db:false,cwd:''};
   this.sel=null;this.fresh.clear();
-  $('#term').innerHTML='<span class="out">Workspace ready. Follow the steps above, or type <b>help</b> to see commands.</span>\n';
+  $('#term').innerHTML='<span class="out">Workspace ready. Type <b>help</b> to see commands.</span>\n';
   $('#view').textContent='Server not running.';
   this.show(null);this.render();
  },
@@ -726,31 +608,13 @@ def index(request):
   const tr=this.tree();
   $('#tree').innerHTML=tr.length?tr.map(([p,d,k,tag])=>{
     const n=p.split('/').pop();
-    return `<div class="node ${this.sel===p?'sel':''} ${this.fresh.has(p)?'new':''}" style="padding-left:${8+d*16}px" onclick="Sim.show('${p}')">${icon(n,k)} ${n}${k==='dir'?'/':''}${tag?`<span class="tag ${tag}">${tag==='proj'?'project':'app'}</span>`:''}</div>`;
+    return `<div class="node ${this.sel===p?'sel':''} ${this.fresh.has(p)?'new':''}" style="padding-left:${8+d*16}px" onclick="Sim.show('${p}')">${k==='dir'?'📁':'📄'} ${n}${k==='dir'?'/':''}${tag?`<span class="tag ${tag}">${tag==='proj'?'project':'app'}</span>`:''}</div>`;
   }).join(''):'<div style="padding:10px;color:var(--muted);font-family:Raleway">Empty workspace</div>';
   this.fresh.clear();
   $('#cwd').textContent='~/workspace'+(this.s.cwd?'/'+this.s.cwd:'')+' $';
-  const cur=STEPS.findIndex(st=>!st.done(this.s));
-  $('#steps').innerHTML=STEPS.map((st,i)=>`<li class="${st.done(this.s)?'ok':(cur===i?'cur':'')}">${st.t}</li>`).join('');
-  $('#hint').textContent='';
-  this.renderGuide(cur);
- },
- renderGuide(cur){
-  const g=$('#guide'),n=STEPS.length,doneCount=STEPS.filter(st=>st.done(this.s)).length;
-  const dots=STEPS.map((st,i)=>{const ok=st.done(this.s),c=i===cur;return (i?`<div class="sline ${ok?'ok':''}"></div>`:'')+`<div class="sdot ${ok?'ok':c?'cur':''}" title="${st.t.replace(/"/g,'&quot;')}">${ok?'✓':i+1}</div>`}).join('');
-  const head=`<div class="stepper">${dots}</div><div class="g-count">${cur<0?'All '+n+' steps complete':'Step '+(cur+1)+' of '+n} &middot; ${doneCount}/${n} done</div>`;
-  if(cur<0){
-    g.innerHTML=head+`<div class="g-body"><h3>🎉 You built a Django site!</h3><p class="g-why">Project created, app added and registered, URLs wired to a view, server started and page served.</p><div class="g-btns"><button class="btn" id="gRun" onclick="openSite()">🌐 Open the site again</button><a class="btn alt" style="text-decoration:none" href="#posttest">Take the Posttest</a><button class="btn alt" onclick="Sim.reset()">Start again</button></div></div>`;
-    return;
-  }
-  const st=STEPS[cur], prev=cur>0?STEPS[cur-1]:null;
-  g.innerHTML=head+`<div class="g-body">
-    ${prev&&prev.done(this.s)?`<div class="g-learn" style="display:block;margin:0 0 10px">✓ <b>${prev.t}:</b> ${prev.learn}</div>`:''}
-    <h3>${st.t}</h3><p class="g-why">${st.why}</p>
-    ${st.cmd?`<code class="g-cmd mono">$ ${st.cmd}</code>`:`<p class="g-do">${st.doText}</p>`}
-    <div class="g-btns"><button class="btn" id="gRun">▶ ${st.cmd?'Run this command':st.actLabel}</button>${st.cmd?'<span style="font-size:13px;align-self:center">or type it in the terminal below</span>':''}</div>
-  </div>`;
-  $('#gRun').onclick=()=>{ if(st.cmd){$('#cmd').value=st.cmd;this.run();} else {st.act();} };
+  let cur=-1;
+  $('#steps').innerHTML=STEPS.map(([t,f],i)=>{const ok=f(this.s);if(!ok&&cur<0)cur=i;return `<li class="${ok?'ok':(cur===i?'cur':'')}">${t}</li>`}).join('');
+  $('#hint').textContent=cur<0?'🎉 All tasks complete! Try the Posttest.':'Next: '+STEPS[cur][0];
  },
  show(p){
   this.sel=p;const a=$('#actions');a.innerHTML='';
@@ -776,9 +640,7 @@ def index(request):
  btn(label,fn){const b=document.createElement('button');b.className='btn';b.style.cssText='padding:4px 10px;font-size:12px';b.textContent=label;b.onclick=fn;$('#actions').appendChild(b)},
  log(cls,txt){const t=$('#term');t.innerHTML+=`<span class="${cls}">${txt.replace(/</g,'&lt;')}</span>\n`;t.scrollTop=t.scrollHeight},
  run(){
-  const inp=$('#cmd');let c=inp.value.trim().replace(/\s+/g,' ');inp.value='';if(!c)return;
-  // forgive common typos: "cd..", "django admin", "Django-Admin"
-  c=c.replace(/^cd\.\.$/,'cd ..').replace(/^django[ _]admin /i,'django-admin ').replace(/^Django-admin /i,'django-admin ');
+  const inp=$('#cmd'),c=inp.value.trim().replace(/\s+/g,' ');inp.value='';if(!c)return;
   const s=this.s;this.log('ps',`${s.cwd?'~/workspace/'+s.cwd:'~/workspace'} $ ${c}`);
   const inProj=s.cwd==='mysite';
   if(c==='help'){this.log('out','Commands: django-admin startproject <name> | cd <dir> | cd .. | ls | python manage.py startapp <name> | python manage.py runserver | python manage.py migrate | clear');}
@@ -793,7 +655,7 @@ def index(request):
   else if(c==='cd mysite'){if(!s.project)this.log('err','cd: mysite: No such file or directory');else if(inProj)this.log('err','Hint: you are already in the outer mysite folder (it contains manage.py).');else s.cwd='mysite';}
   else if(c==='cd ..'){s.cwd='';}
   else if(c.startsWith('python manage.py')){
-   if(!inProj){this.log('err',"python: can't open file 'manage.py': [Errno 2] No such file or directory"+(s.project?"\nHint: manage.py is inside the project folder. Run  cd mysite  first.":"\nHint: create the project first:  django-admin startproject mysite"));}
+   if(!inProj){this.log('err',"python: can't open file 'manage.py': [Errno 2] No such file or directory");}
    else{
     const sub=c.slice(17);
     if(/^startapp \w+$/.test(sub)){const n=sub.split(' ')[1];if(n!=='blog')this.log('err',"For this lab, please name the app 'blog'.");else if(s.app)this.log('err',"CommandError: 'blog' already exists");else{s.app=true;this.tree().filter(x=>x[0].startsWith('mysite/blog')).forEach(x=>this.fresh.add(x[0]));this.log('out','App "blog" created.');}}
@@ -805,13 +667,10 @@ def index(request):
      s.server=true;this.log('out',"Watching for file changes with StatReloader\nSystem check identified no issues (0 silenced).\nStarting development server at http://127.0.0.1:8000/\nQuit the server with CTRL-BREAK.");
      $('#view').textContent='Server running — enter a URL and press Go.';
     }
-    else{const nx=STEPS.find(st=>!st.done(s));this.log('err',`Unknown command: '${sub}'.`+(nx&&nx.cmd?`\nHint: try  ${nx.cmd}`:' Type help.'));}
+    else this.log('err',`Unknown command: '${sub}'. Type help.`);
    }
   }
-  else{
-   const nx=STEPS.find(st=>!st.done(s));
-   this.log('err',`Command not recognised: ${c}`+(nx&&nx.cmd?`\nHint: the next step's command is:  ${nx.cmd}`:nx?`\nHint: the next step doesn't need a command; use the ▶ button in the step box.`:''));
-  }
+  else this.log('err',`Command not recognised: ${c}. Type help.`);
   this.render();
  },
  visit(){
@@ -821,7 +680,7 @@ def index(request):
   if(path==='/blog/'&&s.included&&s.view&&s.appUrls){
    v.innerHTML='<div style="font-size:20px">Hello from the blog app!</div><div style="color:var(--muted);font-size:13px;margin-top:6px">Request flow: mysite/urls.py → include(\'blog.urls\') → blog/urls.py → views.index</div>';
    if(!s.installed)v.innerHTML+='<div class="note">It works — but note that <code>blog</code> is not in INSTALLED_APPS. A plain view still runs, but models, admin, templates and migrations of the app would NOT be picked up. Register it to complete the task.</div>';
-   else s.visited=true;
+   else{ s.visited=true; v.innerHTML+='<p style="margin-top:10px"><button class="btn" onclick="openSite()">🌐 Open the full site</button></p>'; setTimeout(openSite,400); }
    this.log('out',`"GET ${path} HTTP/1.1" 200`);
   }else if(path==='/admin/'){v.innerHTML='Django administration — login page';this.log('out',`"GET ${path} HTTP/1.1" 302`);}
   else{
@@ -833,45 +692,6 @@ def index(request):
  }
 };
 function $(q){return document.querySelector(q)}
-function icon(n,k){
-  if(k==='dir')return '<span class="fi dir">▸📁</span>'.replace('▸','');
-  if(n.endsWith('.py'))return '<span class="fi py">py</span>';
-  if(n.endsWith('.sqlite3'))return '<span class="fi db">🛢</span>';
-  return '<span class="fi">📄</span>';
-}
-function highlight(){
-  const el=$('#code'),name=$('#fname').textContent,raw=el.textContent;
-  const esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  if(!name.endsWith('.py')){el.innerHTML=raw.split('\n').map(l=>`<span class="ln">${esc(l)||' '}</span>`).join('');return;}
-  const KW=/\b(from|import|def|class|return|if|else|elif|for|in|not|and|or|as|with|try|except|raise|None|True|False|pass|lambda)\b/g;
-  el.innerHTML=raw.split('\n').map(line=>{
-    let out='',rest=line;
-    const tok=/("""[^]*?"""|'[^']*'|"[^"]*"|#.*$)/g; let m,last=0,parts=[];
-    while((m=tok.exec(line))){parts.push([line.slice(last,m.index),0]);parts.push([m[0],1]);last=tok.lastIndex;}
-    parts.push([line.slice(last),0]);
-    out=parts.map(([t,isTok])=>{
-      if(isTok)return t.startsWith('#')?`<span class="hc">${esc(t)}</span>`:`<span class="hs">${esc(t)}</span>`;
-      return esc(t).replace(KW,'<span class="hk">$1</span>').replace(/\b(\d+)\b/g,'<span class="hn">$1</span>')
-        .replace(/(@\w+)/g,'<span class="hd">$1</span>').replace(/\b([a-zA-Z_]\w*)(?=\()/g,'<span class="hf">$1</span>');
-    }).join('');
-    return `<span class="ln">${out||' '}</span>`;
-  }).join('');
-}
-function openSite(){
-  $('#siteModal').classList.add('open');
-  // replay the flow animation
-  document.querySelectorAll('.sp-node,.sp-arrow').forEach(n=>{n.style.animation='none';n.offsetHeight;n.style.animation='';});
-}
-function closeSite(){$('#siteModal').classList.remove('open');}
-addEventListener('keydown',e=>{if(e.key==='Escape')closeSite();});
-function confetti(){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  const colors=['#ff6e00','#2f80ed','#28c840','#febc2e','#c792ea'];
-  for(let i=0;i<70;i++){const c=document.createElement('i');c.className='confetti';
-    c.style.left=Math.random()*100+'vw';c.style.background=colors[i%colors.length];
-    c.style.animationDuration=(1.8+Math.random()*1.6)+'s';c.style.animationDelay=(Math.random()*.4)+'s';
-    document.body.appendChild(c);setTimeout(()=>c.remove(),4000);}
-}
 $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
 /* ---------- admin link ---------- */
 // Change ADMIN_URL once Django is hosted online (e.g. https://<user>.pythonanywhere.com/admin/).
@@ -941,17 +761,9 @@ const ADMIN_URL='http://127.0.0.1:8000/admin/';
     }finally{btn.disabled=false;btn.textContent='Submit feedback';}
   });
 })();
-(function(){
-  const show=Sim.show; Sim.show=function(p){show.call(this,p);highlight();};
-  const visit=Sim.visit; Sim.visit=function(){
-    const before=this.s.visited; visit.call(this);
-    const path=(()=>{try{return new URL($('#url').value).pathname}catch(e){return '/'}})();
-    $('#btabTitle').textContent=this.s.server?(path==='/blog/'&&this.s.included&&this.s.view&&this.s.appUrls?'DjangoBlog':path==='/admin/'?'Django admin':'Page not found'):'Can’t be reached';
-    $('#lock').textContent=this.s.server?'🔓':'ⓘ';
-    if(this.s.visited){openSite(); if(!before){confetti();} this.render();}
-  };
-  const reset=Sim.reset; Sim.reset=function(){reset.call(this);$('#btabTitle').textContent='New Tab';closeSite();};
-})();
+function openSite(){document.getElementById('siteModal').classList.add('open');}
+function closeSite(){document.getElementById('siteModal').classList.remove('open');}
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSite();});
 Sim.reset();route();
 </script>
 </body>
