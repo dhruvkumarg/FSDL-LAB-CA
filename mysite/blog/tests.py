@@ -102,6 +102,9 @@ class PostApiTests(TestCase):
         self.author = User.objects.create_user('shlok', first_name='Shlok', password='x')
         self.old = Post.objects.create(title="Old post", body="First", author=self.author)
         self.new = Post.objects.create(title="New post", body="Second")
+        # set times explicitly: posts created in the same clock tick would have equal created_at
+        from datetime import timedelta
+        Post.objects.filter(pk=self.old.pk).update(created_at=self.new.created_at - timedelta(hours=1))
 
     def test_list_returns_all_posts_newest_first(self):
         response = self.client.get(reverse('blog:api_post_list'))
