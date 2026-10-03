@@ -122,6 +122,112 @@ th{background:var(--panel)}
 .note.ok{background:#e6f4ea;border-left-color:var(--ok)}
 .note.err{background:#fce8e6;border-left-color:var(--bad)}
 @media (max-width:600px){.fb-row{grid-template-columns:1fr}}
+
+/* ================= Simulation: IDE look ================= */
+.sim-intro{color:var(--muted);margin-top:0}
+.ide{--ide-bg:#1e1f26;--ide-side:#181920;--ide-line:#2c2e38;--ide-ink:#d6dae3;--ide-mut:#8a90a0;
+  background:var(--ide-bg);color:var(--ide-ink);border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(20,30,60,.25);border:1px solid #2a2c36}
+.ide-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#25262f;border-bottom:1px solid var(--ide-line)}
+.dots{display:inline-flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block}
+.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+.ide-title{flex:1;text-align:center;font-size:13px;color:var(--ide-mut);font-weight:600}
+.ide-reset{background:transparent;border:1px solid #3a3d4a;color:var(--ide-ink);border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
+.ide-reset:hover{border-color:var(--orange);color:var(--orange)}
+.ide-body{display:grid;grid-template-columns:260px 1fr;min-height:520px}
+.ide-side{background:var(--ide-side);border-right:1px solid var(--ide-line);display:flex;flex-direction:column}
+.side-h{font-size:11px;letter-spacing:1.5px;color:var(--ide-mut);padding:10px 14px 4px;font-weight:700}
+.ide .tree{min-height:220px;max-height:340px;padding:4px 6px}
+.ide .tree .node{color:var(--ide-ink);padding:3px 8px}
+.ide .tree .node:hover{background:#262833}
+.ide .tree .node.sel{background:#2b3b5c;color:#fff}
+.ide .tree .node.new{animation:glow 1.6s}
+@keyframes glow{0%{background:#4a3a12;box-shadow:inset 3px 0 0 var(--orange)}100%{background:transparent}}
+.fi{display:inline-block;width:18px;text-align:center;margin-right:4px}
+.fi.py{color:#1e1f26;background:#ffd43b;border-radius:3px;font:700 9px/14px "JetBrains Mono",monospace;width:18px;height:14px;vertical-align:1px}.fi.dir{color:#e8a849}.fi.db{color:#7fb2ff}
+.ide .tag.proj{background:#4a2e14;color:#ffb877}.ide .tag.app{background:#1d3357;color:#8ab8ff}
+.ide .steps{padding:4px 14px 14px 34px;font-size:13px;margin:0}
+.ide .steps li{color:var(--ide-mut);margin:5px 0}
+.ide .steps li.cur{color:#fff;font-weight:700}
+.ide .steps li.ok{color:#5fd38d}
+.ide-main{display:flex;flex-direction:column;min-width:0}
+.editor{display:flex;flex-direction:column;border-bottom:1px solid var(--ide-line)}
+.tabbar{display:flex;justify-content:space-between;align-items:center;background:#202129;border-bottom:1px solid var(--ide-line);min-height:38px;padding-right:8px;flex-wrap:wrap;gap:6px}
+.tab{padding:9px 16px;background:var(--ide-bg);border-top:2px solid var(--orange);font-size:13px;color:#fff}
+.ide #code{margin:0;border-radius:0;background:var(--ide-bg);color:var(--ide-ink);min-height:230px;max-height:320px;font-size:13px;counter-reset:ln}
+.ide #code .ln{display:block;padding-left:3.2em;position:relative}
+.ide #code .ln::before{counter-increment:ln;content:counter(ln);position:absolute;left:0;width:2.2em;text-align:right;color:#4d5263}
+.hk{color:#c792ea}.hs{color:#c3e88d}.hc{color:#6b7389;font-style:italic}.hf{color:#82aaff}.hn{color:#f78c6c}.hd{color:#ffcb6b}
+.ide .explain{background:#23252f;color:var(--ide-ink);border-top:1px solid var(--ide-line)}
+.ide .explain code{background:#2f3240;color:#ffcb6b}
+.ide #actions .btn{background:var(--orange)}
+.terminal{background:#14151b;display:flex;flex-direction:column}
+.term-h{display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.5px;color:var(--ide-mut);padding:8px 14px;border-bottom:1px solid var(--ide-line);font-weight:700}
+.term-h #cwd{letter-spacing:0;font-weight:400;color:#7ee787}
+.ide .term{background:#14151b;min-height:120px;max-height:190px}
+.ide .cmdbar{border-top:1px solid var(--ide-line);align-items:center}
+.ide .cmdbar input{background:#1e1f26;color:#fff;border-color:#33364a}
+.prompt{color:#7ee787;font-weight:700}
+.ide .hint:empty{display:none}
+
+/* step tracker */
+.ide .guide{border:0;border-bottom:1px solid var(--ide-line);background:linear-gradient(135deg,#1f3a66,#23262f 60%);color:#fff;border-radius:0}
+.stepper{display:flex;align-items:center;gap:0;padding:14px 18px 4px;overflow-x:auto}
+.sdot{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:#2e3242;color:#9aa2b8;border:2px solid #3b4055;transition:.3s}
+.sdot.ok{background:#1f8f4e;border-color:#2fd07a;color:#fff}
+.sdot.cur{background:var(--orange);border-color:#ffb877;color:#fff;transform:scale(1.15);box-shadow:0 0 0 6px rgba(255,110,0,.18)}
+.sline{flex:1 0 14px;height:3px;background:#3b4055;min-width:14px}
+.sline.ok{background:#2fd07a}
+.ide .guide .g-body{padding:12px 18px 16px}
+.ide .guide h3{color:#fff;font-size:20px}
+.ide .guide .g-why{color:#c9d3ea}
+.ide .guide .g-why code,.ide .guide .g-do code{background:rgba(255,255,255,.12);color:#ffd8b0}
+.ide .guide .g-cmd{background:#0f1117;border:1px solid #33364a}
+.ide .guide .g-do{background:rgba(255,110,0,.12);color:#ffe3cc}
+.ide .guide .g-learn{background:rgba(47,208,122,.14);color:#c8f5dc}
+.ide .guide .g-learn code{background:rgba(255,255,255,.1);color:#c8f5dc}
+.ide .guide .g-learn a{color:#ffb877}
+.ide .guide #gRun{background:var(--orange);font-size:15px;padding:10px 20px;box-shadow:0 6px 16px rgba(255,110,0,.35);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 6px 16px rgba(255,110,0,.35)}50%{box-shadow:0 6px 24px rgba(255,110,0,.65)}}
+.ide .guide .g-btns span{color:#9aa2b8!important}
+.g-count{font-size:13px;color:#c9d3ea;padding:0 18px}
+
+/* browser window */
+.bwin{margin-top:18px;border-radius:12px;overflow:hidden;border:1px solid #cfd6e0;box-shadow:0 10px 26px rgba(20,30,60,.12);background:#fff}
+.bwin-top{display:flex;align-items:flex-end;gap:12px;padding:8px 12px 0;background:#dfe3ea}
+.btab{background:#fff;border-radius:8px 8px 0 0;padding:7px 14px;font-size:13px;display:inline-flex;gap:6px;align-items:center;max-width:240px;color:#222}
+.bwin-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border-bottom:1px solid #e3e7ee}
+.navb{color:#7a8291;padding:0 4px;cursor:default;user-select:none}
+.addr{flex:1;display:flex;align-items:center;gap:6px;background:#f0f2f6;border-radius:18px;padding:5px 12px;font-size:13px}
+.addr input{flex:1;border:0;background:transparent;font-size:13px;outline:none}
+.bwin .view{padding:22px;min-height:90px;font-size:15px;color:var(--muted)}
+
+/* opened site */
+.site-modal{position:fixed;inset:0;background:rgba(10,16,30,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.site-modal.open{display:flex}
+.site-win{width:min(900px,100%);max-height:92vh;overflow:auto;border-radius:14px;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:popin .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes popin{from{transform:scale(.6) translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.site-x{margin-left:auto;align-self:center;background:transparent;border:0;font-size:16px;cursor:pointer;color:#555;padding:4px 8px}
+.site-page{padding:0 0 22px}
+.sp-nav{display:flex;gap:18px;align-items:center;padding:14px 24px;border-bottom:4px solid var(--orange);font-size:14px}
+.sp-nav b{font-size:20px;margin-right:auto}.sp-nav b span{color:var(--orange)}
+.sp-hero{margin:22px 24px;padding:30px;border-radius:14px;background:linear-gradient(135deg,#2f80ed,#1f4e8c);color:#fff}
+.sp-hero h1{color:#fff;margin:8px 0;font-size:32px}
+.sp-hero code{background:rgba(255,255,255,.18);color:#fff}
+.sp-badge{display:inline-block;background:#28c840;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px}
+.sp-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;padding:0 24px;justify-content:center}
+.sp-node{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:22px;min-width:110px;opacity:0;animation:rise .4s forwards}
+.sp-node span{font-size:12px;font-weight:600}.sp-node small{font-weight:400;color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.sp-arrow{align-self:center;color:var(--orange);font-weight:700;opacity:0;animation:rise .4s forwards}
+.sp-flow>*:nth-child(1){animation-delay:.2s}.sp-flow>*:nth-child(2){animation-delay:.35s}.sp-flow>*:nth-child(3){animation-delay:.5s}
+.sp-flow>*:nth-child(4){animation-delay:.65s}.sp-flow>*:nth-child(5){animation-delay:.8s}.sp-flow>*:nth-child(6){animation-delay:.95s}
+.sp-flow>*:nth-child(7){animation-delay:1.1s}.sp-flow>*:nth-child(8){animation-delay:1.25s}.sp-flow>*:nth-child(9){animation-delay:1.4s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sp-actions{display:flex;gap:10px;justify-content:center;margin-top:22px}
+.sp-actions .btn{text-decoration:none}
+.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:120;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+@media (max-width:860px){.ide-body{grid-template-columns:1fr}.ide-side{border-right:0;border-bottom:1px solid var(--ide-line)}.ide .tree{min-height:120px}.sp-arrow{transform:rotate(90deg)}.sp-flow{flex-direction:column;align-items:center}}
+@media (prefers-reduced-motion:reduce){.ide .guide #gRun,.site-win,.sp-node,.sp-arrow,.confetti{animation:none!important;opacity:1}}
 /* footer */
 footer{background:var(--footer);color:#ddd;padding:28px 24px 10px;font-size:14px}
 footer .cols{display:flex;justify-content:center;gap:40px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
@@ -239,32 +345,83 @@ footer .lic a{display:inline;color:#3fa7d6}
 
 <!-- SIMULATION -->
 <section class="page" id="simulation">
-  <div class="sim">
-    <div class="card">
-      <h4>Explorer <button class="btn alt" style="padding:3px 10px;font-size:12px" onclick="Sim.reset()">Reset</button></h4>
-      <div class="tree mono" id="tree"></div>
-      <h4>Steps</h4>
-      <ol class="steps" id="steps"></ol>
+  <p class="sim-intro">Build a Django project step by step. Press <b>▶</b> in the step box (or type the command in the terminal), watch the files appear, and open your site in the browser at the end.</p>
+
+  <div class="ide">
+    <div class="ide-bar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="ide-title">🐍 mysite &mdash; Django Lab IDE</span>
+      <button class="ide-reset" onclick="Sim.reset()" title="Start the simulation again">↺ Reset</button>
     </div>
-    <div class="right-col">
-      <div class="card guide" id="guide"></div>
-      <div class="card">
-        <h4>Terminal <span class="mono" id="cwd" style="font-weight:400"></span></h4>
-        <div class="term mono" id="term"></div>
-        <div class="cmdbar">
-          <input id="cmd" placeholder="Optional: type the command yourself, or use ▶ Run step above" autocomplete="off" spellcheck="false">
-          <button class="btn" onclick="Sim.run()">Run</button>
+
+    <div class="guide" id="guide"></div>
+
+    <div class="ide-body">
+      <aside class="ide-side">
+        <div class="side-h">EXPLORER</div>
+        <div class="tree mono" id="tree"></div>
+        <div class="side-h">PROGRESS</div>
+        <ol class="steps" id="steps"></ol>
+      </aside>
+
+      <div class="ide-main">
+        <div class="editor viewer">
+          <div class="tabbar"><span class="tab"><span class="mono" id="fname">Select a file</span></span><span id="actions"></span></div>
+          <pre id="code" class="mono">// Click a file in the Explorer to view it.</pre>
+          <div class="explain" id="explain">Each generated file has a specific purpose. Select one to learn about it.</div>
         </div>
-        <div class="hint" id="hint"></div>
+
+        <div class="terminal">
+          <div class="term-h"><span>TERMINAL</span><span class="mono" id="cwd"></span></div>
+          <div class="term mono" id="term"></div>
+          <div class="cmdbar">
+            <span class="mono prompt">$</span>
+            <input id="cmd" class="mono" placeholder="Optional: type a command, or use ▶ in the step box" autocomplete="off" spellcheck="false">
+            <button class="btn" onclick="Sim.run()">Run</button>
+          </div>
+          <div class="hint" id="hint"></div>
+        </div>
       </div>
-      <div class="card viewer">
-        <h4><span class="mono" id="fname">Select a file</span><span id="actions"></span></h4>
-        <pre id="code">// Click a file in the Explorer to view it.</pre>
-        <div class="explain" id="explain">Each generated file has a specific purpose. Select one to learn about it.</div>
+    </div>
+  </div>
+
+  <div class="bwin">
+    <div class="bwin-top">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="btab"><span class="fav">🌐</span><span id="btabTitle">New Tab</span></span>
+    </div>
+    <div class="bwin-bar">
+      <span class="navb">←</span><span class="navb">→</span><span class="navb" onclick="Sim.visit()" title="Reload">⟳</span>
+      <div class="addr"><span id="lock">ⓘ</span><input id="url" class="mono" value="http://127.0.0.1:8000/blog/"></div>
+      <button class="btn" onclick="Sim.visit()">Go</button>
+    </div>
+    <div class="view" id="view">Server not running.</div>
+  </div>
+
+  <div class="site-modal" id="siteModal" onclick="if(event.target===this)closeSite()">
+    <div class="site-win">
+      <div class="bwin-top">
+        <span class="dots"><i onclick="closeSite()" title="Close"></i><i></i><i></i></span>
+        <span class="btab"><span class="fav">🐍</span>DjangoBlog</span>
+        <button class="site-x" onclick="closeSite()" aria-label="Close">✕</button>
       </div>
-      <div class="card browser">
-        <div class="bar"><input id="url" value="http://127.0.0.1:8000/blog/"><button class="btn" onclick="Sim.visit()">Go</button></div>
-        <div class="view" id="view" style="color:var(--muted)">Server not running.</div>
+      <div class="bwin-bar"><span class="navb">←</span><span class="navb">→</span><span class="navb">⟳</span>
+        <div class="addr"><span>🔓</span><span class="mono">127.0.0.1:8000/blog/</span></div></div>
+      <div class="site-page">
+        <nav class="sp-nav"><b>Django<span>Blog</span></b><span>Home</span><span>Posts</span><span>Admin</span></nav>
+        <div class="sp-hero">
+          <div class="sp-badge">200 OK &middot; served by Django</div>
+          <h1>Hello from the blog app!</h1>
+          <p>Your project and app are connected. This page was produced by <code>blog/views.py &rarr; index()</code>.</p>
+        </div>
+        <div class="sp-flow">
+          <div class="sp-node">🌐<span>Browser<br><small>GET /blog/</small></span></div><div class="sp-arrow">&rarr;</div>
+          <div class="sp-node">🗺️<span>mysite/urls.py<br><small>include('blog.urls')</small></span></div><div class="sp-arrow">&rarr;</div>
+          <div class="sp-node">🧭<span>blog/urls.py<br><small>path('', index)</small></span></div><div class="sp-arrow">&rarr;</div>
+          <div class="sp-node">⚙️<span>blog/views.py<br><small>index(request)</small></span></div><div class="sp-arrow">&rarr;</div>
+          <div class="sp-node">📄<span>Response<br><small>HttpResponse</small></span></div>
+        </div>
+        <div class="sp-actions"><a class="btn" href="#posttest" onclick="closeSite()">Take the Posttest</a><button class="btn alt" onclick="closeSite()">Back to the lab</button></div>
       </div>
     </div>
   </div>
@@ -569,7 +726,7 @@ def index(request):
   const tr=this.tree();
   $('#tree').innerHTML=tr.length?tr.map(([p,d,k,tag])=>{
     const n=p.split('/').pop();
-    return `<div class="node ${this.sel===p?'sel':''} ${this.fresh.has(p)?'new':''}" style="padding-left:${8+d*16}px" onclick="Sim.show('${p}')">${k==='dir'?'📁':'📄'} ${n}${k==='dir'?'/':''}${tag?`<span class="tag ${tag}">${tag==='proj'?'project':'app'}</span>`:''}</div>`;
+    return `<div class="node ${this.sel===p?'sel':''} ${this.fresh.has(p)?'new':''}" style="padding-left:${8+d*16}px" onclick="Sim.show('${p}')">${icon(n,k)} ${n}${k==='dir'?'/':''}${tag?`<span class="tag ${tag}">${tag==='proj'?'project':'app'}</span>`:''}</div>`;
   }).join(''):'<div style="padding:10px;color:var(--muted);font-family:Raleway">Empty workspace</div>';
   this.fresh.clear();
   $('#cwd').textContent='~/workspace'+(this.s.cwd?'/'+this.s.cwd:'')+' $';
@@ -580,18 +737,18 @@ def index(request):
  },
  renderGuide(cur){
   const g=$('#guide'),n=STEPS.length,doneCount=STEPS.filter(st=>st.done(this.s)).length;
-  const head=`<div class="g-head"><span>${cur<0?'All steps complete':'Step '+(cur+1)+' of '+n}</span><span>${doneCount}/${n} done</span></div><div class="g-bar"><div style="width:${doneCount/n*100}%"></div></div>`;
-  g.classList.remove('done-step');
+  const dots=STEPS.map((st,i)=>{const ok=st.done(this.s),c=i===cur;return (i?`<div class="sline ${ok?'ok':''}"></div>`:'')+`<div class="sdot ${ok?'ok':c?'cur':''}" title="${st.t.replace(/"/g,'&quot;')}">${ok?'✓':i+1}</div>`}).join('');
+  const head=`<div class="stepper">${dots}</div><div class="g-count">${cur<0?'All '+n+' steps complete':'Step '+(cur+1)+' of '+n} &middot; ${doneCount}/${n} done</div>`;
   if(cur<0){
-    g.innerHTML=head+`<div class="g-body"><h3>🎉 Well done!</h3><p class="g-why">You created a project, added an app, registered it, wired its URLs to a view and served a page.</p><div class="g-btns"><a class="btn" style="text-decoration:none" href="#posttest">Take the Posttest</a><button class="btn alt" onclick="Sim.reset()">Start again</button></div></div>`;
+    g.innerHTML=head+`<div class="g-body"><h3>🎉 You built a Django site!</h3><p class="g-why">Project created, app added and registered, URLs wired to a view, server started and page served.</p><div class="g-btns"><button class="btn" id="gRun" onclick="openSite()">🌐 Open the site again</button><a class="btn alt" style="text-decoration:none" href="#posttest">Take the Posttest</a><button class="btn alt" onclick="Sim.reset()">Start again</button></div></div>`;
     return;
   }
   const st=STEPS[cur], prev=cur>0?STEPS[cur-1]:null;
   g.innerHTML=head+`<div class="g-body">
-    ${prev?`<div class="g-learn" style="display:block;margin:0 0 10px">✓ <b>${prev.t}:</b> ${prev.learn}</div>`:''}
+    ${prev&&prev.done(this.s)?`<div class="g-learn" style="display:block;margin:0 0 10px">✓ <b>${prev.t}:</b> ${prev.learn}</div>`:''}
     <h3>${st.t}</h3><p class="g-why">${st.why}</p>
     ${st.cmd?`<code class="g-cmd mono">$ ${st.cmd}</code>`:`<p class="g-do">${st.doText}</p>`}
-    <div class="g-btns"><button class="btn" id="gRun">▶ ${st.cmd?'Run this command':st.actLabel}</button>${st.cmd?'<span style="font-size:13px;color:var(--muted);align-self:center">or type it in the terminal below</span>':''}</div>
+    <div class="g-btns"><button class="btn" id="gRun">▶ ${st.cmd?'Run this command':st.actLabel}</button>${st.cmd?'<span style="font-size:13px;align-self:center">or type it in the terminal below</span>':''}</div>
   </div>`;
   $('#gRun').onclick=()=>{ if(st.cmd){$('#cmd').value=st.cmd;this.run();} else {st.act();} };
  },
@@ -676,6 +833,45 @@ def index(request):
  }
 };
 function $(q){return document.querySelector(q)}
+function icon(n,k){
+  if(k==='dir')return '<span class="fi dir">▸📁</span>'.replace('▸','');
+  if(n.endsWith('.py'))return '<span class="fi py">py</span>';
+  if(n.endsWith('.sqlite3'))return '<span class="fi db">🛢</span>';
+  return '<span class="fi">📄</span>';
+}
+function highlight(){
+  const el=$('#code'),name=$('#fname').textContent,raw=el.textContent;
+  const esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if(!name.endsWith('.py')){el.innerHTML=raw.split('\n').map(l=>`<span class="ln">${esc(l)||' '}</span>`).join('');return;}
+  const KW=/\b(from|import|def|class|return|if|else|elif|for|in|not|and|or|as|with|try|except|raise|None|True|False|pass|lambda)\b/g;
+  el.innerHTML=raw.split('\n').map(line=>{
+    let out='',rest=line;
+    const tok=/("""[^]*?"""|'[^']*'|"[^"]*"|#.*$)/g; let m,last=0,parts=[];
+    while((m=tok.exec(line))){parts.push([line.slice(last,m.index),0]);parts.push([m[0],1]);last=tok.lastIndex;}
+    parts.push([line.slice(last),0]);
+    out=parts.map(([t,isTok])=>{
+      if(isTok)return t.startsWith('#')?`<span class="hc">${esc(t)}</span>`:`<span class="hs">${esc(t)}</span>`;
+      return esc(t).replace(KW,'<span class="hk">$1</span>').replace(/\b(\d+)\b/g,'<span class="hn">$1</span>')
+        .replace(/(@\w+)/g,'<span class="hd">$1</span>').replace(/\b([a-zA-Z_]\w*)(?=\()/g,'<span class="hf">$1</span>');
+    }).join('');
+    return `<span class="ln">${out||' '}</span>`;
+  }).join('');
+}
+function openSite(){
+  $('#siteModal').classList.add('open');
+  // replay the flow animation
+  document.querySelectorAll('.sp-node,.sp-arrow').forEach(n=>{n.style.animation='none';n.offsetHeight;n.style.animation='';});
+}
+function closeSite(){$('#siteModal').classList.remove('open');}
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSite();});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const colors=['#ff6e00','#2f80ed','#28c840','#febc2e','#c792ea'];
+  for(let i=0;i<70;i++){const c=document.createElement('i');c.className='confetti';
+    c.style.left=Math.random()*100+'vw';c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(1.8+Math.random()*1.6)+'s';c.style.animationDelay=(Math.random()*.4)+'s';
+    document.body.appendChild(c);setTimeout(()=>c.remove(),4000);}
+}
 $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
 /* ---------- admin link ---------- */
 // Change ADMIN_URL once Django is hosted online (e.g. https://<user>.pythonanywhere.com/admin/).
@@ -744,6 +940,17 @@ const ADMIN_URL='http://127.0.0.1:8000/admin/';
       show('err','<b>Could not reach the feedback server.</b> Start Django with <code>python manage.py runserver</code> and submit again, or open the lab from <a href="http://127.0.0.1:8000/vlab/#feedback">127.0.0.1:8000/vlab/</a>.');
     }finally{btn.disabled=false;btn.textContent='Submit feedback';}
   });
+})();
+(function(){
+  const show=Sim.show; Sim.show=function(p){show.call(this,p);highlight();};
+  const visit=Sim.visit; Sim.visit=function(){
+    const before=this.s.visited; visit.call(this);
+    const path=(()=>{try{return new URL($('#url').value).pathname}catch(e){return '/'}})();
+    $('#btabTitle').textContent=this.s.server?(path==='/blog/'&&this.s.included&&this.s.view&&this.s.appUrls?'DjangoBlog':path==='/admin/'?'Django admin':'Page not found'):'Can’t be reached';
+    $('#lock').textContent=this.s.server?'🔓':'ⓘ';
+    if(this.s.visited){openSite(); if(!before){confetti();} this.render();}
+  };
+  const reset=Sim.reset; Sim.reset=function(){reset.call(this);$('#btabTitle').textContent='New Tab';closeSite();};
 })();
 Sim.reset();route();
 </script>
