@@ -12,7 +12,7 @@
 
 ---
 
-## Status (updated 2026-10-02)
+## Status (updated 2026-10-03)
 
 ### ✅ Done
 
@@ -26,12 +26,13 @@
 | Feedback JSON API, saves to database | `/blog/api/feedback/` |
 | Admin: custom blue/orange theme, feedback list with filters and search | `mysite/templates/admin/`, `blog/admin.py` |
 | Vlab served by Django | `/vlab/` |
-| 10 automated tests passing | `blog/tests.py` |
+| 18 automated tests passing | `blog/tests.py` |
 | Vlab: theory, quizzes, simulation, feedback form → database, ⚙ Admin button, footer contact details | `index.html` |
 | GitHub Pages deployment (`.nojekyll` so Django template tags don't break the build) | https://dhruvkumarg.github.io/FSDL-LAB-CA/ |
 | Docs: file-by-file structure and PythonAnywhere deployment guide | `docs/` |
 | Production settings (env-based `DEBUG` / `SECRET_KEY`, HTTPS cookies) | `settings.py` |
 | Collaborators: Shlok, Prajeet | ✅ write access |
+| **P2 Shlok:** `Post` author + slug (migration `0004`), Post admin, Post API `GET /blog/api/posts/` and `/blog/api/posts/<id>/`, 8 new tests (PR #1, 2026-10-03) | `mysite/blog/` |
 | Branch protection on `main` (PR + 1 approval required) | GitHub settings |
 
 ### ⏳ Pending
@@ -39,7 +40,6 @@
 | Item | Owner |
 |---|---|
 | Accept the repo invite | **Arnav** (invite is pending) |
-| Post API (`/blog/api/posts/`) — **needed by Prajeet** | P2 Shlok |
 | React frontend | P3 Prajeet (start with mock data) |
 | Vlab Contributors tab, more posttest questions, final testing | P4 Arnav |
 
@@ -70,7 +70,7 @@
    python manage.py createsuperuser
    python manage.py runserver
    ```
-   Then open http://127.0.0.1:8000/ and run `python manage.py test blog` (10 tests should pass).
+   Then open http://127.0.0.1:8000/ and run `python manage.py test blog` (18 tests should pass).
 
 ---
 
@@ -134,17 +134,17 @@ Rules:
 - *What if you forget `INSTALLED_APPS`?* The app's models, migrations, admin and templates are ignored.
 - *Why `startapp` doesn't create `urls.py`?* Not every app needs URLs, so you add it yourself.
 
-### Person 2 — Models, URLs, views & admin (Shlok)
-Already in `blog/` (read it before starting): `Post` and `Feedback` models, `FeedbackForm`, views for home/list/detail/feedback, feedback JSON API, templates, admin for `Feedback`, 10 tests.
-- [ ] Add `author` and `slug` fields to `Post`, run `makemigrations`, commit the migration.
-- [ ] Customise the `Post` admin (`list_display`, `search_fields`, `prepopulated_fields` for slug).
-- [ ] Create `blog/serializers.py` + API views: `GET /blog/api/posts/` and `GET /blog/api/posts/<id>/`.
-- [ ] Add tests for the Post API in `tests.py`.
-- **Present:** MTV pattern, model → migration → admin, request flow `mysite/urls.py → blog/urls.py → views.py`, the feedback form/API, run tests.
+### Person 2 — Models, URLs, views & admin (Shlok) ✅ Complete
+Merged in PR #1 (`backend-logic`, 5 commits).
+- [x] Add `author` and `slug` fields to `Post`, run `makemigrations`, commit the migration (`0004_post_author_slug.py`).
+- [x] Customise the `Post` admin (`list_display`, `search_fields`, `prepopulated_fields` for slug).
+- [x] Create `blog/serializers.py` + API views: `GET /blog/api/posts/` and `GET /blog/api/posts/<id>/`.
+- [x] Add tests for the Post slug and Post API in `tests.py` (18 tests passing in total).
+- **Present:** MTV pattern, model → migration → admin, request flow `mysite/urls.py → blog/urls.py → views.py`, the Post API (open http://127.0.0.1:8000/blog/api/posts/ in the browser), the feedback form/API, run `python manage.py test blog`.
 
 ### Person 3 — React frontend (Prajeet)
 - [ ] `npm create vite@latest frontend -- --template react` (in repo root).
-- [ ] `PostList` and `PostDetail` components fetching `http://127.0.0.1:8000/blog/api/posts/` (use mock data until Shlok's API is merged).
+- [ ] `PostList` and `PostDetail` components fetching `http://127.0.0.1:8000/blog/api/posts/` (Shlok's API is merged and ready ✅).
 - [ ] *(Optional)* React feedback form posting to `/blog/api/feedback/` (already working, CORS allows `http://localhost:5173`).
 - [ ] Basic styling + loading/error states.
 - [ ] Add "Run frontend" steps to README (`cd frontend && npm install && npm run dev`).
@@ -166,7 +166,7 @@ Already in `blog/` (read it before starting): `Post` and `Feedback` models, `Fee
 | Day | Work |
 |---|---|
 | 1 | ✅ P1 setup, collaborators, CORS/DRF config, templates, feedback, admin theme, Pages |
-| 2–3 | P2 Post API & model fields, P3 React UI (mock data until API merges), P4 Vlab edits; P1 reviews PRs |
+| 2–3 | ✅ P2 Post API & model fields (merged 2026-10-03); P3 React UI on the live API; P4 Vlab edits; P1 reviews PRs |
 | 4 | Merge all PRs, P4 runs a full test on a fresh clone, fix bugs |
 | 5 | Rehearse presentation: P4 intro → P1 → P2 → P3 → P4 demo & conclusion |
 

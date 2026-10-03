@@ -75,7 +75,8 @@ After completing this lab, the student will be able to:
 - Feedback form (`/blog/feedback/`) with validation, and a JSON API (`/blog/api/feedback/`) used by the Vlab
 - Customised admin: blue/orange theme (light and dark), feedback list with filters and search
 - The Vlab is also served by Django at `/vlab/`
-- 10 automated tests
+- Post API: `GET /blog/api/posts/` and `/blog/api/posts/<id>/` (Django REST Framework)
+- 18 automated tests
 - Production-ready settings (`DEBUG` / `SECRET_KEY` from environment variables) for PythonAnywhere
 
 ---
@@ -162,6 +163,7 @@ python manage.py runserver
 | Virtual Lab (served by Django) | http://127.0.0.1:8000/vlab/ |
 | Admin | http://127.0.0.1:8000/admin/ |
 | Feedback API (POST JSON) | http://127.0.0.1:8000/blog/api/feedback/ |
+| Post API (GET JSON) | http://127.0.0.1:8000/blog/api/posts/ |
 
 Run the tests:
 
