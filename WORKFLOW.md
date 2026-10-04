@@ -37,13 +37,13 @@
 | Production settings (env-based `DEBUG` / `SECRET_KEY`, HTTPS cookies) | `settings.py` |
 | Collaborators: Shlok, Prajeet, Arnav | ✅ all joined with write access |
 | **P2 Shlok:** `Post` author + slug (migration `0004`), Post admin, Post API `GET /blog/api/posts/` and `/blog/api/posts/<id>/`, 8 new tests (PR #1, 2026-10-03) | `mysite/blog/` |
+| **P3 Prajeet:** React frontend SPA (Vite), `PostList` & `PostDetail` consuming `/blog/api/posts/`, feedback form posting to `/blog/api/feedback/`, MTV/API architecture presentation guide, mock fallback (`frontend/`) | `frontend/` |
 | Branch protection on `main` (PR + 1 approval required) | GitHub settings |
 
 ### ⏳ Pending
 
 | Item | Owner |
 |---|---|
-| React frontend | P3 Prajeet (start with mock data) |
 | More posttest questions, final testing | P4 Arnav |
 
 ---
@@ -145,13 +145,14 @@ Merged in PR #1 (`backend-logic`, 5 commits).
 - [x] Add tests for the Post slug and Post API in `tests.py` (18 tests passing in total).
 - **Present:** MTV pattern, model → migration → admin, request flow `mysite/urls.py → blog/urls.py → views.py`, the Post API (open http://127.0.0.1:8000/blog/api/posts/ in the browser), the feedback form/API, run `python manage.py test blog`.
 
-### Person 3 — React frontend (Prajeet)
-- [ ] `npm create vite@latest frontend -- --template react` (in repo root).
-- [ ] `PostList` and `PostDetail` components fetching `http://127.0.0.1:8000/blog/api/posts/` (Shlok's API is merged and ready ✅).
-- [ ] *(Optional)* React feedback form posting to `/blog/api/feedback/` (already working, CORS allows `http://localhost:5173`).
-- [ ] Basic styling + loading/error states.
-- [ ] Add "Run frontend" steps to README (`cd frontend && npm install && npm run dev`).
-- **Present:** React components, `useEffect`/`fetch`, how the frontend talks to the Django API, CORS, live demo (add a post in admin → appears in React).
+### Person 3 — React frontend (Prajeet) ✅ Complete
+Merged in branch `p3-react-frontend`.
+- [x] `npm create vite@latest frontend -- --template react` (in repo root).
+- [x] `PostList` and `PostDetail` components fetching `http://127.0.0.1:8000/blog/api/posts/` (Shlok's API is merged and ready ✅).
+- [x] React feedback form posting to `/blog/api/feedback/` (CORS allows `http://localhost:5173`).
+- [x] Basic styling + loading/error states + mock data fallback for offline demos.
+- [x] Add "Run frontend" steps to README (`cd frontend && npm install && npm run dev`).
+- **Present:** React components, `useEffect`/`fetch`, how the frontend talks to the Django API, CORS, live demo (add a post in admin → appears in React), interactive MTV & API architecture guide.
 
 ### Person 4 — Virtual Lab, testing & deployment (Arnav)
 - [x] Accept the repo invite (joined 2026-10-04).
@@ -185,4 +186,4 @@ Merged in PR #1 (`backend-logic`, 5 commits).
 - [ ] Admin login works; a few posts added
 - [ ] Vlab open at http://127.0.0.1:8000/vlab/ (or the GitHub Pages link)
 - [ ] Submit one feedback → show it in **Admin → Blog → Feedbacks**
-- [ ] React dev server running (`npm run dev`)
+- [x] React dev server running (`npm run dev`)
