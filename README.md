@@ -185,3 +185,17 @@ Responses are saved only while the Django server is reachable: local `runserver`
 ## Hosting the admin online
 
 GitHub Pages only serves static files, so the admin and API need a Python host. Follow [docs/deploy-pythonanywhere.md](docs/deploy-pythonanywhere.md) (free plan).
+
+## Admin login
+
+| | |
+|---|---|
+| Admin URL | http://127.0.0.1:8000/admin/ |
+| Username | `dhruvgoenka24` |
+| Password | Shared privately with the team (not stored in this public repo) |
+
+This account exists only in the local database on the demo laptop (`db.sqlite3` is not committed). On your own machine, create your own admin with:
+
+```bash
+python manage.py createsuperuser
+```
