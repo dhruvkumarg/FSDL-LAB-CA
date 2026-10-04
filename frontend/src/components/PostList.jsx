@@ -9,7 +9,7 @@ export default function PostList({ onSelectPost, onLiveStatusChange }) {
   const [isLive, setIsLive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const loadPosts = async () => {
+  const loadPosts = React.useCallback(async () => {
     setLoading(true);
     setErrorNotice(null);
     const result = await fetchPosts();
@@ -20,11 +20,29 @@ export default function PostList({ onSelectPost, onLiveStatusChange }) {
       onLiveStatusChange(result.isLive);
     }
     setLoading(false);
-  };
+  }, [onLiveStatusChange]);
 
   useEffect(() => {
-    loadPosts();
-  }, []);
+    let ignore = false;
+    async function fetchInitial() {
+      setLoading(true);
+      setErrorNotice(null);
+      const result = await fetchPosts();
+      if (!ignore) {
+        setPosts(result.data || []);
+        setIsLive(result.isLive);
+        setErrorNotice(result.error);
+        if (onLiveStatusChange) {
+          onLiveStatusChange(result.isLive);
+        }
+        setLoading(false);
+      }
+    }
+    fetchInitial();
+    return () => {
+      ignore = true;
+    };
+  }, [onLiveStatusChange]);
 
   const filteredPosts = posts.filter((post) => {
     const term = searchTerm.toLowerCase();
