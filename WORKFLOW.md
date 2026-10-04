@@ -12,7 +12,7 @@
 
 ---
 
-## Status (updated 2026-10-03)
+## Status (updated 2026-10-04)
 
 ### ✅ Done
 
@@ -28,10 +28,14 @@
 | Vlab served by Django | `/vlab/` |
 | 18 automated tests passing | `blog/tests.py` |
 | Vlab: theory, quizzes, simulation, feedback form → database, ⚙ Admin button, footer contact details | `index.html` |
+| Simulation ends by opening a full DjangoBlog website popup (PR #3) | `index.html` |
+| Pretest/Posttest: every question must be answered before submitting | `index.html` |
+| Contributors tab: K. J. Somaiya School of Engineering, guide Prof. Ashwini Deshmukh, 4 developers (PR #5) | `index.html` |
+| Footer: © 2026 K. J. Somaiya School of Engineering · FSDL Lab CA (license notice removed, PR #6) | `index.html` |
 | GitHub Pages deployment (`.nojekyll` so Django template tags don't break the build) | https://dhruvkumarg.github.io/FSDL-LAB-CA/ |
 | Docs: file-by-file structure and PythonAnywhere deployment guide | `docs/` |
 | Production settings (env-based `DEBUG` / `SECRET_KEY`, HTTPS cookies) | `settings.py` |
-| Collaborators: Shlok, Prajeet | ✅ write access |
+| Collaborators: Shlok, Prajeet, Arnav | ✅ all joined with write access |
 | **P2 Shlok:** `Post` author + slug (migration `0004`), Post admin, Post API `GET /blog/api/posts/` and `/blog/api/posts/<id>/`, 8 new tests (PR #1, 2026-10-03) | `mysite/blog/` |
 | Branch protection on `main` (PR + 1 approval required) | GitHub settings |
 
@@ -39,20 +43,19 @@
 
 | Item | Owner |
 |---|---|
-| Accept the repo invite | **Arnav** (invite is pending) |
 | React frontend | P3 Prajeet (start with mock data) |
-| Vlab Contributors tab, more posttest questions, final testing | P4 Arnav |
+| More posttest questions, final testing | P4 Arnav |
 
 ---
 
 ## 0. One-time setup
 
 **Person 1 (repo owner):**
-1. ✅ Collaborators invited (Arnav still has to accept).
+1. ✅ Collaborators invited and joined (Shlok, Prajeet, Arnav).
 2. ✅ Branch protection on `main`: pull request + 1 approval required.
 
 **Persons 2, 3, 4 (Shlok, Prajeet, Arnav):**
-1. Accept the invite at https://github.com/dhruvkumarg/FSDL-LAB-CA/invitations if you haven't.
+1. ✅ All three have accepted the invite.
 2. Make sure the email in your git config is added and verified on your GitHub account (**Settings → Emails**), otherwise you will NOT show as a contributor:
    ```bash
    git config --global user.name "Your Name"
@@ -151,8 +154,8 @@ Merged in PR #1 (`backend-logic`, 5 commits).
 - **Present:** React components, `useEffect`/`fetch`, how the frontend talks to the Django API, CORS, live demo (add a post in admin → appears in React).
 
 ### Person 4 — Virtual Lab, testing & deployment (Arnav)
-- [ ] Accept the repo invite.
-- [ ] Fill the Contributors tab in `index.html` with all 4 names and roles.
+- [x] Accept the repo invite (joined 2026-10-04).
+- [x] Fill the Contributors tab in `index.html` with all 4 names and roles (done by P1, PR #5).
 - [ ] Add 2–3 more posttest questions, including one about React ↔ Django.
 - [x] GitHub Pages enabled (auto-redeploys on every push to `main`; check the Actions tab after merging).
 - [x] Feedback tab form saving to the database (done by P1).
