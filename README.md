@@ -92,6 +92,7 @@ FSDL-LAB-CA/
 ├── docs/
 │   ├── project-structure.md      ← every Django file explained
 │   └── deploy-pythonanywhere.md  ← host Django + admin online
+├── frontend/                     ← React frontend (Vite)
 └── mysite/                       ← Django project (see below)
 ```
 
@@ -172,6 +173,21 @@ python manage.py test blog
 ```
 
 > The "This is a development server" warning from `runserver` is normal. It is for local use only; production uses `wsgi.py` / `asgi.py`.
+
+## Run the React frontend
+
+A decoupled Single Page Application (SPA) built with React and Vite that consumes the Django REST API with CORS.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open http://localhost:5173/ in your browser.
+
+- **Live Mode:** When Django's `runserver` is active, the React app dynamically fetches posts from `http://127.0.0.1:8000/blog/api/posts/` and submits feedback to `/blog/api/feedback/`.
+- **Mock Mode:** If the Django server is offline, the frontend gracefully falls back to built-in mock data with an informative banner.
 
 ## Feedback → database
 
