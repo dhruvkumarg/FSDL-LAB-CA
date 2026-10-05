@@ -12,7 +12,7 @@
 
 ---
 
-## Status (updated 2026-10-04)
+## Status (updated 2026-10-05: submission day)
 
 ### ✅ Done
 
@@ -37,7 +37,7 @@
 | Production settings (env-based `DEBUG` / `SECRET_KEY`, HTTPS cookies) | `settings.py` |
 | Collaborators: Shlok, Prajeet, Arnav | ✅ all joined with write access |
 | **P2 Shlok:** `Post` author + slug (migration `0004`), Post admin, Post API `GET /blog/api/posts/` and `/blog/api/posts/<id>/`, 8 new tests (PR #1, 2026-10-03) | `mysite/blog/` |
-| **P3 Prajeet:** React frontend SPA (Vite), `PostList` & `PostDetail` consuming `/blog/api/posts/`, feedback form posting to `/blog/api/feedback/`, MTV/API architecture presentation guide, mock fallback (`frontend/`) | `frontend/` |
+| **P3 Prajeet:** React frontend SPA (Vite), `PostList` & `PostDetail` consuming `/blog/api/posts/`, feedback form posting to `/blog/api/feedback/`, MTV/API architecture presentation guide, mock fallback (PR #9, 6 commits, 2026-10-05; builds and lints cleanly, verified live against the Django API) | `frontend/` |
 | Branch protection on `main` (PR + 1 approval required) | GitHub settings |
 
 ### ⏳ Pending
@@ -146,7 +146,7 @@ Merged in PR #1 (`backend-logic`, 5 commits).
 - **Present:** MTV pattern, model → migration → admin, request flow `mysite/urls.py → blog/urls.py → views.py`, the Post API (open http://127.0.0.1:8000/blog/api/posts/ in the browser), the feedback form/API, run `python manage.py test blog`.
 
 ### Person 3 — React frontend (Prajeet) ✅ Complete
-Merged in branch `p3-react-frontend`.
+Merged in PR #9 (`p3-react-frontend`, 6 commits). Verified 2026-10-05: `npm ci`, `npm run build` and `npm run lint` pass; posts load from `GET /blog/api/posts/` and feedback saves via `POST /blog/api/feedback/`.
 - [x] `npm create vite@latest frontend -- --template react` (in repo root).
 - [x] `PostList` and `PostDetail` components fetching `http://127.0.0.1:8000/blog/api/posts/` (Shlok's API is merged and ready ✅).
 - [x] React feedback form posting to `/blog/api/feedback/` (CORS allows `http://localhost:5173`).
@@ -170,7 +170,7 @@ Merged in branch `p3-react-frontend`.
 | Day | Work |
 |---|---|
 | 1 | ✅ P1 setup, collaborators, CORS/DRF config, templates, feedback, admin theme, Pages |
-| 2–3 | ✅ P2 Post API & model fields (merged 2026-10-03); P3 React UI on the live API; P4 Vlab edits; P1 reviews PRs |
+| 2–3 | ✅ P2 Post API & model fields (PR #1); ✅ P3 React frontend (PR #9); P4 Vlab edits; P1 reviews PRs |
 | 4 | Merge all PRs, P4 runs a full test on a fresh clone, fix bugs |
 | 5 | Rehearse presentation: P4 intro → P1 → P2 → P3 → P4 demo & conclusion |
 
