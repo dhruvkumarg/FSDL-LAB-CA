@@ -16,10 +16,22 @@ body{margin:0;font-family:Raleway,"Segoe UI",Roboto,Arial,sans-serif;color:var(-
 a{color:var(--blue)}
 code,pre,.mono{font-family:"JetBrains Mono",Consolas,monospace}
 /* header */
-header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:4px solid var(--orange);background:#fff;position:sticky;top:0;z-index:10}
-.admin-link{margin-left:auto;margin-right:14px;padding:6px 14px;border:1px solid var(--blue);border-radius:6px;color:var(--blue);text-decoration:none;font-weight:600;font-size:14px}
+header{display:flex;align-items:center;gap:0;padding:0 20px 0 0;border-bottom:6px solid var(--orange);background:#fff;position:sticky;top:0;z-index:10;min-height:96px}
+.brand{display:flex;align-items:center;gap:18px;padding:0 16px;min-width:0}
+.logo-somaiya{height:84px;width:auto}
+.logo-vlabs{height:78px;width:auto}
+.hdr-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
+.stars{display:flex;gap:2px;margin-right:30px}
+.stars button{background:none;border:0;padding:0 2px;font-size:30px;line-height:1;cursor:pointer;color:transparent;-webkit-text-stroke:1.5px #e6b800}
+.stars button.on{color:#ffc61a}
+.stars button:focus-visible{outline:2px solid var(--blue);border-radius:4px}
+.pill-btn{background:#2b8fd6;color:#fff;text-decoration:none;font-size:19px;font-weight:500;padding:12px 22px;border-radius:24px;white-space:nowrap}
+.pill-btn:hover{background:#1f74b3}
+body.nav-collapsed nav.side{display:none}
+.admin-link{margin-right:0;padding:6px 14px;border:1px solid var(--blue);border-radius:6px;color:var(--blue);text-decoration:none;font-weight:600;font-size:14px}
 .admin-link:hover{background:var(--blue);color:#fff}
-.burger{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 10px;font-size:20px;cursor:pointer;display:none}
+.burger{align-self:stretch;width:92px;border:0;border-right:1px solid var(--line);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;flex:0 0 auto}
+.burger span{display:block;width:30px;height:2.5px;background:#777;border-radius:2px}
 .logo{font-weight:700;color:var(--ok);font-size:18px}
 .logo span{color:var(--orange)}
 .crumbs{padding:14px 24px;font-size:22px;color:var(--blue)}
@@ -161,9 +173,20 @@ footer h5{margin:0 0 6px;font-size:15px;color:#fff;border-bottom:2px solid #3fa7
 footer a{color:#ddd;text-decoration:none;display:block}
 footer .lic{text-align:center;margin-top:18px;border-top:1px solid #333;padding-top:10px}
 footer .lic a{display:inline;color:#3fa7d6}
+@media (max-width:1100px){
+  .pill-btn{font-size:15px;padding:9px 14px}
+  .stars{margin-right:8px}.stars button{font-size:22px}
+  .logo-somaiya{height:64px}.logo-vlabs{height:58px}
+}
 @media (max-width:860px){
-  .burger{display:block}
-  nav.side{display:none;position:fixed;top:60px;left:0;background:#fff;width:240px;height:100%;box-shadow:2px 0 10px rgba(0,0,0,.15);z-index:20}
+  header{min-height:64px;padding-right:10px}
+  .burger{width:54px}
+  .logo-somaiya{height:44px}.logo-vlabs{height:40px}
+  .brand{gap:8px;padding:0 8px}
+  .stars,.hdr-actions .pill-btn:nth-of-type(2),.admin-link{display:none}
+  .pill-btn{font-size:13px;padding:7px 12px}
+  body.nav-collapsed nav.side{display:none}
+  nav.side{display:none;position:fixed;top:70px;left:0;background:#fff;width:240px;height:100%;box-shadow:2px 0 10px rgba(0,0,0,.15);z-index:20}
   nav.side.open{display:block}
   .sim{grid-template-columns:1fr}
   .crumbs{font-size:17px;padding:12px 16px}
@@ -173,9 +196,21 @@ footer .lic a{display:inline;color:#3fa7d6}
 </head>
 <body>
 <header>
-  <button class="burger" onclick="document.querySelector('nav.side').classList.toggle('open')" aria-label="Menu">☰</button>
-  <div class="logo">Virtual <span>Labs</span></div>
-  <a class="admin-link" id="adminLink" href="http://127.0.0.1:8000/admin/" target="_blank" rel="noopener" title="Django admin: view feedback responses and posts">&#9881; Admin</a>
+  <button class="burger" onclick="toggleNav()" aria-label="Show or hide the menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="brand">
+    <img class="logo-somaiya" src="assets/somaiya-kjsse-logo.png" alt="Somaiya Vidyavihar University, K J Somaiya School of Engineering">
+    <img class="logo-vlabs" src="assets/virtual-labs-logo.png" alt="Virtual Labs, an MoE Govt of India initiative">
+  </div>
+  <div class="hdr-actions">
+    <div class="stars" id="stars" role="radiogroup" aria-label="Rate this experiment">
+      <button type="button" data-v="1" aria-label="1 star">★</button><button type="button" data-v="2" aria-label="2 stars">★</button><button type="button" data-v="3" aria-label="3 stars">★</button><button type="button" data-v="4" aria-label="4 stars">★</button><button type="button" data-v="5" aria-label="5 stars">★</button>
+    </div>
+    <a class="pill-btn" href="#feedback" title="Rate this experiment">Rate Me</a>
+    <a class="pill-btn" href="https://github.com/dhruvkumarg/FSDL-LAB-CA/issues/new?title=Bug%3A%20&amp;body=Page%2Ftab%3A%0AWhat%20happened%3A%0AWhat%20I%20expected%3A%0A" target="_blank" rel="noopener" title="Report a problem on GitHub">Report a Bug</a>
+    <a class="admin-link" id="adminLink" href="http://127.0.0.1:8000/admin/" target="_blank" rel="noopener" title="Django admin: view feedback responses and posts">&#9881; Admin</a>
+  </div>
 </header>
 <div class="crumbs"><b>Computer Science and Engineering</b><span class="sep">›</span><b>Web Development Lab</b><span class="sep">›</span><b>Experiments</b></div>
 
@@ -718,6 +753,30 @@ def index(request):
 };
 function $(q){return document.querySelector(q)}
 $('#cmd').addEventListener('keydown',e=>{if(e.key==='Enter')Sim.run()});
+/* ---------- header: menu toggle + star rating ---------- */
+function toggleNav(){
+  if(innerWidth<=860){document.querySelector('nav.side').classList.toggle('open');}
+  else{document.body.classList.toggle('nav-collapsed');}
+}
+(function(){
+  const box=document.getElementById('stars'),btns=[...box.querySelectorAll('button')];
+  let saved=0; try{saved=+localStorage.getItem('vlabRating')||0}catch(e){}
+  const paint=n=>btns.forEach(b=>b.classList.toggle('on',+b.dataset.v<=n));
+  paint(saved);
+  btns.forEach(b=>{
+    b.addEventListener('mouseenter',()=>paint(+b.dataset.v));
+    b.addEventListener('click',()=>{
+      saved=+b.dataset.v; paint(saved);
+      try{localStorage.setItem('vlabRating',saved)}catch(e){}
+      location.hash='#feedback';
+      // pre-select the same "Overall experience" rating in the feedback form
+      const r=document.querySelector('#fbForm input[name="Overall experience"][value="'+saved+'"]');
+      if(r){r.checked=true;r.closest('.fb-field').classList.remove('bad');}
+    });
+  });
+  box.addEventListener('mouseleave',()=>paint(saved));
+})();
+
 /* ---------- admin link ---------- */
 // Change ADMIN_URL once Django is hosted online (e.g. https://<user>.pythonanywhere.com/admin/).
 const ADMIN_URL='http://127.0.0.1:8000/admin/';

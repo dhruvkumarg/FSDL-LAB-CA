@@ -99,6 +99,7 @@ FSDL-LAB-CA/
 ├── README.md
 ├── WORKFLOW.md                   ← team roles, tasks, status
 ├── .nojekyll                     ← serve files as-is on GitHub Pages
+├── assets/                       ← Somaiya and Virtual Labs logos used in the Vlab header
 ├── docs/
 │   ├── project-structure.md      ← every Django file explained
 │   └── deploy-pythonanywhere.md  ← host Django + admin online
