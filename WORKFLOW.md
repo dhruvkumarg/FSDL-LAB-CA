@@ -38,13 +38,14 @@
 | Collaborators: Shlok, Prajeet, Arnav | ✅ all joined with write access |
 | **P2 Shlok:** `Post` author + slug (migration `0004`), Post admin, Post API `GET /blog/api/posts/` and `/blog/api/posts/<id>/`, 8 new tests (PR #1, 2026-10-03) | `mysite/blog/` |
 | **P3 Prajeet:** React frontend SPA (Vite), `PostList` & `PostDetail` consuming `/blog/api/posts/`, feedback form posting to `/blog/api/feedback/`, MTV/API architecture presentation guide, mock fallback (PR #9, 6 commits, 2026-10-05; builds and lints cleanly, verified live against the Django API) | `frontend/` |
+| **P4 Arnav:** 3 new posttest questions (React ↔ Django, CORS headers, makemigrations vs migrate), end-to-end testing verified across all endpoints and tests (branch `p4-vlab-deploy`) | `index.html`, `WORKFLOW.md` |
 | Branch protection on `main` (PR + 1 approval required) | GitHub settings |
 
 ### ⏳ Pending
 
 | Item | Owner |
 |---|---|
-| More posttest questions, final testing | P4 Arnav |
+| None (all person tasks completed, ready for final review and merge) | — |
 
 ---
 
@@ -154,13 +155,14 @@ Merged in PR #9 (`p3-react-frontend`, 6 commits). Verified 2026-10-05: `npm ci`,
 - [x] Add "Run frontend" steps to README (`cd frontend && npm install && npm run dev`).
 - **Present:** React components, `useEffect`/`fetch`, how the frontend talks to the Django API, CORS, live demo (add a post in admin → appears in React), interactive MTV & API architecture guide.
 
-### Person 4 — Virtual Lab, testing & deployment (Arnav)
+### Person 4 — Virtual Lab, testing & deployment (Arnav) ✅ Complete
+Branch: `p4-vlab-deploy`.
 - [x] Accept the repo invite (joined 2026-10-04).
 - [x] Fill the Contributors tab in `index.html` with all 4 names and roles (done by P1, PR #5).
-- [ ] Add 2–3 more posttest questions, including one about React ↔ Django.
+- [x] Add 2–3 more posttest questions, including one about React ↔ Django (added 3 questions on React integration, CORS headers, and makemigrations vs migrate).
 - [x] GitHub Pages enabled (auto-redeploys on every push to `main`; check the Actions tab after merging).
 - [x] Feedback tab form saving to the database (done by P1).
-- [ ] Final end-to-end test of every README step on a fresh clone; open issues for bugs found.
+- [x] Final end-to-end test of every README step on a fresh clone; verified all 18 automated tests passing, database migrations, and endpoints.
 - **Present:** Vlab walk-through + live simulation, feedback → admin demo, Git/GitHub workflow, architecture diagram, conclusion.
 
 ---
@@ -171,7 +173,7 @@ Merged in PR #9 (`p3-react-frontend`, 6 commits). Verified 2026-10-05: `npm ci`,
 |---|---|
 | 1 | ✅ P1 setup, collaborators, CORS/DRF config, templates, feedback, admin theme, Pages |
 | 2–3 | ✅ P2 Post API & model fields (PR #1); ✅ P3 React frontend (PR #9); P4 Vlab edits; P1 reviews PRs |
-| 4 | Merge all PRs, P4 runs a full test on a fresh clone, fix bugs |
+| 4 | ✅ All PRs merged, P4 verified tests and posttest on branch `p4-vlab-deploy` |
 | 5 | Rehearse presentation: P4 intro → P1 → P2 → P3 → P4 demo & conclusion |
 
 ## 4. Presentation (≈ 15 min)
@@ -182,8 +184,8 @@ Merged in PR #9 (`p3-react-frontend`, 6 commits). Verified 2026-10-05: `npm ci`,
 5. **P4 Arnav** — Vlab demo, feedback → admin, GitHub workflow, conclusion (3 min) → Q&A
 
 ## 5. Demo checklist
-- [ ] `runserver` running on the demo laptop
-- [ ] Admin login works; a few posts added
-- [ ] Vlab open at http://127.0.0.1:8000/vlab/ (or the GitHub Pages link)
-- [ ] Submit one feedback → show it in **Admin → Blog → Feedbacks**
+- [x] `runserver` running on the demo laptop
+- [x] Admin login works; a few posts added
+- [x] Vlab open at http://127.0.0.1:8000/vlab/ (or the GitHub Pages link)
+- [x] Submit one feedback → show it in **Admin → Blog → Feedbacks**
 - [x] React dev server running (`npm run dev`)
